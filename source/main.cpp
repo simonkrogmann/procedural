@@ -1,39 +1,25 @@
 #include <iostream>
 #include <glm/gtc/constants.hpp>
 
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 
+#include "Window.h"
+
 using namespace gl;
 
-int main() {
-    std::cout << glm::pi<double>() << std::endl;
 
-    if (!glfwInit())
-        return -1;
-    GLFWwindow* window = glfwCreateWindow(640, 480, "glphotomagic", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
+int main() {
+    Window w;
+
+    w.init("glphotomagic");
 
     glbinding::Binding::initialize();
     glClearColor(1.0, 0.0, 0.0, 1.0);
+    std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
 
-    while (!glfwWindowShouldClose(window))
-    {
-        // TODO: render
-        glClear(GL_COLOR_BUFFER_BIT);
+    w.loop();
 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
     return 0;
 
 }
