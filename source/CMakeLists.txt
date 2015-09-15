@@ -1,7 +1,11 @@
 set(sources
-	main.cpp
-	Window.cpp
-	Window.h
+    main.cpp
+    Window.cpp
+    Window.h
+    Renderer.cpp
+    Renderer.h
+    PhotoRenderer.cpp
+    PhotoRenderer.h
 )
 
 add_executable(glphotomagic ${sources})

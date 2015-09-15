@@ -1,12 +1,15 @@
 #include "Window.h"
 
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
+
 Window::Window()
 : m_window{ nullptr }
 {
 
 }
 
-int Window::init(std::string title)
+int Window::init(std::unique_ptr<Renderer> renderer, std::string title)
 {
     if (!glfwInit())
     {
@@ -24,6 +27,9 @@ int Window::init(std::string title)
     glfwMakeContextCurrent(window);
     m_window = window;
 
+    m_renderer = std::move(renderer);
+    m_renderer->init();
+
     return 0;
 }
 
@@ -39,6 +45,8 @@ void Window::loop()
 {
     while (!glfwWindowShouldClose(m_window))
     {
+        m_renderer->render();
+
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
