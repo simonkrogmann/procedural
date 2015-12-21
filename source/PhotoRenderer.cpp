@@ -5,6 +5,8 @@
 using namespace gl;
 
 PhotoRenderer::PhotoRenderer()
+    : screen { }
+    , shader { "../source/shader/simple.vert", "../source/shader/simple.frag" }
 {
 
 }
@@ -22,4 +24,7 @@ void PhotoRenderer::init()
 void PhotoRenderer::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    shader.use();
+    screen.draw();
 }

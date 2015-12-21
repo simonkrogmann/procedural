@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Renderer.h"
+#include "ScreenAlignedQuad.h"
+#include "ShaderProgram.h"
 
 class PhotoRenderer : public Renderer {
 public:
@@ -9,4 +11,8 @@ public:
 
     virtual void init() override;
     virtual void render() override;
+
+private:
+    ScreenAlignedQuad screen;
+    ShaderProgram shader;
 };

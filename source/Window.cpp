@@ -9,7 +9,7 @@ Window::Window()
 
 }
 
-int Window::init(std::unique_ptr<Renderer> renderer, std::string title)
+int Window::init(std::string title)
 {
     if (!glfwInit())
     {
@@ -27,9 +27,6 @@ int Window::init(std::unique_ptr<Renderer> renderer, std::string title)
     glfwMakeContextCurrent(window);
     m_window = window;
 
-    m_renderer = std::move(renderer);
-    m_renderer->init();
-
     return 0;
 }
 
@@ -39,6 +36,17 @@ Window::~Window()
     {
         glfwTerminate();
     }
+}
+
+void Window::setRenderer(std::unique_ptr<Renderer> renderer)
+{
+    m_renderer = std::move(renderer);
+    m_renderer->init();
+}
+
+Renderer * Window::renderer()
+{
+    return m_renderer.get();
 }
 
 void Window::loop()

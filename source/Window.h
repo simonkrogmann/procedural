@@ -12,7 +12,9 @@ public:
     Window();
     ~Window();
 
-    int init(std::unique_ptr<Renderer> renderer, std::string title);
+    int init(std::string title);
+    void setRenderer(std::unique_ptr<Renderer> renderer);
+    Renderer * renderer();
     void loop();
 private:
     GLFWwindow * m_window;

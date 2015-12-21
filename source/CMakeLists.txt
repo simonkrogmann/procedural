@@ -6,6 +6,12 @@ set(sources
     Renderer.h
     PhotoRenderer.cpp
     PhotoRenderer.h
+    Drawable.cpp
+    Drawable.h
+    ScreenAlignedQuad.cpp
+    ScreenAlignedQuad.h
+    ShaderProgram.cpp
+    ShaderProgram.h
 )
 
 add_executable(glphotomagic ${sources})
