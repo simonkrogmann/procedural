@@ -6,11 +6,6 @@
 using namespace gl;
 
 class ShaderProgram {
-private:
-    GLuint createShader(const std::string& fileName, GLenum type);
-    GLuint linkShaders(const std::vector<GLuint>& shaders);
-
-    GLuint program;
 public:
     ShaderProgram();
     ~ShaderProgram();
@@ -21,6 +16,13 @@ public:
     bool isLinked();
     void printLinkingError();
     GLint getUniformLocation(const char * uniformName);
-    GLuint getProgram() { return program; };
+    GLuint getProgram() { return m_program; };
     void use();
+private:
+    bool isCompiled(const GLuint& shader);
+    void printCompilationError(const GLuint& shader, const std::string& filename);
+    GLuint createShader(const std::string& fileName, GLenum type);
+    GLuint linkShaders(const std::vector<GLuint>& shaders);
+
+    GLuint m_program;
 };

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Window.h"
-#include "PhotoRenderer.h"
+#include "ProceduralRenderer.h"
 
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
@@ -14,7 +14,7 @@ int main() {
 
     glbinding::Binding::initialize();
 
-    auto renderer = std::make_unique<PhotoRenderer>();
+    auto renderer = std::make_unique<ProceduralRenderer>();
 
     w.setRenderer(std::move(renderer));
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;

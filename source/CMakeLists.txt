@@ -4,8 +4,8 @@ set(sources
     Window.h
     Renderer.cpp
     Renderer.h
-    PhotoRenderer.cpp
-    PhotoRenderer.h
+    ProceduralRenderer.cpp
+    ProceduralRenderer.h
     Drawable.cpp
     Drawable.h
     ScreenAlignedQuad.cpp

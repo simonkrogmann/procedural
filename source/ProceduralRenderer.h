@@ -4,10 +4,10 @@
 #include "ScreenAlignedQuad.h"
 #include "ShaderProgram.h"
 
-class PhotoRenderer : public Renderer {
+class ProceduralRenderer : public Renderer {
 public:
-    PhotoRenderer();
-    virtual ~PhotoRenderer();
+    ProceduralRenderer();
+    virtual ~ProceduralRenderer();
 
     virtual void init() override;
     virtual void render() override;
