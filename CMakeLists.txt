@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-project(glphotomagic)
+project(procedural)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -16,7 +16,7 @@ endif()
 
 include_directories(${GLFW_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${GLBINDING_INCLUDE_DIR})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fsanitize=undefined -Wall -Wextra")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 

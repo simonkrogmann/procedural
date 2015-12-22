@@ -10,7 +10,7 @@ using namespace gl;
 
 int main() {
     Window w;
-    w.init("glphotomagic");
+    w.init("procedural");
 
     glbinding::Binding::initialize();
 

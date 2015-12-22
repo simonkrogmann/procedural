@@ -1,2 +1,2 @@
-# glphotomagic
-Photo effects using OpenGL
+# procedural
+Procedural textures using OpenGL

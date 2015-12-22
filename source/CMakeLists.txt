@@ -14,8 +14,8 @@ set(sources
     ShaderProgram.h
 )
 
-add_executable(glphotomagic ${sources})
+add_executable(procedural ${sources})
 
-target_link_libraries(glphotomagic ${GLFW_LIBRARIES} ${GLBINDING_LIBRARIES})
+target_link_libraries(procedural ${GLFW_LIBRARIES} ${GLBINDING_LIBRARIES})
 
-target_compile_options(glphotomagic PRIVATE ${DEFAULT_COMPILE_FLAGS})
+target_compile_options(procedural PRIVATE ${DEFAULT_COMPILE_FLAGS})
