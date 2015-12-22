@@ -4,9 +4,15 @@
 
 using namespace gl;
 
+#include "Shader.h"
+#include "Group.h"
+
 ProceduralRenderer::ProceduralRenderer()
-    : screen { }
-    , shader { "screenalignedquad.vert", "procedural.frag" }
+    : m_screen { }
+    , m_program { Group<Shader>(
+        Shader::vertex("screenalignedquad.vert"),
+        Shader::fragment("procedural.frag")
+    )}
 {
 
 }
@@ -25,6 +31,6 @@ void ProceduralRenderer::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader.use();
-    screen.draw();
+    m_program.use();
+    m_screen.draw();
 }

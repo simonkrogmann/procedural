@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 #include "ScreenAlignedQuad.h"
-#include "ShaderProgram.h"
+#include "Program.h"
 
 class ProceduralRenderer : public Renderer {
 public:
@@ -13,6 +13,6 @@ public:
     virtual void render() override;
 
 private:
-    ScreenAlignedQuad screen;
-    ShaderProgram shader;
+    ScreenAlignedQuad m_screen;
+    Program m_program;
 };

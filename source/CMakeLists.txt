@@ -10,8 +10,11 @@ set(sources
     Drawable.h
     ScreenAlignedQuad.cpp
     ScreenAlignedQuad.h
-    ShaderProgram.cpp
-    ShaderProgram.h
+    Program.cpp
+    Program.h
+    Shader.cpp
+    Shader.h
+    Group.h
 )
 
 add_executable(procedural ${sources})
