@@ -5,7 +5,8 @@ out vec4 color;
 in vec2 position;
 
 #include "/gradient"
+#include "/chess"
 
 void main() {
-    color = vec4(gradient(position), 1.0);
+    color = vec4(chess(position, 8), 1.0);
 }
