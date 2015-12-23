@@ -11,7 +11,7 @@ ProceduralRenderer::ProceduralRenderer()
     : m_screen { }
     , m_program { Group<Shader>(
         Shader::vertex("screenalignedquad.vert"),
-        Shader::fragment("procedural.frag")
+        Shader::fragment("procedural.frag", {"gradient"})
     )}
 {
 

@@ -9,14 +9,19 @@ using namespace gl;
 class Shader
 {
 public:
-    static Shader vertex(const std::string& filename);
-    static Shader geometry(const std::string& filename);
-    static Shader fragment(const std::string& filename);
-    static Shader compute(const std::string& filename);
+    static Shader vertex(const std::string& filename,
+        const std::vector<std::string>& includes = {});
+    static Shader geometry(const std::string& filename,
+        const std::vector<std::string>& includes = {});
+    static Shader fragment(const std::string& filename,
+        const std::vector<std::string>& includes = {});
+    static Shader compute(const std::string& filename,
+        const std::vector<std::string>& includes = {});
     Shader();
     Shader(Shader&& old);
     Shader(const Shader&) = delete;
-    Shader(const std::string& filename, const GLenum& type);
+    Shader(const std::string& filename, const GLenum& type,
+        const std::vector<std::string>& includes = {});
     ~Shader();
 
     bool isCompiled() const;

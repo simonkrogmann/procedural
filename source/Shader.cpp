@@ -20,38 +20,66 @@ namespace
     }
 }
 
-Shader Shader::vertex(const std::string& filename)
+Shader Shader::vertex(const std::string& filename,
+        const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_VERTEX_SHADER);
+    return Shader(filename, GL_VERTEX_SHADER, includes);
 }
-Shader Shader::geometry(const std::string& filename)
+Shader Shader::geometry(const std::string& filename,
+        const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_GEOMETRY_SHADER);
+    return Shader(filename, GL_GEOMETRY_SHADER, includes);
 }
-Shader Shader::fragment(const std::string& filename)
+Shader Shader::fragment(const std::string& filename,
+        const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_FRAGMENT_SHADER);
+    return Shader(filename, GL_FRAGMENT_SHADER, includes);
 }
-Shader Shader::compute(const std::string& filename)
+Shader Shader::compute(const std::string& filename,
+        const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_COMPUTE_SHADER);
+    return Shader(filename, GL_COMPUTE_SHADER, includes);
 }
 
-Shader::Shader(const std::string& filename, const GLenum& type)
+Shader::Shader(const std::string& filename, const GLenum& type,
+        const std::vector<std::string>& includes)
 : m_filename{filename}
 {
     const std::string shaderLocation = "../source/shader/";
 
-    const auto sourceString = load_file(shaderLocation + filename);
-    const auto source = sourceString.c_str();
-    const auto length = static_cast<GLint>(sourceString.length());
+    auto glLength = [](auto string) {
+        return static_cast<GLint>(string.size());
+    };
+
+    const auto shaderSource = load_file(shaderLocation + filename);
+    const auto shaderCString = shaderSource.c_str();
+    const auto shaderLength = glLength(shaderSource);
+
+    // handle includes
+    std::vector<const char *> includeCStrings;
+    for (auto& include : includes)
+    {
+        const auto name = "/" + include;
+        includeCStrings.push_back(name.c_str());
+        const auto includeSource = load_file(shaderLocation + include + ".glsl");
+        glNamedStringARB(GL_SHADER_INCLUDE_ARB, glLength(name), name.c_str(),
+            glLength(includeSource), includeSource.c_str());
+    }
 
     m_shader = glCreateShader(type);
-    glShaderSource(m_shader, 1, &source, &length);
-    glCompileShader(m_shader);
+    glShaderSource(m_shader, 1, &shaderCString, &shaderLength);
+    glCompileShaderIncludeARB(m_shader, glLength(includeCStrings),
+        includeCStrings.data(), nullptr);
     if (!isCompiled())
     {
         printCompilationError();
+    }
+
+    // delte includes
+    for (auto& include : includes)
+    {
+        const auto name = "/" + include;
+        glDeleteNamedStringARB(glLength(name), name.c_str());
     }
 }
 
