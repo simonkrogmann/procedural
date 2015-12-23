@@ -14,6 +14,7 @@ int main() {
 
     glbinding::Binding::initialize();
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+    w.initGL();
 
     auto renderer = std::make_unique<ProceduralRenderer>();
 

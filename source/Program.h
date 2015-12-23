@@ -17,7 +17,7 @@ public:
 
     bool isLinked() const;
     void printLinkingError() const;
-    GLint getUniformLocation(const char * uniformName) const;
+    GLint getUniformLocation(const std::string& uniformName) const;
     GLuint get() const { return m_program; };
     void use() const;
 private:

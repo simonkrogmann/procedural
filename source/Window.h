@@ -13,6 +13,7 @@ public:
     ~Window();
 
     int init(std::string title);
+    void initGL();
     void setRenderer(std::unique_ptr<Renderer> renderer);
     Renderer * renderer();
     void loop();

@@ -77,7 +77,7 @@ void Program::use() const
     glUseProgram(m_program);
 }
 
-GLint Program::getUniformLocation(const char* uniformName) const
+GLint Program::getUniformLocation(const std::string& uniformName) const
 {
-    return glGetUniformLocation(m_program, uniformName);
+    return glGetUniformLocation(m_program, uniformName.c_str());
 }

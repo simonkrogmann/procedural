@@ -2,6 +2,18 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <glbinding/gl/gl.h>
+
+namespace
+{
+    using namespace gl;
+
+    void onResize(GLFWwindow*, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    }
+}
+
 
 Window::Window()
 : m_window{ nullptr }
@@ -28,6 +40,11 @@ int Window::init(std::string title)
     m_window = window;
 
     return 0;
+}
+
+void Window::initGL()
+{
+    glfwSetWindowSizeCallback(m_window, onResize);
 }
 
 Window::~Window()
