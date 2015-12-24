@@ -2,6 +2,7 @@
 #include <string>
 #include <glbinding/gl/gl.h>
 #include <vector>
+#include <map>
 
 
 using namespace gl;
@@ -28,6 +29,11 @@ public:
     void printCompilationError() const;
     GLuint get() const { return m_shader; }
 private:
+    void includeShader(const std::string& name, const std::string& source);
+    void compileShader(const std::string& source);
+    void deleteIncludes();
+
     std::string m_filename;
     GLuint m_shader;
+    std::map<std::string, std::string> m_includes;
 };
