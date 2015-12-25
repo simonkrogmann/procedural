@@ -1,92 +1,31 @@
 #include "Shader.h"
 
 #include <glbinding/gl/gl.h>
-#include <fstream>
-#include <sstream>
 #include <iostream>
-#include <cstring>
+
+#include "util.h"
 
 using namespace gl;
-
-namespace
-{
-    std::string loadFile(std::string filename)
-    {
-        std::ifstream sourceFile(filename);
-
-        std::stringstream sourceBuffer;
-        sourceBuffer << sourceFile.rdbuf();
-        return sourceBuffer.str();
-    }
-
-    template<typename T>
-    GLint glLength(T object) {
-        return static_cast<GLint>(object.size());
-    }
-
-    std::string toString(const GLubyte * glString)
-    {
-        return reinterpret_cast<char const *>(glString);
-    }
-
-    bool glExtensionSupported(std::string extension)
-    {
-        auto extensionsRaw = glGetString(GL_EXTENSIONS);
-        if (extensionsRaw == NULL)
-        {
-            return false;
-        }
-        std::string extensions = toString(glGetString(GL_EXTENSIONS));
-        return extensions.find(extension) != std::string::npos;
-    }
-
-    std::string glslVersion()
-    {
-        int major = 0;
-        int minor = 0;
-        glGetIntegerv(GL_MAJOR_VERSION, &major);
-        glGetIntegerv(GL_MINOR_VERSION, &minor);
-        const std::string glVersion = std::to_string(major) + std::to_string(minor);
-        const std::map<std::string, std::string> glslVersionMapping {
-            {"20", "110"},
-            {"21", "120"},
-            {"30", "130"},
-            {"31", "140"},
-            {"32", "150"},
-        };
-        if (glslVersionMapping.find(glVersion) != glslVersionMapping.end())
-        {
-            return glslVersionMapping.at(glVersion);
-        }
-        return glVersion + "0";
-    }
-
-    void replace(std::string& target, const std::string& old, const std::string& with)
-    {
-        const auto position = target.find(old);
-        target.replace(position, old.length(), with);
-    }
-}
 
 Shader Shader::vertex(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, loadFile(filename), GL_VERTEX_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER, includes);
 }
 Shader Shader::geometry(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, loadFile(filename), GL_GEOMETRY_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER, includes);
 }
 Shader Shader::fragment(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, loadFile(filename), GL_FRAGMENT_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER, includes);
 }
 Shader Shader::compute(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, loadFile(filename), GL_COMPUTE_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
 
 Shader::Shader(const std::string& name, const std::string& source,
@@ -96,12 +35,12 @@ Shader::Shader(const std::string& name, const std::string& source,
     const std::string includeLocation = "../source/shader/";
 
     auto shaderSource = source;
-    replace(shaderSource, "#version 140", "#version " + glslVersion());
+    util::replace(shaderSource, "#version 140", "#version " + util::glslVersion());
 
     // handle includes
     for (auto& include : includes)
     {
-        includeShader("/" + include, loadFile(includeLocation + include + ".glsl"));
+        includeShader("/" + include, util::loadFile(includeLocation + include + ".glsl"));
     }
 
     m_shader = glCreateShader(type);
@@ -117,27 +56,27 @@ Shader::Shader(const std::string& name, const std::string& source,
 void Shader::includeShader(const std::string& name, const std::string& source)
 {
     m_includes[name] = source;
-    if (glExtensionSupported("GL_ARB_shader_include"))
+    if (util::glExtensionSupported("GL_ARB_shader_include"))
     {
-        glNamedStringARB(GL_SHADER_INCLUDE_ARB, glLength(name), name.c_str(),
-            glLength(source), source.c_str());
+        glNamedStringARB(GL_SHADER_INCLUDE_ARB, util::glLength(name), name.c_str(),
+            util::glLength(source), source.c_str());
     }
 
 }
 
 void Shader::compileShader(const std::string& source)
 {
-    const auto ARBinclude = glExtensionSupported("GL_ARB_shader_include");
+    const auto ARBinclude = util::glExtensionSupported("GL_ARB_shader_include");
     auto uploadSource = source;
     if (!ARBinclude) {
         for (const auto& include : m_includes)
         {
             const auto directive = "#include \"" + include.first + "\"";
-            replace(uploadSource, directive, include.second);
+            util::replace(uploadSource, directive, include.second);
         }
     }
     const auto shaderCString = uploadSource.c_str();
-    const auto shaderLength = glLength(uploadSource);
+    const auto shaderLength = util::glLength(uploadSource);
     glShaderSource(m_shader, 1, &shaderCString, &shaderLength);
     if (ARBinclude)
     {
@@ -145,7 +84,7 @@ void Shader::compileShader(const std::string& source)
         for (const auto& include : m_includes) {
             includeCStrings.push_back(include.first.c_str());
         }
-        glCompileShaderIncludeARB(m_shader, glLength(includeCStrings),
+        glCompileShaderIncludeARB(m_shader, util::glLength(includeCStrings),
             includeCStrings.data(), nullptr);
     }
     else
@@ -156,11 +95,11 @@ void Shader::compileShader(const std::string& source)
 
 void Shader::deleteIncludes()
 {
-    if (glExtensionSupported("GL_ARB_shader_include"))
+    if (util::glExtensionSupported("GL_ARB_shader_include"))
     {
         for (const auto& include : m_includes)
         {
-            glDeleteNamedStringARB(glLength(include.first), include.first.c_str());
+            glDeleteNamedStringARB(util::glLength(include.first), include.first.c_str());
         }
     }
 }

@@ -14,7 +14,8 @@ set(sources
     Program.h
     Shader.cpp
     Shader.h
-    Group.h
+    util.cpp
+    util.h
 )
 
 add_executable(procedural ${sources})

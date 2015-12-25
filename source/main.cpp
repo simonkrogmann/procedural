@@ -4,11 +4,13 @@
 #include <map>
 #include <sstream>
 
-#include "Window.h"
-#include "ProceduralRenderer.h"
-
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
+
+#include "Window.h"
+#include "ProceduralRenderer.h"
+#include "util.h"
+
 
 using namespace gl;
 
@@ -23,12 +25,10 @@ std::map<std::string, std::string> parseArguments(int argc, char * argv[])
     std::map<std::string, std::string> options;
     for (auto& argument : arguments)
     {
-        const auto equalPosition = argument.find("=");
-        if (argument.substr(0, 2) == "--" && equalPosition != std::string::npos)
+        if (argument.substr(0, 2) == "--" && util::contains(argument, "="))
         {
-            const auto key = argument.substr(2, equalPosition - 2);
-            const auto value = argument.substr(equalPosition + 1);
-            options[key] = value;
+            auto split = util::split(argument.substr(2), "=");
+            options[split.first] = split.second;
         }
     }
     return options;
@@ -41,12 +41,12 @@ int main(int argc, char * argv[]) {
     if (options.find("gl") != options.end())
     {
         const auto version = options.at("gl");
-        const auto dotPosition = version.find(".");
-        if (dotPosition != std::string::npos)
+        if (util::contains(version, "."))
         {
+            auto numbers = util::split(version, ".");
             int major, minor;
-            std::istringstream(version.substr(0, dotPosition)) >> major;
-            std::istringstream(version.substr(dotPosition + 1)) >> minor;
+            std::istringstream(numbers.first) >> major;
+            std::istringstream(numbers.second) >> minor;
             w.requestGLVersion(major, minor);
         }
     }

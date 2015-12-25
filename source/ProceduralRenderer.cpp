@@ -3,7 +3,7 @@
 #include <glbinding/gl/gl.h>
 
 #include "Shader.h"
-#include "Group.h"
+#include "util.h"
 
 using namespace gl;
 
@@ -30,7 +30,7 @@ void ProceduralRenderer::init()
 void ProceduralRenderer::recompile()
 {
     const std::string shaderLocation = "../source/shader/";
-    Group<Shader> shaders (
+    util::Group<Shader> shaders (
         Shader::vertex(shaderLocation + "screenalignedquad.vert"),
         Shader::fragment(shaderLocation + "procedural.frag", m_includes)
     );
@@ -45,8 +45,7 @@ void ProceduralRenderer::render()
 
     m_program->use();
     auto loc = m_program->getUniformLocation("windowSize");
-    GLint data[4];
-    glGetIntegerv(GL_VIEWPORT, data);
-    glUniform2i(loc, data[2], data[3]);
+    auto size = util::windowSize();
+    glUniform2i(loc, size.x, size.y);
     m_screen.draw();
 }

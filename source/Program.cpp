@@ -7,11 +7,11 @@
 #include <cstring>
 
 #include "Shader.h"
-#include "Group.h"
+#include "util.h"
 
 using namespace gl;
 
-Program::Program(const Group<Shader>& shaders)
+Program::Program(const util::Group<Shader>& shaders)
 {
     m_program = linkShaders(shaders);
 
@@ -34,7 +34,7 @@ Program::~Program()
     glDeleteProgram(m_program);
 }
 
-GLuint Program::linkShaders(const Group<Shader>& shaders)
+GLuint Program::linkShaders(const util::Group<Shader>& shaders)
 {
     GLuint linkProgram = glCreateProgram();
 
