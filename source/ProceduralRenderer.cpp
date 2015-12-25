@@ -29,9 +29,10 @@ void ProceduralRenderer::init()
 
 void ProceduralRenderer::recompile()
 {
+    const std::string shaderLocation = "../source/shader/";
     Group<Shader> shaders (
-        Shader::vertex("screenalignedquad.vert"),
-        Shader::fragment("procedural.frag", m_includes)
+        Shader::vertex(shaderLocation + "screenalignedquad.vert"),
+        Shader::fragment(shaderLocation + "procedural.frag", m_includes)
     );
 
     m_program = std::make_unique<Program>(shaders);

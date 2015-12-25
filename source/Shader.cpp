@@ -10,7 +10,7 @@ using namespace gl;
 
 namespace
 {
-    std::string load_file(std::string filename)
+    std::string loadFile(std::string filename)
     {
         std::ifstream sourceFile(filename);
 
@@ -71,37 +71,37 @@ namespace
 Shader Shader::vertex(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_VERTEX_SHADER, includes);
+    return Shader(filename, loadFile(filename), GL_VERTEX_SHADER, includes);
 }
 Shader Shader::geometry(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_GEOMETRY_SHADER, includes);
+    return Shader(filename, loadFile(filename), GL_GEOMETRY_SHADER, includes);
 }
 Shader Shader::fragment(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_FRAGMENT_SHADER, includes);
+    return Shader(filename, loadFile(filename), GL_FRAGMENT_SHADER, includes);
 }
 Shader Shader::compute(const std::string& filename,
         const std::vector<std::string>& includes)
 {
-    return Shader(filename, GL_COMPUTE_SHADER, includes);
+    return Shader(filename, loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
 
-Shader::Shader(const std::string& filename, const GLenum& type,
-        const std::vector<std::string>& includes)
-: m_filename{filename}
+Shader::Shader(const std::string& name, const std::string& source,
+    const GLenum& type, const std::vector<std::string>& includes)
+: m_name{name}
 {
-    const std::string shaderLocation = "../source/shader/";
+    const std::string includeLocation = "../source/shader/";
 
-    auto shaderSource = load_file(shaderLocation + filename);
+    auto shaderSource = source;
     replace(shaderSource, "#version 140", "#version " + glslVersion());
 
     // handle includes
     for (auto& include : includes)
     {
-        includeShader("/" + include, load_file(shaderLocation + include + ".glsl"));
+        includeShader("/" + include, loadFile(includeLocation + include + ".glsl"));
     }
 
     m_shader = glCreateShader(type);
@@ -166,7 +166,7 @@ void Shader::deleteIncludes()
 }
 
 Shader::Shader(Shader&& old)
-: m_filename{old.m_filename}
+: m_name{old.m_name}
 , m_shader{old.m_shader}
 {
     old.m_shader = 0;
@@ -186,7 +186,7 @@ bool Shader::isCompiled() const
 
 void Shader::printCompilationError() const
 {
-    std::cout << "Compilation failed for " << m_filename << ":" << std::endl;
+    std::cout << "Compilation failed for " << m_name << ":" << std::endl;
     GLint length;
     glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &length);
     char * infoLog = new char[length + 1];

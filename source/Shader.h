@@ -21,8 +21,8 @@ public:
     Shader();
     Shader(Shader&& old);
     Shader(const Shader&) = delete;
-    Shader(const std::string& filename, const GLenum& type,
-        const std::vector<std::string>& includes = {});
+    Shader(const std::string& name, const std::string& source,
+        const GLenum& type, const std::vector<std::string>& includes = {});
     ~Shader();
 
     bool isCompiled() const;
@@ -33,7 +33,7 @@ private:
     void compileShader(const std::string& source);
     void deleteIncludes();
 
-    std::string m_filename;
+    std::string m_name;
     GLuint m_shader;
     std::map<std::string, std::string> m_includes;
 };
