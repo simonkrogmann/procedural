@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 #include "Window.h"
 #include "ProceduralRenderer.h"
@@ -16,7 +18,8 @@ int main() {
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     w.initGL();
 
-    auto renderer = std::make_unique<ProceduralRenderer>();
+    std::vector<std::string> includes {"gradient", "chess"};
+    auto renderer = std::make_unique<ProceduralRenderer>(includes);
 
     w.setRenderer(std::move(renderer));
     w.loop();

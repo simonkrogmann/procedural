@@ -16,6 +16,7 @@ public:
     void initGL();
     void setRenderer(std::unique_ptr<Renderer> renderer);
     Renderer * renderer();
+    void keyPress(int key, int action, int mods);
     void loop();
 private:
     GLFWwindow * m_window;

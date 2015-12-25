@@ -3,15 +3,24 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glbinding/gl/gl.h>
+#include <map>
 
 namespace
 {
     using namespace gl;
 
+    std::map<GLFWwindow*, Window*> windows;
+
     void onResize(GLFWwindow*, int width, int height)
     {
         glViewport(0, 0, width, height);
     }
+
+    void onKeyPress(GLFWwindow* window, int key, int, int action, int mods)
+    {
+        windows[window]->keyPress(key, action, mods);
+    }
+
 }
 
 
@@ -19,6 +28,15 @@ Window::Window()
 : m_window{ nullptr }
 {
 
+}
+
+Window::~Window()
+{
+    if (m_window != nullptr)
+    {
+        glfwTerminate();
+        windows.erase(m_window);
+    }
 }
 
 int Window::init(std::string title)
@@ -39,6 +57,7 @@ int Window::init(std::string title)
 
     glfwMakeContextCurrent(window);
     m_window = window;
+    windows[m_window] = this;
 
     return 0;
 }
@@ -46,14 +65,7 @@ int Window::init(std::string title)
 void Window::initGL()
 {
     glfwSetWindowSizeCallback(m_window, onResize);
-}
-
-Window::~Window()
-{
-    if (m_window != nullptr)
-    {
-        glfwTerminate();
-    }
+    glfwSetKeyCallback(m_window, onKeyPress);
 }
 
 void Window::setRenderer(std::unique_ptr<Renderer> renderer)
@@ -65,6 +77,14 @@ void Window::setRenderer(std::unique_ptr<Renderer> renderer)
 Renderer * Window::renderer()
 {
     return m_renderer.get();
+}
+
+void Window::keyPress(int key, int action, int mods)
+{
+    if (key == 'R' && action == GLFW_PRESS && mods == 0)
+    {
+        m_renderer->recompile();
+    }
 }
 
 void Window::loop()
