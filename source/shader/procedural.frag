@@ -1,8 +1,8 @@
-#version 450
+#version 330
 #extension GL_ARB_shading_language_include : enable
 
 layout(location = 0) out vec4 color;
-layout(location = 0) in vec2 position;
+in vec2 position;
 
 uniform ivec2 windowSize;
 

@@ -26,6 +26,11 @@ namespace
 
     bool glExtensionSupported(std::string extension)
     {
+        auto extensionsRaw = glGetString(GL_EXTENSIONS);
+        if (extensionsRaw == NULL)
+        {
+            return false;
+        }
         std::string extensions = reinterpret_cast<char const *>(glGetString(GL_EXTENSIONS));
         return extensions.find(extension) != std::string::npos;
     }
