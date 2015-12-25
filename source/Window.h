@@ -12,8 +12,9 @@ public:
     Window();
     ~Window();
 
+    void requestGLVersion(int major, int minor);
     int init(std::string title);
-    void initGL();
+    void initAfterGL();
     void setRenderer(std::unique_ptr<Renderer> renderer);
     Renderer * renderer();
     void keyPress(int key, int action, int mods);

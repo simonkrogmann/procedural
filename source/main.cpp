@@ -16,7 +16,7 @@ int main() {
 
     glbinding::Binding::initialize();
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
-    w.initGL();
+    w.initAfterGL();
 
     std::vector<std::string> includes {"gradient", "chess"};
     auto renderer = std::make_unique<ProceduralRenderer>(includes);

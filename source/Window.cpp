@@ -27,7 +27,7 @@ namespace
 Window::Window()
 : m_window{ nullptr }
 {
-
+    glfwInit();
 }
 
 Window::~Window()
@@ -39,14 +39,15 @@ Window::~Window()
     }
 }
 
+void Window::requestGLVersion(int major, int minor)
+{
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
+}
+
 int Window::init(std::string title)
 {
-    if (!glfwInit())
-    {
-        return -1;
-    }
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     auto window = glfwCreateWindow(640, 480, title.c_str(), NULL, NULL);
 
     if (!window)
@@ -62,7 +63,7 @@ int Window::init(std::string title)
     return 0;
 }
 
-void Window::initGL()
+void Window::initAfterGL()
 {
     glfwSetWindowSizeCallback(m_window, onResize);
     glfwSetKeyCallback(m_window, onKeyPress);
