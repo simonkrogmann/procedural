@@ -29,6 +29,24 @@ Shader Shader::compute(const std::string& filename,
     return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
 
+bool Shader::ARBIncludeSupported()
+{
+    static bool checked = false;
+    static bool supported = false;
+    if (!checked)
+    {
+        supported = util::glExtensionSupported("GL_ARB_shader_include");
+        checked = true;
+        if (!supported)
+        {
+            std::cout << "Warning: GL_ARB_shader_include is not supported. "
+                << "The behaviour will be emulated instead." <<  std::endl;
+        }
+    }
+    return supported;
+
+}
+
 Shader::Shader(const std::string& name, const std::string& source,
     const GLenum& type, const std::vector<std::string>& includes)
 : m_name {name}
@@ -58,7 +76,7 @@ Shader::Shader(const std::string& name, const std::string& source,
 void Shader::includeShader(const std::string& name, const std::string& source)
 {
     m_includes[name] = source;
-    if (util::glExtensionSupported("GL_ARB_shader_include"))
+    if (ARBIncludeSupported())
     {
         glNamedStringARB(GL_SHADER_INCLUDE_ARB, util::glLength(name), name.c_str(),
             util::glLength(source), source.c_str());
@@ -68,9 +86,8 @@ void Shader::includeShader(const std::string& name, const std::string& source)
 
 void Shader::compileShader(const std::string& source)
 {
-    const auto ARBinclude = util::glExtensionSupported("GL_ARB_shader_include");
     auto uploadSource = source;
-    if (!ARBinclude) {
+    if (!ARBIncludeSupported()) {
         for (const auto& include : m_includes)
         {
             const auto directive = "#include \"" + include.first + "\"";
@@ -80,7 +97,7 @@ void Shader::compileShader(const std::string& source)
     const auto shaderCString = uploadSource.c_str();
     const auto shaderLength = util::glLength(uploadSource);
     glShaderSource(m_shader, 1, &shaderCString, &shaderLength);
-    if (ARBinclude)
+    if (ARBIncludeSupported())
     {
         std::vector<const char*> includeCStrings;
         for (const auto& include : m_includes) {
@@ -97,7 +114,7 @@ void Shader::compileShader(const std::string& source)
 
 void Shader::deleteIncludes()
 {
-    if (util::glExtensionSupported("GL_ARB_shader_include"))
+    if (ARBIncludeSupported())
     {
         for (const auto& include : m_includes)
         {

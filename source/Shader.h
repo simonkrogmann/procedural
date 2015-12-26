@@ -11,6 +11,7 @@ using namespace gl;
 class Shader
 {
 public:
+    static bool ARBIncludeSupported();
     static Shader vertex(const std::string& filename,
         const std::vector<std::string>& includes = {});
     static Shader geometry(const std::string& filename,
