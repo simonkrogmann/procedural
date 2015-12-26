@@ -7,9 +7,9 @@ in vec2 position;
 
 uniform ivec2 windowSize;
 
-#include "/gradient"
-#include "/chess"
-
+// The symbols below will be auto-replaced
+#textures
+#includes
 
 void main() {
     color = vec4(chessSquare(position, vec2(windowSize), 8), 1.0);

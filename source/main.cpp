@@ -43,7 +43,7 @@ int main(int argc, char * argv[]) {
         const auto version = options.at("gl");
         if (util::contains(version, "."))
         {
-            auto numbers = util::split(version, ".");
+            const auto numbers = util::split(version, ".");
             int major, minor;
             std::istringstream(numbers.first) >> major;
             std::istringstream(numbers.second) >> minor;

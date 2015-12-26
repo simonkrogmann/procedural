@@ -29,6 +29,17 @@ Shader Shader::compute(const std::string& filename,
     return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
 
+std::string Shader::includeString(std::string name)
+{
+    return "#include \"/" + name + "\"\n";
+}
+
+std::string Shader::textureString(std::string name)
+{
+    return "uniform sampler2D " + name + ";\n";
+}
+
+
 bool Shader::ARBIncludeSupported()
 {
     static bool checked = false;
