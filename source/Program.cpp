@@ -1,10 +1,11 @@
 #include "Program.h"
 
-#include <glbinding/gl/gl.h>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <cstring>
+
+#include <glbinding/gl/gl.h>
 
 #include "Shader.h"
 #include "util.h"
@@ -12,6 +13,7 @@
 using namespace gl;
 
 Program::Program(const util::Group<Shader>& shaders)
+: m_program {0}
 {
     m_program = linkShaders(shaders);
 

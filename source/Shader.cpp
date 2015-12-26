@@ -1,7 +1,8 @@
 #include "Shader.h"
 
-#include <glbinding/gl/gl.h>
 #include <iostream>
+
+#include <glbinding/gl/gl.h>
 
 #include "util.h"
 
@@ -30,7 +31,8 @@ Shader Shader::compute(const std::string& filename,
 
 Shader::Shader(const std::string& name, const std::string& source,
     const GLenum& type, const std::vector<std::string>& includes)
-: m_name{name}
+: m_name {name}
+, m_shader {0}
 {
     const std::string includeLocation = "../source/shader/";
 

@@ -1,9 +1,10 @@
 #include "Window.h"
 
+#include <map>
+
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glbinding/gl/gl.h>
-#include <map>
 
 namespace
 {
@@ -84,7 +85,7 @@ void Window::keyPress(int key, int action, int mods)
 {
     if (key == 'R' && action == GLFW_PRESS && mods == 0)
     {
-        m_renderer->recompile();
+        m_renderer->reload();
     }
 }
 

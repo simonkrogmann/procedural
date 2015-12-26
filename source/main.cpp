@@ -4,8 +4,8 @@
 #include <map>
 #include <sstream>
 
-#include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
+#include <glbinding/gl/gl.h>
 
 #include "Window.h"
 #include "ProceduralRenderer.h"
@@ -52,12 +52,13 @@ int main(int argc, char * argv[]) {
     }
     w.init("procedural");
 
-    glbinding::Binding::initialize();
+    glbinding::Binding::initialize(false);
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     w.initAfterGL();
 
     std::vector<std::string> includes {"gradient", "chess"};
-    auto renderer = std::make_unique<ProceduralRenderer>(includes);
+    std::map<std::string, std::string> textures { };
+    auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
 
     w.setRenderer(std::move(renderer));
     w.loop();

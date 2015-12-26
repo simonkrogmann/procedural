@@ -1,5 +1,7 @@
 #pragma once
+
 #include <string>
+
 #include <glbinding/gl/gl.h>
 
 using namespace gl;

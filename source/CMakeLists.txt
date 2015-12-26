@@ -14,11 +14,17 @@ set(sources
     Program.h
     Shader.cpp
     Shader.h
+    Texture.cpp
+    Texture.h
     util.cpp
     util.h
+    convert.cpp
+    convert.h
 )
 
 add_executable(procedural ${sources})
+
+qt5_use_modules(procedural OpenGL)
 
 target_link_libraries(procedural ${GLFW_LIBRARIES} ${GLBINDING_LIBRARIES})
 

@@ -1,9 +1,10 @@
 #pragma once
+
 #include <string>
-#include <glbinding/gl/gl.h>
 #include <vector>
 #include <map>
 
+#include <glbinding/gl/gl.h>
 
 using namespace gl;
 
@@ -18,7 +19,6 @@ public:
         const std::vector<std::string>& includes = {});
     static Shader compute(const std::string& filename,
         const std::vector<std::string>& includes = {});
-    Shader();
     Shader(Shader&& old);
     Shader(const Shader&) = delete;
     Shader(const std::string& name, const std::string& source,

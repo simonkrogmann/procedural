@@ -36,6 +36,7 @@ namespace util
     bool glExtensionSupported(std::string extension)
     {
         auto extensionsRaw = glGetString(GL_EXTENSIONS);
+        glGetError();
         if (extensionsRaw == NULL)
         {
             return false;
