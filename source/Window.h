@@ -24,5 +24,5 @@ public:
 private:
     GLFWwindow * m_window;
     std::unique_ptr<Renderer> m_renderer;
-    util::Viewport m_viewport;
+    util::viewport::Viewport m_viewport;
 };

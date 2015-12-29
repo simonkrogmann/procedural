@@ -10,13 +10,31 @@ namespace util
 {
     using namespace gl;
 
-    struct Viewport {
-        GLint x, y, width, height;
+    class StateKeeper {
+    public:
+        StateKeeper(const std::function<void()>& restoreFunction)
+            : m_restoreFunction {restoreFunction} {}
+        StateKeeper(const StateKeeper&) = delete;
+        StateKeeper(const StateKeeper&&) {}
+        ~StateKeeper() { m_restoreFunction(); }
+    private:
+        std::function<void()> m_restoreFunction;
     };
 
-    Viewport viewport();
+    namespace viewport
+    {
+        struct Viewport {
+            GLint x, y, width, height;
+        };
 
-    void setViewport(Viewport);
+        Viewport get();
+
+        void set(Viewport);
+
+        StateKeeper use(Viewport resolution);
+    }
+
+    GLint glGetInteger(GLenum symbol);
 
     template<typename T>
     GLint glLength(T object) {

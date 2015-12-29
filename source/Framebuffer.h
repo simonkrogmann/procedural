@@ -4,6 +4,8 @@
 
 #include <glbinding/gl/gl.h>
 
+#include "util.h"
+
 using namespace gl;
 
 class Framebuffer
@@ -14,7 +16,7 @@ public:
     Framebuffer(const Framebuffer&) = delete;
     ~Framebuffer();
 
-    void bind() const;
+    util::StateKeeper use(GLenum mode = GL_FRAMEBUFFER) const;
     void resize(const unsigned int& m_width, const unsigned int& height);
     void save(std::string filename);
 

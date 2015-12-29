@@ -65,7 +65,7 @@ void ProceduralRenderer::reload()
     }
 }
 
-void ProceduralRenderer::render(const util::Viewport& viewport)
+void ProceduralRenderer::render(const util::viewport::Viewport& viewport)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

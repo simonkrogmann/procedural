@@ -26,7 +26,7 @@ Framebuffer::Framebuffer(const unsigned int& width, const unsigned int& height)
 
     resize(width, height);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+    auto keeper = use();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_color, 0);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depth);
 
@@ -35,14 +35,13 @@ Framebuffer::Framebuffer(const unsigned int& width, const unsigned int& height)
     {
         std::cout << "Framebuffer is incomplete: " << framebufferStatus << std::endl;
     }
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 Framebuffer::~Framebuffer()
 {
-    glDeleteFramebuffers(1,&m_framebuffer);
-    glDeleteRenderbuffers(1,&m_color);
-    glDeleteRenderbuffers(1,&m_depth);
+    glDeleteFramebuffers(1, &m_framebuffer);
+    glDeleteRenderbuffers(1, &m_color);
+    glDeleteRenderbuffers(1, &m_depth);
 }
 
 Framebuffer::Framebuffer(Framebuffer&& old)
@@ -52,18 +51,19 @@ Framebuffer::Framebuffer(Framebuffer&& old)
 }
 
 
-void Framebuffer::bind() const
+util::StateKeeper Framebuffer::use(GLenum mode) const
 {
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_framebuffer);
+    auto old = util::glGetInteger(GL_FRAMEBUFFER_BINDING);
+    glBindFramebuffer(mode, m_framebuffer);
+    return { [=]() { glBindFramebuffer(mode, old); } };
 }
 
 void Framebuffer::save(std::string filename)
 {
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, m_framebuffer);
+    auto keeper = use(GL_READ_FRAMEBUFFER);
     std::vector<unsigned char> imageData (m_width * m_height * 4);
     glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, &imageData[0]);
     saveImage(imageData, m_width, m_height, filename);
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 }
 
 void Framebuffer::resize(const unsigned int& width, const unsigned int& height)

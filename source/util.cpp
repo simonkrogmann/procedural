@@ -13,17 +13,26 @@ namespace util
 {
     using namespace gl;
 
-    Viewport viewport()
+    namespace viewport
     {
-        GLint data[4];
-        glGetIntegerv(GL_VIEWPORT, data);
+        Viewport get()
+        {
+            GLint data[4];
+            glGetIntegerv(GL_VIEWPORT, data);
 
-        return {data[0], data[1], data[2], data[3]};
-    }
+            return {data[0], data[1], data[2], data[3]};
+        }
 
-    void setViewport(Viewport data)
-    {
-        glViewport(data.x, data.y, data.width, data.height);
+        void set(Viewport data)
+        {
+            glViewport(data.x, data.y, data.width, data.height);
+        }
+
+        StateKeeper use(Viewport resolution) {
+            auto old = get();
+            set(resolution);
+            return { [=]() { set(old); } };
+        }
     }
 
     void glCheckErrorsIn(unsigned int line, std::string file)
@@ -38,6 +47,13 @@ namespace util
     void glContextInfo()
     {
         std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    }
+
+    GLint glGetInteger(GLenum symbol)
+    {
+        GLint value;
+        glGetIntegerv(symbol, &value);
+        return value;
     }
 
     std::string loadFile(std::string filename)

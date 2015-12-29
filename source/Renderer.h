@@ -8,7 +8,9 @@ using namespace gl;
 
 namespace util
 {
-    struct Viewport;
+    namespace viewport {
+        struct Viewport;
+    }
 }
 
 class Renderer {
@@ -17,11 +19,11 @@ public:
     virtual ~Renderer();
 
     virtual void init() = 0;
-    virtual void render(const util::Viewport& viewport) = 0;
+    virtual void render(const util::viewport::Viewport& viewport) = 0;
     virtual void reload() = 0;
 
-    void renderOffscreen(const Framebuffer& fbo, const util::Viewport& resolution);
-    void renderToFile(const util::Viewport& resolution);
+    void renderOffscreen(const Framebuffer& fbo, const util::viewport::Viewport& resolution);
+    void renderToFile(const util::viewport::Viewport& resolution);
 protected:
     Framebuffer m_fileFBO;
 };

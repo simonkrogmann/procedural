@@ -50,7 +50,7 @@ void Window::requestGLVersion(int major, int minor)
 int Window::init(std::string title)
 {
     auto window = glfwCreateWindow(640, 480, title.c_str(), NULL, NULL);
-    m_viewport = util::Viewport {0, 0, 640, 480};
+    m_viewport = util::viewport::Viewport {0, 0, 640, 480};
 
     if (!window)
     {
@@ -96,8 +96,8 @@ void Window::keyPress(int key, int action, int mods)
 
 void Window::resize(int width, int height)
 {
-    m_viewport = util::Viewport {0, 0, width, height};
-    util::setViewport(m_viewport);
+    m_viewport = util::viewport::Viewport {0, 0, width, height};
+    util::viewport::set(m_viewport);
 }
 
 void Window::loop()

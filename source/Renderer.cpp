@@ -17,22 +17,17 @@ Renderer::~Renderer()
 
 }
 
-void Renderer::renderToFile(const util::Viewport& resolution)
+void Renderer::renderToFile(const util::viewport::Viewport& resolution)
 {
-    const int width = resolution.width, height = resolution.height;
-    m_fileFBO.resize(width, height);
+    m_fileFBO.resize(resolution.width, resolution.height);
     renderOffscreen(m_fileFBO, resolution);
     m_fileFBO.save("test.png");
 }
 
-void Renderer::renderOffscreen(const Framebuffer& fbo, const util::Viewport& resolution)
+void Renderer::renderOffscreen(const Framebuffer& fbo, const util::viewport::Viewport& resolution)
 {
-    auto old = util::viewport();
+    auto keeper = util::viewport::use(resolution);
+    auto keeper2 = fbo.use(GL_DRAW_FRAMEBUFFER);
 
-    fbo.bind();
-    util::setViewport(resolution);
     render(resolution);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-    util::setViewport(old);
 }
