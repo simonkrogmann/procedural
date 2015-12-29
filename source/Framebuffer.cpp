@@ -12,6 +12,8 @@ Framebuffer::Framebuffer(const unsigned int& width, const unsigned int& height)
 : m_framebuffer {0}
 , m_color {0}
 , m_depth {0}
+, m_width {0}
+, m_height {0}
 {
     glGenFramebuffers(1, &m_framebuffer);
     glGenTextures(1, &m_color);
