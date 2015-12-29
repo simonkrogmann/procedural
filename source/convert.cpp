@@ -15,6 +15,8 @@ void saveImage(const std::vector<unsigned char>& data,
     const int& width, const int& height, const std::string& filename)
 {
     QImage image { data.data(), width, height, QImage::Format_ARGB32 };
-    std::cout << image.save(QString::fromStdString(filename)) << std::endl;
-    std::cout << "Saved image " << filename << std::endl;
+    if (image.save(QString::fromStdString(filename)))
+    {
+        std::cout << "Saved image " << filename << std::endl;
+    }
 }

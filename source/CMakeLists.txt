@@ -16,6 +16,8 @@ set(sources
     Shader.h
     Texture.cpp
     Texture.h
+    Framebuffer.cpp
+    Framebuffer.h
     util.cpp
     util.h
     convert.cpp

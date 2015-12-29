@@ -88,6 +88,10 @@ void Window::keyPress(int key, int action, int mods)
     {
         m_renderer->reload();
     }
+    else if (key == 'S' && action == GLFW_PRESS && mods == 0)
+    {
+        m_renderer->renderToFile({0, 0, 3840, 2160});
+    }
 }
 
 void Window::resize(int width, int height)
