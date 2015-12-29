@@ -4,6 +4,8 @@
 #include <vector>
 
 #include <glbinding/gl/gl.h>
+#include <QImage>
+
 #define glCheckErrors() glCheckErrorsIn(__LINE__, __FILE__)
 
 namespace util
@@ -46,6 +48,10 @@ namespace util
 
     bool glExtensionSupported(std::string extension);
     std::string glslVersion();
+
+    QImage loadImage(const std::string& filename);
+    void saveImage(const std::vector<unsigned char>& data,
+        const int& width, const int& height, const std::string& filename);
 
     std::string loadFile(std::string filename);
     std::string toString(const GLubyte * glString);

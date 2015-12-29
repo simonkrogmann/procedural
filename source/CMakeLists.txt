@@ -24,8 +24,7 @@ set(sources
 
     util.cpp
     util.h
-    convert.cpp
-    convert.h
+    util_convert.cpp
 )
 
 add_executable(procedural ${sources})

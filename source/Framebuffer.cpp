@@ -4,7 +4,7 @@
 
 #include <glbinding/gl/gl.h>
 
-#include "convert.h"
+#include "util.h"
 
 using namespace gl;
 
@@ -65,7 +65,7 @@ void Framebuffer::save(std::string filename)
     auto keeper = use(GL_READ_FRAMEBUFFER);
     std::vector<unsigned char> imageData (m_width * m_height * 4);
     glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, &imageData[0]);
-    saveImage(imageData, m_width, m_height, filename);
+    util::saveImage(imageData, m_width, m_height, filename);
 }
 
 void Framebuffer::resize(const unsigned int& width, const unsigned int& height)
