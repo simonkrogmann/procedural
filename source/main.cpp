@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
@@ -53,7 +52,7 @@ int main(int argc, char * argv[]) {
     w.init("procedural");
 
     glbinding::Binding::initialize(false);
-    std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+    util::glContextInfo();
     w.initAfterGL();
 
     std::vector<std::string> includes {"gradient", "chess"};

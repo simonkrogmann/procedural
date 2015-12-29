@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Renderer.h"
+#include "util.h"
 
 struct GLFWwindow;
 
@@ -18,8 +19,10 @@ public:
     void setRenderer(std::unique_ptr<Renderer> renderer);
     Renderer * renderer();
     void keyPress(int key, int action, int mods);
+    void resize(int width, int height);
     void loop();
 private:
     GLFWwindow * m_window;
     std::unique_ptr<Renderer> m_renderer;
+    util::Viewport m_viewport;
 };

@@ -17,7 +17,7 @@ public:
     virtual ~ProceduralRenderer();
 
     virtual void init() override;
-    virtual void render() override;
+    virtual void render(const util::Viewport& viewport) override;
     virtual void reload() override;
 
 private:

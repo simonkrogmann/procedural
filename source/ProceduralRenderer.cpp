@@ -65,14 +65,12 @@ void ProceduralRenderer::reload()
     }
 }
 
-
-void ProceduralRenderer::render()
+void ProceduralRenderer::render(const util::Viewport& viewport)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_program->use();
     auto loc = m_program->getUniformLocation("windowSize");
-    auto size = util::windowSize();
-    glUniform2i(loc, size.x, size.y);
+    glUniform2i(loc, viewport.width, viewport.height);
     m_screen.draw();
 }

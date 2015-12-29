@@ -4,21 +4,27 @@
 #include <vector>
 
 #include <glbinding/gl/gl.h>
+#define glCheckErrors() glCheckErrorsIn(__LINE__, __FILE__)
 
 namespace util
 {
     using namespace gl;
 
-    struct Size {
-        GLint x, y;
+    struct Viewport {
+        GLint x, y, width, height;
     };
 
-    Size windowSize();
+    Viewport viewport();
+
+    void setViewport(Viewport);
 
     template<typename T>
     GLint glLength(T object) {
         return static_cast<GLint>(object.size());
     }
+
+    void glContextInfo();
+    void glCheckErrorsIn(unsigned int line, std::string file);
 
     bool glExtensionSupported(std::string extension);
     std::string glslVersion();

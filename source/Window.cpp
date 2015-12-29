@@ -12,9 +12,9 @@ namespace
 
     std::map<GLFWwindow*, Window*> windows;
 
-    void onResize(GLFWwindow*, int width, int height)
+    void onResize(GLFWwindow* window, int width, int height)
     {
-        glViewport(0, 0, width, height);
+        windows[window]->resize(width, height);
     }
 
     void onKeyPress(GLFWwindow* window, int key, int, int action, int mods)
@@ -50,6 +50,7 @@ void Window::requestGLVersion(int major, int minor)
 int Window::init(std::string title)
 {
     auto window = glfwCreateWindow(640, 480, title.c_str(), NULL, NULL);
+    m_viewport = util::Viewport {0, 0, 640, 480};
 
     if (!window)
     {
@@ -89,11 +90,17 @@ void Window::keyPress(int key, int action, int mods)
     }
 }
 
+void Window::resize(int width, int height)
+{
+    m_viewport = util::Viewport {0, 0, width, height};
+    util::setViewport(m_viewport);
+}
+
 void Window::loop()
 {
     while (!glfwWindowShouldClose(m_window))
     {
-        m_renderer->render();
+        m_renderer->render(m_viewport);
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();

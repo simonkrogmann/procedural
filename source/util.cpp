@@ -7,16 +7,37 @@
 #include <map>
 
 #include <glbinding/gl/gl.h>
+#include <iostream>
 
 namespace util
 {
     using namespace gl;
 
-    Size windowSize()
+    Viewport viewport()
     {
         GLint data[4];
         glGetIntegerv(GL_VIEWPORT, data);
-        return {data[2], data[3]};
+
+        return {data[0], data[1], data[2], data[3]};
+    }
+
+    void setViewport(Viewport data)
+    {
+        glViewport(data.x, data.y, data.width, data.height);
+    }
+
+    void glCheckErrorsIn(unsigned int line, std::string file)
+    {
+        auto error = glGetError();
+        if (error != GL_NONE)
+        {
+            std::cout << error << " before line " << line << " in " << file << std::endl;
+        }
+    }
+
+    void glContextInfo()
+    {
+        std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
     }
 
     std::string loadFile(std::string filename)
@@ -36,9 +57,9 @@ namespace util
     bool glExtensionSupported(std::string extension)
     {
         auto extensionsRaw = glGetString(GL_EXTENSIONS);
-        glGetError();
         if (extensionsRaw == NULL)
         {
+            glGetError();
             return false;
         }
         std::string extensions = toString(glGetString(GL_EXTENSIONS));

@@ -34,7 +34,7 @@ Texture::Texture(Texture&& old)
 
 void Texture::load()
 {
-    auto glImage = convertToGL(m_filename);
+    auto glImage = loadImage(m_filename);
     bind();
     glTexImage2D(GL_TEXTURE_2D, 0, (GLint) GL_RGBA8, glImage.width(),
         glImage.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, glImage.constBits());
