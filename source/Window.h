@@ -20,9 +20,11 @@ public:
     Renderer * renderer();
     void keyPress(int key, int action, int mods);
     void resize(int width, int height);
+    void setFileResolution(const int& width, const int& height);
     void loop();
 private:
     GLFWwindow * m_window;
     std::unique_ptr<Renderer> m_renderer;
     util::viewport::Viewport m_viewport;
+    util::viewport::Viewport m_fileResolution;
 };

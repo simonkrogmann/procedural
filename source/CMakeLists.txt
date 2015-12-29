@@ -2,10 +2,13 @@ set(sources
     main.cpp
     Window.cpp
     Window.h
+    Config.cpp
+    Config.h
     Renderer.cpp
     Renderer.h
     ProceduralRenderer.cpp
     ProceduralRenderer.h
+
     Drawable.cpp
     Drawable.h
     ScreenAlignedQuad.cpp
@@ -18,6 +21,7 @@ set(sources
     Texture.h
     Framebuffer.cpp
     Framebuffer.h
+
     util.cpp
     util.h
     convert.cpp

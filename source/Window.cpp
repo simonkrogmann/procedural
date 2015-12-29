@@ -28,6 +28,7 @@ namespace
 Window::Window()
 : m_window{ nullptr }
 {
+    setFileResolution(1920, 1080);
     glfwInit();
 }
 
@@ -77,6 +78,11 @@ void Window::setRenderer(std::unique_ptr<Renderer> renderer)
     m_renderer->init();
 }
 
+void Window::setFileResolution(const int& width, const int& height)
+{
+    m_fileResolution = {0, 0, width, height};
+}
+
 Renderer * Window::renderer()
 {
     return m_renderer.get();
@@ -90,13 +96,13 @@ void Window::keyPress(int key, int action, int mods)
     }
     else if (key == 'S' && action == GLFW_PRESS && mods == 0)
     {
-        m_renderer->renderToFile({0, 0, 3840, 2160});
+        m_renderer->renderToFile(m_fileResolution);
     }
 }
 
 void Window::resize(int width, int height)
 {
-    m_viewport = util::viewport::Viewport {0, 0, width, height};
+    m_viewport = {0, 0, width, height};
     util::viewport::set(m_viewport);
 }
 

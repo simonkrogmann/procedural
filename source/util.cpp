@@ -5,9 +5,10 @@
 #include <sstream>
 #include <cstring>
 #include <map>
+#include <cassert>
+#include <iostream>
 
 #include <glbinding/gl/gl.h>
-#include <iostream>
 
 namespace util
 {
@@ -112,15 +113,20 @@ namespace util
     std::pair<std::string, std::string> split(const std::string& string, const std::string& at)
     {
         const auto position = string.find(at);
-        if (position != std::string::npos)
-        {
-            return {string.substr(0, position), string.substr(position + at.length())};
-        }
-        return {"", ""};
+        assert(position != std::string::npos);
+        return {string.substr(0, position), string.substr(position + at.length())};
     }
     bool contains(const std::string& string, const std::string& substring)
     {
         return string.find(substring) != std::string::npos;
+    }
 
+    std::pair<int, int> splitNumbers(const std::string& string, const std::string& at)
+    {
+        const auto numbers = util::split(string, at);
+        int first, second;
+        std::istringstream(numbers.first) >> first;
+        std::istringstream(numbers.second) >> second;
+        return {first, second};
     }
 }

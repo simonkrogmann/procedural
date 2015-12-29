@@ -54,6 +54,7 @@ namespace util
     // splits string at first occurence
     std::pair<std::string, std::string> split(const std::string& string, const std::string& at);
     bool contains(const std::string& string, const std::string& substring);
+    std::pair<int, int> splitNumbers(const std::string& string, const std::string& at);
 
     // A container that can be constructed with rvalue-references to its elements.
     // All objects will be moved instead of copied like when using initializer lists.
