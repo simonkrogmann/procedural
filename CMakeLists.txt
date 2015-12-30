@@ -1,18 +1,12 @@
 cmake_minimum_required (VERSION 3.0)
 project(procedural)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
 find_package(glm REQUIRED)
 find_package(glbinding REQUIRED)
 
 # GLFW
-find_package(PkgConfig)
-if(PkgConfig_FOUND)
-    pkg_search_module(GLFW REQUIRED glfw3)
-else()
-    find_package(GLFW REQUIRED)
-endif()
+find_package(PkgConfig REQUIRED)
+pkg_search_module(GLFW REQUIRED glfw3)
 
 find_package(Qt5OpenGL  REQUIRED)
 
