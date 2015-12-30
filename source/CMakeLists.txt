@@ -31,6 +31,6 @@ add_executable(procedural ${sources})
 
 qt5_use_modules(procedural OpenGL)
 
-target_link_libraries(procedural ${GLFW_LIBRARIES} glbinding::glbinding)
-
 target_compile_options(procedural PRIVATE ${DEFAULT_COMPILE_FLAGS})
+
+target_link_libraries(procedural ${GLFW_LIBRARIES} glbinding::glbinding)
