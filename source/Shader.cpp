@@ -46,7 +46,7 @@ bool Shader::ARBIncludeSupported()
     static bool supported = false;
     if (!checked)
     {
-        supported = util::glExtensionSupported("GL_ARB_shader_include");
+        supported = util::glExtensionSupported("GL_ARB_shading_language_include");
         checked = true;
         if (!supported)
         {
