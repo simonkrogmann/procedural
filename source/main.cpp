@@ -1,9 +1,11 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 
 #include <glbinding/Binding.h>
 #include <glbinding/gl/gl.h>
+#include <glbinding/callbacks.h>
 #include <QSettings>
 
 #include "Window.h"
@@ -32,6 +34,23 @@ int main(int argc, char * argv[]) {
     w.init("procedural");
 
     glbinding::Binding::initialize(false);
+    glbinding::setCallbackMaskExcept(
+        glbinding::CallbackMask::After | glbinding::CallbackMask::Parameters,
+        { "glGetError" });
+    glbinding::setAfterCallback([](const glbinding::FunctionCall& call)
+    {
+        auto error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            std::cout << error << " in " << call.function->name()
+                << " with parameters:" << std::endl;
+            for (const auto& parameter : call.parameters)
+            {
+                std::cout << "    " << parameter->asString() << std::endl;
+            }
+        }
+    });
+
     util::glContextInfo();
     w.initAfterGL();
 
