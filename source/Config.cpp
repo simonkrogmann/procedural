@@ -78,6 +78,17 @@ std::string Config::value(const std::string& key)
     return setting.toString().toUtf8().constData();
 }
 
+int Config::valueInt(const std::string& key)
+{
+    auto setting = m_settings.value(QString::fromStdString(key), 0);
+    return setting.toInt();
+}
+
+void Config::setValueInt(const std::string& key, const int& value)
+{
+    m_settings.setValue(QString::fromStdString(key), value);
+}
+
 const std::map<std::string, std::string> Config::defaults {
     {"gl-version", "best"},
     {"file-resolution", "3840x2160"},

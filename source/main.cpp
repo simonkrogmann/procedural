@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "ProceduralRenderer.h"
 #include "Config.h"
+#include "Shader.h"
 #include "util.h"
 
 
@@ -18,6 +19,7 @@ using namespace gl;
 
 int main(int argc, char * argv[]) {
     Config config {argc, argv};
+    Shader::id = config.valueInt("shader-id");
     auto additionalArguments = config.additionalArguments();
 
     Window w;
@@ -61,5 +63,6 @@ int main(int argc, char * argv[]) {
     w.setRenderer(std::move(renderer));
     w.loop();
 
+    config.setValueInt("shader-id", Shader::id);
     return 0;
 }

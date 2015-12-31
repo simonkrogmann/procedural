@@ -12,6 +12,8 @@ public:
     ~Config();
 
     std::string value(const std::string& key);
+    int valueInt(const std::string& key);
+    void setValueInt(const std::string& key, const int& value);
     std::vector<std::string> additionalArguments();
 private:
     std::vector<std::string> toVector(int argc, char * argv[]);

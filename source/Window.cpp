@@ -98,6 +98,10 @@ void Window::keyPress(int key, int action, int mods)
     {
         m_renderer->renderToFile(m_fileResolution);
     }
+    else if (key == 'Q' && action == GLFW_PRESS && mods == GLFW_MOD_CONTROL)
+    {
+        glfwSetWindowShouldClose(m_window, 1);
+    }
 }
 
 void Window::resize(int width, int height)

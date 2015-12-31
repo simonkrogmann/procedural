@@ -29,6 +29,8 @@ Shader Shader::compute(const std::string& filename,
     return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
 
+int Shader::id = 0;
+
 std::string Shader::includeString(std::string name)
 {
     return "#include \"/" + name + "\"\n";
@@ -37,6 +39,11 @@ std::string Shader::includeString(std::string name)
 std::string Shader::textureString(std::string name)
 {
     return "uniform sampler2D " + name + ";\n";
+}
+
+std::string Shader::idString()
+{
+    return "const int shader_id = " + std::to_string(++Shader::id) + ";\n";
 }
 
 
@@ -67,6 +74,12 @@ Shader::Shader(const std::string& name, const std::string& source,
 
     auto shaderSource = source;
     util::replace(shaderSource, "#version 140", "#version " + util::glslVersion());
+
+    if (util::contains(shaderSource, "#id"))
+    {
+        std::string idReplacement = (includes.size() > 0) ? idString() : "";
+        util::replace(shaderSource, "#id", idReplacement);
+    }
 
     // handle includes
     for (auto& include : includes)

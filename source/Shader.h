@@ -13,6 +13,9 @@ class Shader
 public:
     static std::string includeString(std::string name);
     static std::string textureString(std::string name);
+    static std::string idString();
+
+    static int id;
 
     static Shader vertex(const std::string& filename,
         const std::vector<std::string>& includes = {});
