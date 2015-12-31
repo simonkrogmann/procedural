@@ -1,8 +1,3 @@
-float diffuse(vec3 normal, vec3 light)
-{
-    return dot(normal, light);
-}
-
 bool insideSquare(vec2 uv)
 {
     return 0 <= uv.x && uv.x <= 1 && 0 <= uv.y && uv.y <= 1;

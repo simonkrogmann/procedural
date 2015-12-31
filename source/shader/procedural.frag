@@ -16,5 +16,5 @@ void main()
     vec4 sphereData = sphere(position, vec2(0.5, 0.5), 0.2, vec2(windowSize));
     vec3 light = vec3(1, 1, 1);
     vec3 sphereColor = vec3(0.3, 0.3, 0.9);
-    color = vec4(sphereData.a * diffuse(sphereData.xyz, light) * sphereColor, 1.0);
+    color = vec4(sphereData.a * diffuse(sphereData.xyz, light) * sphereColor, 2000);
 }
