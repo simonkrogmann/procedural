@@ -54,7 +54,7 @@ int main(int argc, char * argv[]) {
     util::glContextInfo();
     w.initAfterGL();
 
-    std::vector<std::string> includes {"gradient", "chess"};
+    std::vector<std::string> includes {"util", "sphere", "gradient", "chess"};
     std::map<std::string, std::string> textures { };
     auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
 

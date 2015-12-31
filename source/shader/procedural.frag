@@ -11,6 +11,10 @@ uniform ivec2 windowSize;
 #textures
 #includes
 
-void main() {
-    color = vec4(chessSquare(position, vec2(windowSize), 8), 1.0);
+void main()
+{
+    vec4 sphereData = sphere(position, vec2(0.5, 0.5), 0.2, vec2(windowSize));
+    vec3 light = vec3(1, 1, 1);
+    vec3 sphereColor = vec3(0.3, 0.3, 0.9);
+    color = vec4(sphereData.a * diffuse(sphereData.xyz, light) * sphereColor, 1.0);
 }
