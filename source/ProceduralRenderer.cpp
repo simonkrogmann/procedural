@@ -52,6 +52,10 @@ void ProceduralRenderer::reload()
         Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER, m_includes)
     );
     m_program = std::make_unique<Program>(shaders);
+    if (!m_program->isLinked())
+    {
+        return;
+    }
 
     m_program->use();
     unsigned int i = 0;
@@ -68,6 +72,11 @@ void ProceduralRenderer::reload()
 void ProceduralRenderer::render(const util::viewport::Viewport& viewport)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (!m_program->isLinked())
+    {
+        return;
+    }
 
     m_program->use();
     auto loc = m_program->getUniformLocation("windowSize");
