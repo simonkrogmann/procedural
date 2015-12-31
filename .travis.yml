@@ -1,0 +1,33 @@
+language: cpp
+compiler:
+# - clang
+  - gcc
+notifications:
+  email: false
+sudo: required
+dist: trusty
+cache: apt
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+      - gcc-5
+      - cppcheck
+      - qtbase5-dev
+      - libqt5opengl5-dev
+      - xorg-dev
+      - libglu1-mesa-dev
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - git clone https://github.com/glfw/glfw.git
+  - cd glfw && mkdir build && cd build && cmake .. -DBUILD_SHARED_LIBS=ON
+  - make && sudo make install
+  - cd ../..
+  - git clone https://github.com/cginternals/glbinding.git
+  - cd glbinding && mkdir build && cd build && cmake .. -DOPTION_BUILD_TOOLS=OFF
+  - make && sudo make install
+  - cd ../..
+before_script:
+  - cppcheck source
