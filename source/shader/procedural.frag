@@ -8,13 +8,16 @@ in vec2 position;
 uniform ivec2 windowSize;
 
 // The symbols below will be auto-replaced
+#id
 #textures
 #includes
 
 void main()
 {
     vec4 sphereData = sphere(position, vec2(0.5, 0.5), 0.2, vec2(windowSize));
-    vec3 light = vec3(1, 1, 1);
+    vec3 light = normalize(vec3(1, 1, 1));
     vec3 sphereColor = vec3(0.3, 0.3, 0.9);
-    color = vec4(sphereData.a * diffuse(sphereData.xyz, light) * sphereColor, 2000);
+    vec3 eye = vec3(0, 0, 1);
+    vec4 factors = vec4(0, 0.6, 0, 16);
+    color = vec4(sphereData.a * phong(sphereData.xyz, light, eye, factors) * sphereColor, 0);
 }
