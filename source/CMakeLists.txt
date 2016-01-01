@@ -22,6 +22,8 @@ set(sources
     Framebuffer.cpp
     Framebuffer.h
 
+    FileWatcher.cpp
+    FileWatcher.h
     util.cpp
     util.h
     util_convert.cpp

@@ -18,7 +18,14 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     for (const auto& textureFile : textureFiles)
     {
         m_textures.push_back(Texture(textureFile));
+        addDependentPath(textureFile.path);
     }
+    for (const auto& include : m_includes)
+    {
+        addDependentPath(include.path);
+    }
+    addDependentPath("../source/shader/procedural.frag");
+    addDependentPath("../source/shader/screenalignedquad.vert");
 }
 
 ProceduralRenderer::~ProceduralRenderer()
@@ -79,7 +86,7 @@ void ProceduralRenderer::reload()
     reloadTextures();
 }
 
-void ProceduralRenderer::render(const util::viewport::Viewport& viewport)
+void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

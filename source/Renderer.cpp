@@ -8,6 +8,7 @@ using namespace gl;
 
 Renderer::Renderer()
 : m_fileFBO {1920, 1080}
+, m_fileWatcher { }
 {
 
 }
@@ -15,6 +16,15 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
 
+}
+
+void Renderer::render(const util::viewport::Viewport& viewport)
+{
+    if (m_fileWatcher.check())
+    {
+        reload();
+    }
+    draw(viewport);
 }
 
 void Renderer::renderToFile(const util::viewport::Viewport& resolution)
@@ -30,4 +40,9 @@ void Renderer::renderOffscreen(const Framebuffer& fbo, const util::viewport::Vie
     const auto keeper2 = fbo.use(GL_DRAW_FRAMEBUFFER);
 
     render(resolution);
+}
+
+void Renderer::addDependentPath(const std::string& path)
+{
+    m_fileWatcher.addFile(path);
 }

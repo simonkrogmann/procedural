@@ -62,7 +62,7 @@ int main(int argc, char * argv[]) {
         { "lighting", includeLocation + "lighting.glsl" },
         { "sphere", includeLocation + "sphere.glsl" },
         { "gradient", includeLocation + "gradient.glsl" },
-        { "chess", includeLocation + "chess.glsl" }
+        { "chess", includeLocation + "chess.glsl" },
     };
     const std::vector<util::File> textures { };
     auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);

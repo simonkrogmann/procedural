@@ -18,8 +18,9 @@ public:
     virtual ~ProceduralRenderer();
 
     virtual void init() override;
-    virtual void render(const util::viewport::Viewport& viewport) override;
     virtual void reload() override;
+protected:
+    virtual void draw(const util::viewport::Viewport& viewport) override;
 private:
     void reloadProgram();
     void reloadTextures();
