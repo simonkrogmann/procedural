@@ -1,6 +1,7 @@
 #include "Window.h"
 
 #include <map>
+#include <cassert>
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -14,6 +15,7 @@ namespace
 
     void onResize(GLFWwindow* window, int width, int height)
     {
+        assert(width >= 0 && height >= 0);
         windows[window]->resize(width, height);
     }
 
@@ -27,6 +29,7 @@ namespace
 
 Window::Window()
 : m_window{ nullptr }
+, m_viewport{ 0, 0, 640, 480 }
 {
     setFileResolution(1920, 1080);
     glfwInit();
@@ -41,26 +44,24 @@ Window::~Window()
     }
 }
 
-void Window::requestGLVersion(int major, int minor)
+void Window::requestGLVersion(const int& major, const int& minor)
 {
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
 }
 
-int Window::init(std::string title)
+int Window::init(const std::string& title)
 {
-    auto window = glfwCreateWindow(640, 480, title.c_str(), NULL, NULL);
-    m_viewport = util::viewport::Viewport {0, 0, 640, 480};
+    m_window = glfwCreateWindow(m_viewport.width, m_viewport.height, title.c_str(), NULL, NULL);
 
-    if (!window)
+    if (!m_window)
     {
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(window);
-    m_window = window;
+    glfwMakeContextCurrent(m_window);
     windows[m_window] = this;
 
     return 0;
@@ -78,7 +79,7 @@ void Window::setRenderer(std::unique_ptr<Renderer> renderer)
     m_renderer->init();
 }
 
-void Window::setFileResolution(const int& width, const int& height)
+void Window::setFileResolution(const unsigned int& width, const unsigned int& height)
 {
     m_fileResolution = {0, 0, width, height};
 }
@@ -104,7 +105,7 @@ void Window::keyPress(int key, int action, int mods)
     }
 }
 
-void Window::resize(int width, int height)
+void Window::resize(const unsigned int& width, const unsigned int& height)
 {
     m_viewport = {0, 0, width, height};
     util::viewport::set(m_viewport);

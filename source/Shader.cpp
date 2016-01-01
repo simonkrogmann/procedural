@@ -8,35 +8,14 @@
 
 using namespace gl;
 
-Shader Shader::vertex(const std::string& filename,
-        const std::vector<std::string>& includes)
-{
-    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER, includes);
-}
-Shader Shader::geometry(const std::string& filename,
-        const std::vector<std::string>& includes)
-{
-    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER, includes);
-}
-Shader Shader::fragment(const std::string& filename,
-        const std::vector<std::string>& includes)
-{
-    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER, includes);
-}
-Shader Shader::compute(const std::string& filename,
-        const std::vector<std::string>& includes)
-{
-    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
-}
+unsigned int Shader::id = 0;
 
-int Shader::id = 0;
-
-std::string Shader::includeString(std::string name)
+std::string Shader::includeString(const std::string& name)
 {
     return "#include \"/" + name + "\"\n";
 }
 
-std::string Shader::textureString(std::string name)
+std::string Shader::textureString(const std::string& name)
 {
     return "uniform sampler2D " + name + ";\n";
 }
@@ -46,14 +25,36 @@ std::string Shader::idString()
     return "const int shader_id = " + std::to_string(++Shader::id) + ";\n";
 }
 
+Shader Shader::vertex(const std::string& filename,
+        const std::vector<std::string>& includes)
+{
+    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER, includes);
+}
+
+Shader Shader::geometry(const std::string& filename,
+        const std::vector<std::string>& includes)
+{
+    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER, includes);
+}
+
+Shader Shader::fragment(const std::string& filename,
+        const std::vector<std::string>& includes)
+{
+    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER, includes);
+}
+
+Shader Shader::compute(const std::string& filename,
+        const std::vector<std::string>& includes)
+{
+    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
+}
 
 bool Shader::ARBIncludeSupported()
 {
-    static bool checked = false;
-    static bool supported = false;
+    static auto supported = util::glExtensionSupported("GL_ARB_shading_language_include");
+    static auto checked = false;
     if (!checked)
     {
-        supported = util::glExtensionSupported("GL_ARB_shading_language_include");
         checked = true;
         if (!supported)
         {
@@ -73,11 +74,12 @@ Shader::Shader(const std::string& name, const std::string& source,
     const std::string includeLocation = "../source/shader/";
 
     auto shaderSource = source;
-    util::replace(shaderSource, "#version 140", "#version " + util::glslVersion());
+    const static auto glslVersion = util::glslVersion();
+    util::replace(shaderSource, "#version 140", "#version " + glslVersion);
 
     if (util::contains(shaderSource, "#id"))
     {
-        std::string idReplacement = (includes.size() > 0) ? idString() : "";
+        const auto idReplacement = (includes.size() > 0) ? idString() : "";
         util::replace(shaderSource, "#id", idReplacement);
     }
 
@@ -163,7 +165,7 @@ bool Shader::isCompiled() const
 {
     GLint isCompiled;
     glGetShaderiv(m_shader, GL_COMPILE_STATUS, &isCompiled);
-    return (GLboolean) isCompiled != GL_FALSE;
+    return static_cast<GLboolean>(isCompiled) != GL_FALSE;
 }
 
 void Shader::printCompilationError() const

@@ -11,11 +11,11 @@ using namespace gl;
 class Shader
 {
 public:
-    static std::string includeString(std::string name);
-    static std::string textureString(std::string name);
-    static std::string idString();
+    static unsigned int id;
 
-    static int id;
+    static std::string includeString(const std::string& name);
+    static std::string textureString(const std::string& name);
+    static std::string idString();
 
     static Shader vertex(const std::string& filename,
         const std::vector<std::string>& includes = {});
@@ -25,6 +25,7 @@ public:
         const std::vector<std::string>& includes = {});
     static Shader compute(const std::string& filename,
         const std::vector<std::string>& includes = {});
+
     Shader(Shader&& old);
     Shader(const Shader&) = delete;
     Shader(const std::string& name, const std::string& source,
@@ -38,7 +39,9 @@ private:
     void includeShader(const std::string& name, const std::string& source);
     void compileShader(const std::string& source);
     void deleteIncludes();
+
     static bool ARBIncludeSupported();
+
 
     std::string m_name;
     GLuint m_shader;

@@ -60,12 +60,12 @@ bool Program::isLinked() const
 {
     GLint isLinked;
     glGetProgramiv(m_program, GL_LINK_STATUS, &isLinked);
-    return (GLboolean) isLinked != GL_FALSE;
+    return static_cast<GLboolean>(isLinked) != GL_FALSE;
 }
 
 void Program::printLinkingError() const
 {
-    std::cout << "Linking failed" << std::endl;
+    std::cout << "Linking failed:" << std::endl;
     GLint length;
     glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &length);
     char * infoLog = new char[length + 1];

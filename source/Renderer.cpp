@@ -26,8 +26,8 @@ void Renderer::renderToFile(const util::viewport::Viewport& resolution)
 
 void Renderer::renderOffscreen(const Framebuffer& fbo, const util::viewport::Viewport& resolution)
 {
-    auto keeper = util::viewport::use(resolution);
-    auto keeper2 = fbo.use(GL_DRAW_FRAMEBUFFER);
+    const auto keeper = util::viewport::use(resolution);
+    const auto keeper2 = fbo.use(GL_DRAW_FRAMEBUFFER);
 
     render(resolution);
 }

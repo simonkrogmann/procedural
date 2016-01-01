@@ -14,7 +14,7 @@ public:
     Texture(const Texture&) = delete;
     ~Texture();
 
-    void bind();
+    void bind() const;
     void load();
     GLuint get() const { return m_texture; }
     std::string name() const { return m_name; }

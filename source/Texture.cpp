@@ -13,10 +13,10 @@ Texture::Texture(const std::string& name, const std::string& filename)
 {
     glGenTextures(1, &m_texture);
     bind();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint) GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint) GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint) GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint) GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<GLint>(GL_REPEAT));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<GLint>(GL_REPEAT));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLint>(GL_LINEAR));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLint>(GL_LINEAR));
 }
 
 Texture::~Texture()
@@ -34,13 +34,13 @@ Texture::Texture(Texture&& old)
 
 void Texture::load()
 {
-    auto glImage = util::loadImage(m_filename);
+    const auto glImage = util::loadImage(m_filename);
     bind();
-    glTexImage2D(GL_TEXTURE_2D, 0, (GLint) GL_RGBA8, glImage.width(),
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(GL_RGBA8), glImage.width(),
         glImage.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, glImage.constBits());
 }
 
-void Texture::bind()
+void Texture::bind() const
 {
     glBindTexture(GL_TEXTURE_2D, m_texture);
 }

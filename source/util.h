@@ -26,34 +26,35 @@ namespace util
     namespace viewport
     {
         struct Viewport {
-            GLint x, y, width, height;
+            int x, y;
+            unsigned int width, height;
         };
 
         Viewport get();
 
-        void set(Viewport);
+        void set(const Viewport& data);
 
-        StateKeeper use(Viewport resolution);
+        StateKeeper use(const Viewport& resolution);
     }
 
-    GLint glGetInteger(GLenum symbol);
+    GLint glGetInteger(const GLenum& symbol);
 
     template<typename T>
-    GLint glLength(T object) {
+    GLint glLength(const T& object) {
         return static_cast<GLint>(object.size());
     }
 
     void glContextInfo();
-    void glCheckErrorsIn(unsigned int line, std::string file);
+    void glCheckErrorsIn(const unsigned int& line, const std::string& file);
 
-    bool glExtensionSupported(std::string extension);
+    bool glExtensionSupported(const std::string& extension);
     std::string glslVersion();
 
     QImage loadImage(const std::string& filename);
     void saveImage(const std::vector<unsigned char>& data,
         const int& width, const int& height, const std::string& filename);
 
-    std::string loadFile(std::string filename);
+    std::string loadFile(const std::string& filename);
     std::string toString(const GLubyte * glString);
     // replaces first occurence of old in target
     void replace(std::string& target, const std::string& old, const std::string& with);

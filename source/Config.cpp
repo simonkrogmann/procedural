@@ -9,7 +9,7 @@
 
 #include "util.h"
 
-Config::Config(int argc, char * argv[])
+Config::Config(const int argc, char * argv[])
 : m_settings {"simonkrogmann", "procedural"}
 {
     const auto arguments = toVector(argc, argv);
@@ -24,7 +24,7 @@ Config::~Config()
 
 }
 
-std::vector<std::string> Config::toVector(int argc, char * argv[])
+std::vector<std::string> Config::toVector(const int& argc, char * argv[])
 {
     std::vector<std::string> arguments;
     for (int i = 0; i < argc; ++i)
@@ -34,14 +34,14 @@ std::vector<std::string> Config::toVector(int argc, char * argv[])
     return arguments;
 }
 
-std::map<std::string, std::string> Config::parseArguments(std::vector<std::string> arguments)
+std::map<std::string, std::string> Config::parseArguments(const std::vector<std::string>& arguments)
 {
     std::map<std::string, std::string> options;
     for (const auto& argument : arguments)
     {
         if (argument.substr(0, 2) == "--" && util::contains(argument, "="))
         {
-            auto split = util::split(argument.substr(2), "=");
+            const auto split = util::split(argument.substr(2), "=");
             options[split.first] = split.second;
         }
         else
@@ -58,7 +58,7 @@ std::vector<std::string> Config::additionalArguments()
 }
 
 
-void Config::setValues(std::map<std::string, std::string> pairs)
+void Config::setValues(const std::map<std::string, std::string>& pairs)
 {
     for (const auto& pair : pairs)
     {
@@ -73,18 +73,18 @@ void Config::setValues(std::map<std::string, std::string> pairs)
 std::string Config::value(const std::string& key)
 {
     assert(defaults.find(key) != defaults.end());
-    auto setting = m_settings.value(QString::fromStdString(key),
+    const auto setting = m_settings.value(QString::fromStdString(key),
         QString::fromStdString(defaults.at(key)));
     return setting.toString().toUtf8().constData();
 }
 
-int Config::valueInt(const std::string& key)
+unsigned int Config::valueUInt(const std::string& key)
 {
-    auto setting = m_settings.value(QString::fromStdString(key), 0);
-    return setting.toInt();
+    const auto setting = m_settings.value(QString::fromStdString(key), 0);
+    return setting.toUInt();
 }
 
-void Config::setValueInt(const std::string& key, const int& value)
+void Config::setValue(const std::string& key, const unsigned int& value)
 {
     m_settings.setValue(QString::fromStdString(key), value);
 }

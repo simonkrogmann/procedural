@@ -19,8 +19,8 @@ using namespace gl;
 
 int main(int argc, char * argv[]) {
     Config config {argc, argv};
-    Shader::id = config.valueInt("shader-id");
-    auto additionalArguments = config.additionalArguments();
+    Shader::id = config.valueUInt("shader-id");
+    const auto additionalArguments = config.additionalArguments();
 
     Window w;
     const auto resolution = config.value("file-resolution");
@@ -41,7 +41,7 @@ int main(int argc, char * argv[]) {
         { "glGetError" });
     glbinding::setAfterCallback([](const glbinding::FunctionCall& call)
     {
-        auto error = glGetError();
+        const auto error = glGetError();
         if (error != GL_NO_ERROR)
         {
             std::cout << error << " in " << call.function->name()
@@ -56,13 +56,13 @@ int main(int argc, char * argv[]) {
     util::glContextInfo();
     w.initAfterGL();
 
-    std::vector<std::string> includes {"util", "lighting", "sphere", "gradient", "chess"};
-    std::map<std::string, std::string> textures { };
+    const std::vector<std::string> includes {"util", "lighting", "sphere", "gradient", "chess"};
+    const std::map<std::string, std::string> textures { };
     auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
 
     w.setRenderer(std::move(renderer));
     w.loop();
 
-    config.setValueInt("shader-id", Shader::id);
+    config.setValue("shader-id", Shader::id);
     return 0;
 }

@@ -11,7 +11,7 @@ find_package(Qt5OpenGL  REQUIRED)
 
 include_directories(${GLFW_INCLUDE_DIRS} ${GLBINDING_INCLUDE_DIR})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fsanitize=undefined -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fsanitize=undefined -Wall -Wextra -Wpedantic -Wfloat-equal -Wold-style-cast")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 

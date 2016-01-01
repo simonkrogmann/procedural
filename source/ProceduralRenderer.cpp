@@ -47,7 +47,7 @@ void ProceduralRenderer::reload()
     }
     util::replace(fragmentCode, "#textures", textureString);
     util::replace(fragmentCode, "#includes", includeString);
-    util::Group<Shader> shaders (
+    const util::Group<Shader> shaders (
         Shader::vertex(shaderLocation + "screenalignedquad.vert"),
         Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER, m_includes)
     );
@@ -63,7 +63,7 @@ void ProceduralRenderer::reload()
     {
         glActiveTexture(GL_TEXTURE0 + i);
         texture.load();
-        auto location = m_program->getUniformLocation(texture.name());
+        const auto location = m_program->getUniformLocation(texture.name());
         glUniform1i(location, i);
         ++i;
     }
@@ -79,7 +79,7 @@ void ProceduralRenderer::render(const util::viewport::Viewport& viewport)
     }
 
     m_program->use();
-    auto loc = m_program->getUniformLocation("windowSize");
+    const auto loc = m_program->getUniformLocation("windowSize");
     glUniform2i(loc, viewport.width, viewport.height);
     m_screen.draw();
 }

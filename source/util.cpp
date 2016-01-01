@@ -20,25 +20,26 @@ namespace util
         {
             GLint data[4];
             glGetIntegerv(GL_VIEWPORT, data);
+            assert(data[2] >= 0 && data[3] >= 0);
 
-            return {data[0], data[1], data[2], data[3]};
+            return {data[0], data[1], static_cast<unsigned int>(data[2]), static_cast<unsigned int>(data[3])};
         }
 
-        void set(Viewport data)
+        void set(const Viewport& data)
         {
             glViewport(data.x, data.y, data.width, data.height);
         }
 
-        StateKeeper use(Viewport resolution) {
-            auto old = get();
+        StateKeeper use(const Viewport& resolution) {
+            const auto old = get();
             set(resolution);
             return { [=]() { set(old); } };
         }
     }
 
-    void glCheckErrorsIn(unsigned int line, std::string file)
+    void glCheckErrorsIn(const unsigned int& line, const std::string& file)
     {
-        auto error = glGetError();
+        const auto error = glGetError();
         if (error != GL_NONE)
         {
             std::cout << error << " before line " << line << " in " << file << std::endl;
@@ -50,14 +51,14 @@ namespace util
         std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
     }
 
-    GLint glGetInteger(GLenum symbol)
+    GLint glGetInteger(const GLenum& symbol)
     {
         GLint value;
         glGetIntegerv(symbol, &value);
         return value;
     }
 
-    std::string loadFile(std::string filename)
+    std::string loadFile(const std::string& filename)
     {
         std::ifstream sourceFile(filename);
 
@@ -71,15 +72,15 @@ namespace util
         return reinterpret_cast<char const *>(glString);
     }
 
-    bool glExtensionSupported(std::string extension)
+    bool glExtensionSupported(const std::string& extension)
     {
-        auto extensionsRaw = glGetString(GL_EXTENSIONS);
+        const auto extensionsRaw = glGetString(GL_EXTENSIONS);
         if (extensionsRaw == NULL)
         {
             glGetError();
             return false;
         }
-        std::string extensions = toString(glGetString(GL_EXTENSIONS));
+        const std::string extensions = toString(glGetString(GL_EXTENSIONS));
         return extensions.find(extension) != std::string::npos;
     }
 

@@ -16,9 +16,9 @@ public:
     Framebuffer(const Framebuffer&) = delete;
     ~Framebuffer();
 
-    util::StateKeeper use(GLenum mode = GL_FRAMEBUFFER) const;
+    util::StateKeeper use(const GLenum& mode = GL_FRAMEBUFFER) const;
     void resize(const unsigned int& m_width, const unsigned int& height);
-    void save(std::string filename);
+    void save(const std::string& filename);
 
     GLuint get() const { return m_framebuffer; }
 private:
