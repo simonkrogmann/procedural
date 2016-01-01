@@ -56,8 +56,15 @@ int main(int argc, char * argv[]) {
     util::glContextInfo();
     w.initAfterGL();
 
-    const std::vector<std::string> includes {"util", "lighting", "sphere", "gradient", "chess"};
-    const std::map<std::string, std::string> textures { };
+    const std::string includeLocation = "../source/shader/";
+    const std::vector<util::File> includes {
+        { "util", includeLocation + "util.glsl" },
+        { "lighting", includeLocation + "lighting.glsl" },
+        { "sphere", includeLocation + "sphere.glsl" },
+        { "gradient", includeLocation + "gradient.glsl" },
+        { "chess", includeLocation + "chess.glsl" }
+    };
+    const std::vector<util::File> textures { };
     auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
 
     w.setRenderer(std::move(renderer));

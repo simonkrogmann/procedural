@@ -4,12 +4,14 @@
 
 #include <glbinding/gl/gl.h>
 
+#include "util.h"
+
 using namespace gl;
 
 class Texture
 {
 public:
-    Texture(const std::string& name, const std::string& filename);
+    Texture(const util::File& file);
     Texture(Texture&& old);
     Texture(const Texture&) = delete;
     ~Texture();
@@ -17,9 +19,8 @@ public:
     void bind() const;
     void load();
     GLuint get() const { return m_texture; }
-    std::string name() const { return m_name; }
+    std::string name() const { return m_file.name; }
 private:
-    std::string m_name;
-    std::string m_filename;
+    util::File m_file;
     GLuint m_texture;
 };

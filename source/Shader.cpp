@@ -9,6 +9,10 @@
 using namespace gl;
 
 unsigned int Shader::id = 0;
+std::string Shader::uniqueId()
+{
+    return std::to_string(++id);
+}
 
 std::string Shader::includeString(const std::string& name)
 {
@@ -22,29 +26,29 @@ std::string Shader::textureString(const std::string& name)
 
 std::string Shader::idString()
 {
-    return "const int shader_id = " + std::to_string(++Shader::id) + ";\n";
+    return "const int shader_id = " + uniqueId() + ";\n";
 }
 
 Shader Shader::vertex(const std::string& filename,
-        const std::vector<std::string>& includes)
+        const std::vector<util::File>& includes)
 {
     return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER, includes);
 }
 
 Shader Shader::geometry(const std::string& filename,
-        const std::vector<std::string>& includes)
+        const std::vector<util::File>& includes)
 {
     return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER, includes);
 }
 
 Shader Shader::fragment(const std::string& filename,
-        const std::vector<std::string>& includes)
+        const std::vector<util::File>& includes)
 {
     return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER, includes);
 }
 
 Shader Shader::compute(const std::string& filename,
-        const std::vector<std::string>& includes)
+        const std::vector<util::File>& includes)
 {
     return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
 }
@@ -67,12 +71,10 @@ bool Shader::ARBIncludeSupported()
 }
 
 Shader::Shader(const std::string& name, const std::string& source,
-    const GLenum& type, const std::vector<std::string>& includes)
+    const GLenum& type, const std::vector<util::File>& includes)
 : m_name {name}
 , m_shader {0}
 {
-    const std::string includeLocation = "../source/shader/";
-
     auto shaderSource = source;
     const static auto glslVersion = util::glslVersion();
     util::replace(shaderSource, "#version 140", "#version " + glslVersion);
@@ -84,9 +86,9 @@ Shader::Shader(const std::string& name, const std::string& source,
     }
 
     // handle includes
-    for (auto& include : includes)
+    for (const auto& include : includes)
     {
-        includeShader("/" + include, util::loadFile(includeLocation + include + ".glsl"));
+        includeShader("/" + include.name, include.content());
     }
 
     m_shader = glCreateShader(type);

@@ -6,13 +6,12 @@
 #include <glbinding/gl/gl.h>
 #include <QImage>
 
-#define glCheckErrors() glCheckErrorsIn(__LINE__, __FILE__)
-
 namespace util
 {
     using namespace gl;
 
-    class StateKeeper {
+    class StateKeeper
+    {
     public:
         StateKeeper(const std::function<void()>& restoreFunction)
             : m_restoreFunction {restoreFunction} {}
@@ -23,9 +22,18 @@ namespace util
         std::function<void()> m_restoreFunction;
     };
 
+    std::string loadFile(const std::string& filename);
+    struct File
+    {
+        std::string name;
+        std::string path;
+        std::string content() const { return loadFile(path); }
+    };
+
     namespace viewport
     {
-        struct Viewport {
+        struct Viewport
+        {
             int x, y;
             unsigned int width, height;
         };
@@ -45,7 +53,6 @@ namespace util
     }
 
     void glContextInfo();
-    void glCheckErrorsIn(const unsigned int& line, const std::string& file);
 
     bool glExtensionSupported(const std::string& extension);
     std::string glslVersion();
@@ -54,7 +61,6 @@ namespace util
     void saveImage(const std::vector<unsigned char>& data,
         const int& width, const int& height, const std::string& filename);
 
-    std::string loadFile(const std::string& filename);
     std::string toString(const GLubyte * glString);
     // replaces first occurence of old in target
     void replace(std::string& target, const std::string& old, const std::string& with);

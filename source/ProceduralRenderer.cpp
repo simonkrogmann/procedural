@@ -7,8 +7,8 @@
 
 using namespace gl;
 
-ProceduralRenderer::ProceduralRenderer(const std::vector<std::string>& includes,
-    const std::map<std::string, std::string>& textureFiles)
+ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
+    const std::vector<util::File>& textureFiles)
 : Renderer { }
 , m_screen { }
 , m_program { }
@@ -17,7 +17,7 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<std::string>& includes,
 {
     for (const auto& textureFile : textureFiles)
     {
-        m_textures.push_back(Texture(textureFile.first, textureFile.second));
+        m_textures.push_back(Texture(textureFile));
     }
 }
 
@@ -32,10 +32,8 @@ void ProceduralRenderer::init()
     reload();
 }
 
-void ProceduralRenderer::reload()
+void ProceduralRenderer::reloadProgram()
 {
-    const std::string shaderLocation = "../source/shader/";
-    auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
     std::string textureString = "", includeString = "";
     for (const auto& texture : m_textures)
     {
@@ -43,8 +41,11 @@ void ProceduralRenderer::reload()
     }
     for (const auto& include : m_includes)
     {
-        textureString += Shader::includeString(include);
+        textureString += Shader::includeString(include.name);
     }
+
+    const std::string shaderLocation = "../source/shader/";
+    auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
     util::replace(fragmentCode, "#textures", textureString);
     util::replace(fragmentCode, "#includes", includeString);
     const util::Group<Shader> shaders (
@@ -52,11 +53,10 @@ void ProceduralRenderer::reload()
         Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER, m_includes)
     );
     m_program = std::make_unique<Program>(shaders);
-    if (!m_program->isLinked())
-    {
-        return;
-    }
+}
 
+void ProceduralRenderer::reloadTextures()
+{
     m_program->use();
     unsigned int i = 0;
     for (auto& texture : m_textures)
@@ -67,6 +67,16 @@ void ProceduralRenderer::reload()
         glUniform1i(location, i);
         ++i;
     }
+}
+
+void ProceduralRenderer::reload()
+{
+    reloadProgram();
+    if (!m_program->isLinked())
+    {
+        return;
+    }
+    reloadTextures();
 }
 
 void ProceduralRenderer::render(const util::viewport::Viewport& viewport)

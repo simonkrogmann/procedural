@@ -37,15 +37,6 @@ namespace util
         }
     }
 
-    void glCheckErrorsIn(const unsigned int& line, const std::string& file)
-    {
-        const auto error = glGetError();
-        if (error != GL_NONE)
-        {
-            std::cout << error << " before line " << line << " in " << file << std::endl;
-        }
-    }
-
     void glContextInfo()
     {
         std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
@@ -117,6 +108,7 @@ namespace util
         assert(position != std::string::npos);
         return {string.substr(0, position), string.substr(position + at.length())};
     }
+
     bool contains(const std::string& string, const std::string& substring)
     {
         return string.find(substring) != std::string::npos;
