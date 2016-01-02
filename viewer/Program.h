@@ -23,6 +23,7 @@ public:
     bool isLinked() const;
     void printLinkingError() const;
     GLint getUniformLocation(const std::string& uniformName) const;
+    GLint operator[](const std::string& uniformName) const;
     GLuint get() const { return m_program; };
     void use() const;
 private:

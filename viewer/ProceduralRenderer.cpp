@@ -16,6 +16,7 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
 , m_program { }
 , m_includes { includes }
 , m_textures { }
+, m_start { std::chrono::steady_clock::now() }
 {
     for (const auto& textureFile : textureFiles)
     {
@@ -96,8 +97,11 @@ void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
         return;
     }
 
+    std::chrono::duration<double> diff = std::chrono::steady_clock::now() - m_start;
+
     m_program->use();
-    const auto loc = m_program->getUniformLocation("windowSize");
-    glUniform2i(loc, viewport.width, viewport.height);
+    glUniform2i((*m_program)["windowSize"], viewport.width, viewport.height);
+    glUniform1f((*m_program)["time"], diff.count());
+
     m_screen.draw();
 }

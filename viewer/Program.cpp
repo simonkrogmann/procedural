@@ -83,3 +83,8 @@ GLint Program::getUniformLocation(const std::string& uniformName) const
 {
     return glGetUniformLocation(m_program, uniformName.c_str());
 }
+
+GLint Program::operator[](const std::string& uniformName) const
+{
+    return getUniformLocation(uniformName);
+}

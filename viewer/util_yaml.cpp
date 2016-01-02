@@ -4,9 +4,9 @@
 
 namespace
 {
-    int leadingSpaces(const std::string& string)
+    unsigned int leadingSpaces(const std::string& string)
     {
-        int number = 0;
+        auto number = 0u;
         for (; string[number] == ' '; ++number);
         return number;
     }
@@ -28,8 +28,8 @@ namespace util
         std::string line;
         while (std::getline(sourceFile, line)) {
             auto level = leadingSpaces(line);
-            if (line[level] == '#') continue;
-            for (; current->m_level >= level; current = current->parent());
+            if (line[level] == '#' || line.size() == level) continue;
+            for (; current->m_level >= static_cast<int>(level); current = current->parent());
             if (line[level] == '-')
             {
                 ++level;

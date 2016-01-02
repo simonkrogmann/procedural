@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <chrono>
 
 #include "Renderer.h"
 #include "ScreenAlignedQuad.h"
@@ -31,4 +32,5 @@ private:
     std::unique_ptr<Program> m_program;
     std::vector<util::File> m_includes;
     std::vector<Texture> m_textures;
+    std::chrono::time_point<std::chrono::steady_clock> m_start;
 };
