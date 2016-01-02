@@ -79,10 +79,10 @@ Shader::Shader(const std::string& name, const std::string& source,
     const static auto glslVersion = util::glslVersion();
     util::replace(shaderSource, "#version 140", "#version " + glslVersion);
 
-    if (util::contains(shaderSource, "#id"))
+    if (util::contains(shaderSource, "//id"))
     {
         const auto idReplacement = (includes.size() > 0) ? idString() : "";
-        util::replace(shaderSource, "#id", idReplacement);
+        util::replace(shaderSource, "//id", idReplacement);
     }
 
     // handle includes

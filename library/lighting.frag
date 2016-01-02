@@ -1,7 +1,7 @@
 float diffuse(vec3 normal, vec3 light)
 {
     float factor = dot(normal, light);
-    return clamp(factor, 0, 1);
+    return clamp(factor, 0.0, 1.0);
 }
 
 float specular(vec3 reflection, vec3 eye, float alpha)

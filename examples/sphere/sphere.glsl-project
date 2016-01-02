@@ -3,7 +3,7 @@ internal-includes:
     - sphere
     - lighting
 external-includes:
-    settings: settings.glsl
+    settings: settings.frag
 textures:
 
-main: main.glsl
+main: main.frag

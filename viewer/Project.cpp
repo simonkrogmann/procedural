@@ -4,7 +4,7 @@
 
 Project::Project(const std::string& filename)
 {
-    if (util::endsWith(filename, ".glsl"))
+    if (util::endsWith(filename, ".frag"))
     {
         m_mainShader = filename;
     }
@@ -38,7 +38,7 @@ std::vector<util::File> Project::includes()
     const std::string includeLocation = "../library/";
     for (const auto& include : m_internal)
     {
-        includeFiles.push_back({include, includeLocation + include + ".glsl"});
+        includeFiles.push_back({include, includeLocation + include + ".frag"});
     }
     for (const auto& include : m_external)
     {

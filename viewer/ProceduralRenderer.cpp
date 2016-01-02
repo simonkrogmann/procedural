@@ -55,8 +55,8 @@ void ProceduralRenderer::reloadProgram()
     }
 
     auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
-    util::replace(fragmentCode, "#textures", textureString);
-    util::replace(fragmentCode, "#includes", includeString);
+    util::replace(fragmentCode, "//textures", textureString);
+    util::replace(fragmentCode, "//includes", includeString);
     const util::Group<Shader> shaders (
         Shader::vertex(shaderLocation + "screenalignedquad.vert"),
         Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER, m_includes)

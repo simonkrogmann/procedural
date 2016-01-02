@@ -43,7 +43,7 @@ int main(int argc, char * argv[]) {
     Config config {argc, argv};
     Shader::id = config.valueUInt("shader-id");
     const auto arguments = config.additionalArguments();
-    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.glsl";
+    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
     Project project { openFile };
 
     Window w;
