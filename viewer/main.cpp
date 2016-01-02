@@ -12,28 +12,11 @@
 #include "ProceduralRenderer.h"
 #include "Config.h"
 #include "Shader.h"
+#include "Project.h"
 #include "util.h"
 
 
 using namespace gl;
-
-std::vector<util::File> collectIncludes(const std::vector<std::string>& internal,
-    const std::vector<util::File>& external, const std::string& mainShader)
-{
-    std::vector<util::File> includes;
-
-    const std::string includeLocation = "../library/";
-    for (const auto& include : internal)
-    {
-        includes.push_back({include, includeLocation + include + ".glsl"});
-    }
-    for (const auto& include : external)
-    {
-        includes.push_back(include);
-    }
-    includes.push_back({"main", mainShader});
-    return includes;
-}
 
 void initializeGL()
 {
@@ -60,6 +43,8 @@ int main(int argc, char * argv[]) {
     Config config {argc, argv};
     Shader::id = config.valueUInt("shader-id");
     const auto arguments = config.additionalArguments();
+    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.glsl";
+    Project project { openFile };
 
     Window w;
     const auto resolution = config.value("file-resolution");
@@ -77,23 +62,7 @@ int main(int argc, char * argv[]) {
     util::glContextInfo();
     w.initAfterGL();
 
-    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.glsl";
-    std::vector<std::string> internal;
-    std::vector<util::File> external;
-    std::string mainShader;
-    std::vector<util::File> textures;
-    if (util::endsWith(openFile, ".glsl"))
-    {
-        mainShader = openFile;
-    }
-    else
-    {
-        internal = {"util", "lighting", "sphere"};
-        external = {{"settings", "../examples/sphere/settings.glsl"}};
-        mainShader = "../examples/sphere/main.glsl";
-    }
-    const auto includes = collectIncludes(internal, external, mainShader);
-    auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
+    auto renderer = std::make_unique<ProceduralRenderer>(project.includes(), project.textures());
 
     w.setRenderer(std::move(renderer));
     w.loop();

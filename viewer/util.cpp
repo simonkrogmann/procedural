@@ -105,7 +105,20 @@ namespace util
     std::pair<std::string, std::string> split(const std::string& string, const std::string& at)
     {
         const auto position = string.find(at);
-        assert(position != std::string::npos);
+        if (position == std::string::npos)
+        {
+            return {string, ""};
+        }
+        return {string.substr(0, position), string.substr(position + at.length())};
+    }
+
+    std::pair<std::string, std::string> rsplit(const std::string& string, const std::string& at)
+    {
+        const auto position = string.rfind(at);
+        if (position == std::string::npos)
+        {
+            return {"", string};
+        }
         return {string.substr(0, position), string.substr(position + at.length())};
     }
 

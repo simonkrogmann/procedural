@@ -4,6 +4,8 @@ set(sources
     Window.h
     Config.cpp
     Config.h
+    Project.cpp
+    Project.h
     Renderer.cpp
     Renderer.h
     ProceduralRenderer.cpp
@@ -27,6 +29,7 @@ set(sources
     util.cpp
     util.h
     util_convert.cpp
+    util_yaml.cpp
 )
 
 add_executable(procedural ${sources})
