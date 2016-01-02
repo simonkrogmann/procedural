@@ -12,29 +12,14 @@
 #include "ProceduralRenderer.h"
 #include "Config.h"
 #include "Shader.h"
+#include "Project.h"
 #include "util.h"
 
 
 using namespace gl;
 
-int main(int argc, char * argv[]) {
-    Config config {argc, argv};
-    Shader::id = config.valueUInt("shader-id");
-    const auto additionalArguments = config.additionalArguments();
-
-    Window w;
-    const auto resolution = config.value("file-resolution");
-    const auto numbers = util::splitNumbers(resolution, "x");
-    w.setFileResolution(numbers.first, numbers.second);
-
-    const auto version = config.value("gl-version");
-    if (version != "best")
-    {
-        const auto numbers = util::splitNumbers(version, ".");
-        w.requestGLVersion(numbers.first, numbers.second);
-    }
-    w.init("procedural");
-
+void initializeGL()
+{
     glbinding::Binding::initialize(false);
     glbinding::setCallbackMaskExcept(
         glbinding::CallbackMask::After | glbinding::CallbackMask::Parameters,
@@ -52,20 +37,32 @@ int main(int argc, char * argv[]) {
             }
         }
     });
+}
 
+int main(int argc, char * argv[]) {
+    Config config {argc, argv};
+    Shader::id = config.valueUInt("shader-id");
+    const auto arguments = config.additionalArguments();
+    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.glsl";
+    Project project { openFile };
+
+    Window w;
+    const auto resolution = config.value("file-resolution");
+    const auto numbers = util::splitNumbers(resolution, "x");
+    w.setFileResolution(numbers.first, numbers.second);
+
+    const auto version = config.value("gl-version");
+    if (version != "best")
+    {
+        const auto numbers = util::splitNumbers(version, ".");
+        w.requestGLVersion(numbers.first, numbers.second);
+    }
+    w.init("procedural");
+    initializeGL();
     util::glContextInfo();
     w.initAfterGL();
 
-    const std::string includeLocation = "../source/shader/";
-    const std::vector<util::File> includes {
-        { "util", includeLocation + "util.glsl" },
-        { "lighting", includeLocation + "lighting.glsl" },
-        { "sphere", includeLocation + "sphere.glsl" },
-        { "gradient", includeLocation + "gradient.glsl" },
-        { "chess", includeLocation + "chess.glsl" },
-    };
-    const std::vector<util::File> textures { };
-    auto renderer = std::make_unique<ProceduralRenderer>(includes, textures);
+    auto renderer = std::make_unique<ProceduralRenderer>(project.includes(), project.textures());
 
     w.setRenderer(std::move(renderer));
     w.loop();

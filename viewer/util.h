@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <glbinding/gl/gl.h>
 #include <QImage>
@@ -66,7 +67,9 @@ namespace util
     void replace(std::string& target, const std::string& old, const std::string& with);
     // splits string at first occurence
     std::pair<std::string, std::string> split(const std::string& string, const std::string& at);
+    std::pair<std::string, std::string> rsplit(const std::string& string, const std::string& at);
     bool contains(const std::string& string, const std::string& substring);
+    bool endsWith(const std::string& string, const std::string& ending);
     std::pair<int, int> splitNumbers(const std::string& string, const std::string& at);
 
     // A container that can be constructed with rvalue-references to its elements.
@@ -102,4 +105,29 @@ namespace util
         std::vector<T> v;
     };
 
+    class YAMLNode
+    {
+    public:
+        static std::unique_ptr<YAMLNode> parseYAML(std::string filename);
+
+        YAMLNode(YAMLNode * parent = nullptr, int level = -1)
+            : m_parent {parent}
+            , m_level {level} {}
+
+        YAMLNode* parent() const { return m_parent; }
+        const std::map<std::string, std::unique_ptr<YAMLNode>>& children() const { return m_children; }
+        YAMLNode* operator[](const std::string& key);
+        const std::vector<std::string>& values() const { return m_values; }
+        std::string value() const { return m_values[0]; }
+
+        bool isLeaf() const { return m_children.size() > 0; }
+    private:
+        YAMLNode * m_parent;
+        std::map<std::string, std::unique_ptr<YAMLNode>> m_children;
+        std::vector<std::string> m_values;
+        int m_level;
+    };
+
+    // implements only a subset of yaml
+    std::unique_ptr<YAMLNode> parseYAML(std::string filename);
 }

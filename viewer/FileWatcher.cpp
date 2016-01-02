@@ -23,7 +23,7 @@ void FileWatcher::addFile(const std::string& file)
 
 void FileWatcher::removeFile(const std::string& file)
 {
-
+    m_files.erase(file);
 }
 
 bool FileWatcher::check()

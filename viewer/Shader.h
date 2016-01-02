@@ -45,7 +45,6 @@ private:
 
     static bool ARBIncludeSupported();
 
-
     std::string m_name;
     GLuint m_shader;
     std::map<std::string, std::string> m_includes;

@@ -105,13 +105,35 @@ namespace util
     std::pair<std::string, std::string> split(const std::string& string, const std::string& at)
     {
         const auto position = string.find(at);
-        assert(position != std::string::npos);
+        if (position == std::string::npos)
+        {
+            return {string, ""};
+        }
+        return {string.substr(0, position), string.substr(position + at.length())};
+    }
+
+    std::pair<std::string, std::string> rsplit(const std::string& string, const std::string& at)
+    {
+        const auto position = string.rfind(at);
+        if (position == std::string::npos)
+        {
+            return {"", string};
+        }
         return {string.substr(0, position), string.substr(position + at.length())};
     }
 
     bool contains(const std::string& string, const std::string& substring)
     {
         return string.find(substring) != std::string::npos;
+    }
+
+    bool endsWith(const std::string& string, const std::string& ending)
+    {
+        if (string.size() < ending.size())
+        {
+            return false;
+        }
+        return std::equal(ending.rbegin(), ending.rend(), string.rbegin());
     }
 
     std::pair<int, int> splitNumbers(const std::string& string, const std::string& at)

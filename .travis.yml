@@ -2,8 +2,6 @@ language: cpp
 compiler:
 # - clang
   - gcc
-notifications:
-  email: false
 sudo: required
 dist: trusty
 cache: apt
@@ -30,4 +28,4 @@ install:
   - make && sudo make install
   - cd ../..
 before_script:
-  - cppcheck source
+  - cppcheck viewer
