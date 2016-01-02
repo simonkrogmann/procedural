@@ -25,6 +25,8 @@ private:
     void reloadProgram();
     void reloadTextures();
 
+    const static std::string shaderLocation;
+
     ScreenAlignedQuad m_screen;
     std::unique_ptr<Program> m_program;
     std::vector<util::File> m_includes;

@@ -7,6 +7,8 @@
 
 using namespace gl;
 
+const std::string ProceduralRenderer::shaderLocation = "../viewer/shader/";
+
 ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     const std::vector<util::File>& textureFiles)
 : Renderer { }
@@ -24,8 +26,8 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     {
         addDependentPath(include.path);
     }
-    addDependentPath("../source/shader/procedural.frag");
-    addDependentPath("../source/shader/screenalignedquad.vert");
+    addDependentPath(shaderLocation + "procedural.frag");
+    addDependentPath(shaderLocation + "screenalignedquad.vert");
 }
 
 ProceduralRenderer::~ProceduralRenderer()
@@ -51,7 +53,6 @@ void ProceduralRenderer::reloadProgram()
         textureString += Shader::includeString(include.name);
     }
 
-    const std::string shaderLocation = "../source/shader/";
     auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
     util::replace(fragmentCode, "#textures", textureString);
     util::replace(fragmentCode, "#includes", includeString);

@@ -114,6 +114,15 @@ namespace util
         return string.find(substring) != std::string::npos;
     }
 
+    bool endsWith(const std::string& string, const std::string& ending)
+    {
+        if (string.size() < ending.size())
+        {
+            return false;
+        }
+        return std::equal(ending.rbegin(), ending.rend(), string.rbegin());
+    }
+
     std::pair<int, int> splitNumbers(const std::string& string, const std::string& at)
     {
         const auto numbers = util::split(string, at);

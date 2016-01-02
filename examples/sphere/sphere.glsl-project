@@ -1,0 +1,9 @@
+internal-includes:
+    util
+    sphere
+    lighting
+external-includes:
+    settings: settings.glsl
+textures:
+
+main: main.glsl
