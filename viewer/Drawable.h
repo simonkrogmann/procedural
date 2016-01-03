@@ -4,12 +4,14 @@
 
 using namespace gl;
 
-class Drawable {
+class Drawable
+{
 public:
     Drawable();
     virtual ~Drawable();
 
     virtual void draw();
+
 protected:
     GLuint m_vao;
 };

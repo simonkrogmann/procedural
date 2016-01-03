@@ -9,33 +9,36 @@
 using namespace gl;
 
 Framebuffer::Framebuffer(const unsigned int& width, const unsigned int& height)
-: m_framebuffer {0}
-, m_color {0}
-, m_depth {0}
-, m_width {0}
-, m_height {0}
+    : m_framebuffer{0}, m_color{0}, m_depth{0}, m_width{0}, m_height{0}
 {
     glGenFramebuffers(1, &m_framebuffer);
     glGenTextures(1, &m_color);
 
     glBindTexture(GL_TEXTURE_2D, m_color);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<GLint>(GL_REPEAT));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<GLint>(GL_REPEAT));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<GLint>(GL_NEAREST));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<GLint>(GL_NEAREST));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                    static_cast<GLint>(GL_REPEAT));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                    static_cast<GLint>(GL_REPEAT));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    static_cast<GLint>(GL_NEAREST));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                    static_cast<GLint>(GL_NEAREST));
 
     glGenRenderbuffers(1, &m_depth);
 
     resize(width, height);
 
     const auto keeper = use();
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_color, 0);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depth);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                           m_color, 0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, m_depth);
 
     auto framebufferStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     if (framebufferStatus != GL_FRAMEBUFFER_COMPLETE)
     {
-        std::cout << "Framebuffer is incomplete: " << framebufferStatus << std::endl;
+        std::cout << "Framebuffer is incomplete: " << framebufferStatus
+                  << std::endl;
     }
 }
 
@@ -46,25 +49,27 @@ Framebuffer::~Framebuffer()
     glDeleteRenderbuffers(1, &m_depth);
 }
 
-Framebuffer::Framebuffer(Framebuffer&& old)
-: m_framebuffer {old.m_framebuffer}
+Framebuffer::Framebuffer(Framebuffer&& old) : m_framebuffer{old.m_framebuffer}
 {
     old.m_framebuffer = 0;
 }
-
 
 util::StateKeeper Framebuffer::use(const GLenum& mode) const
 {
     const auto old = util::glGetInteger(GL_FRAMEBUFFER_BINDING);
     glBindFramebuffer(mode, m_framebuffer);
-    return { [=]() { glBindFramebuffer(mode, old); } };
+    return {[=]()
+            {
+                glBindFramebuffer(mode, old);
+            }};
 }
 
 void Framebuffer::save(const std::string& filename)
 {
     const auto keeper = use(GL_READ_FRAMEBUFFER);
-    std::vector<unsigned char> imageData (m_width * m_height * 4);
-    glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, &imageData[0]);
+    std::vector<unsigned char> imageData(m_width * m_height * 4);
+    glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE,
+                 &imageData[0]);
     util::saveImage(imageData, m_width, m_height, filename);
 }
 
@@ -78,7 +83,8 @@ void Framebuffer::resize(const unsigned int& width, const unsigned int& height)
     m_height = height;
 
     glBindTexture(GL_TEXTURE_2D, m_color);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(GL_RGBA8), width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(GL_RGBA8), width, height,
+                 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glBindRenderbuffer(GL_RENDERBUFFER, m_depth);

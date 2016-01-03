@@ -16,11 +16,13 @@ Project::Project(const std::string& filename)
         m_internal = root["internal-includes"]->values();
         for (const auto& include : root["external-includes"]->children())
         {
-            m_external.push_back({include.first, folder + include.second->value()});
+            m_external.push_back(
+                {include.first, folder + include.second->value()});
         }
         for (const auto& texture : root["textures"]->children())
         {
-            m_textures.push_back({texture.first, folder + texture.second->value()});
+            m_textures.push_back(
+                {texture.first, folder + texture.second->value()});
         }
         m_mainShader = folder + (root["main"]->value());
     }
@@ -28,7 +30,6 @@ Project::Project(const std::string& filename)
 
 Project::~Project()
 {
-
 }
 
 std::vector<util::File> Project::includes()

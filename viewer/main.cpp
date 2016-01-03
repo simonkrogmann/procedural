@@ -15,7 +15,6 @@
 #include "Project.h"
 #include "util.h"
 
-
 using namespace gl;
 
 void initializeGL()
@@ -23,28 +22,31 @@ void initializeGL()
     glbinding::Binding::initialize(false);
     glbinding::setCallbackMaskExcept(
         glbinding::CallbackMask::After | glbinding::CallbackMask::Parameters,
-        { "glGetError" });
-    glbinding::setAfterCallback([](const glbinding::FunctionCall& call)
-    {
-        const auto error = glGetError();
-        if (error != GL_NO_ERROR)
+        {"glGetError"});
+    glbinding::setAfterCallback(
+        [](const glbinding::FunctionCall& call)
         {
-            std::cout << error << " in " << call.function->name()
-                << " with parameters:" << std::endl;
-            for (const auto& parameter : call.parameters)
+            const auto error = glGetError();
+            if (error != GL_NO_ERROR)
             {
-                std::cout << "    " << parameter->asString() << std::endl;
+                std::cout << error << " in " << call.function->name()
+                          << " with parameters:" << std::endl;
+                for (const auto& parameter : call.parameters)
+                {
+                    std::cout << "    " << parameter->asString() << std::endl;
+                }
             }
-        }
-    });
+        });
 }
 
-int main(int argc, char * argv[]) {
-    Config config {argc, argv};
+int main(int argc, char* argv[])
+{
+    Config config{argc, argv};
     Shader::id = config.valueUInt("shader-id");
     const auto arguments = config.additionalArguments();
-    const auto openFile = (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
-    Project project { openFile };
+    const auto openFile =
+        (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
+    Project project{openFile};
 
     Window w;
     const auto resolution = config.value("file-resolution");
@@ -62,7 +64,8 @@ int main(int argc, char * argv[]) {
     util::glContextInfo();
     w.initAfterGL();
 
-    auto renderer = std::make_unique<ProceduralRenderer>(project.includes(), project.textures());
+    auto renderer = std::make_unique<ProceduralRenderer>(project.includes(),
+                                                         project.textures());
 
     w.setRenderer(std::move(renderer));
     w.loop();

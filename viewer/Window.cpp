@@ -9,27 +9,23 @@
 
 namespace
 {
-    using namespace gl;
+using namespace gl;
 
-    std::map<GLFWwindow*, Window*> windows;
+std::map<GLFWwindow*, Window*> windows;
 
-    void onResize(GLFWwindow* window, int width, int height)
-    {
-        assert(width >= 0 && height >= 0);
-        windows[window]->resize(width, height);
-    }
-
-    void onKeyPress(GLFWwindow* window, int key, int, int action, int mods)
-    {
-        windows[window]->keyPress(key, action, mods);
-    }
-
+void onResize(GLFWwindow* window, int width, int height)
+{
+    assert(width >= 0 && height >= 0);
+    windows[window]->resize(width, height);
 }
 
+void onKeyPress(GLFWwindow* window, int key, int, int action, int mods)
+{
+    windows[window]->keyPress(key, action, mods);
+}
+}
 
-Window::Window()
-: m_window{ nullptr }
-, m_viewport{ 0, 0, 640, 480 }
+Window::Window() : m_window{nullptr}, m_viewport{0, 0, 640, 480}
 {
     setFileResolution(1920, 1080);
     glfwInit();
@@ -46,14 +42,14 @@ Window::~Window()
 
 void Window::requestGLVersion(const int& major, const int& minor)
 {
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
 }
 
 int Window::init(const std::string& title)
 {
-    m_window = glfwCreateWindow(m_viewport.width, m_viewport.height, title.c_str(), NULL, NULL);
+    m_window = glfwCreateWindow(m_viewport.width, m_viewport.height,
+                                title.c_str(), NULL, NULL);
 
     if (!m_window)
     {
@@ -79,12 +75,13 @@ void Window::setRenderer(std::unique_ptr<Renderer> renderer)
     m_renderer->init();
 }
 
-void Window::setFileResolution(const unsigned int& width, const unsigned int& height)
+void Window::setFileResolution(const unsigned int& width,
+                               const unsigned int& height)
 {
     m_fileResolution = {0, 0, width, height};
 }
 
-Renderer * Window::renderer()
+Renderer* Window::renderer()
 {
     return m_renderer.get();
 }

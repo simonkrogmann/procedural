@@ -12,16 +12,19 @@
 #include "Texture.h"
 #include "util.h"
 
-class ProceduralRenderer : public Renderer {
+class ProceduralRenderer : public Renderer
+{
 public:
     ProceduralRenderer(const std::vector<util::File>& includes,
-        const std::vector<util::File>& textureFiles);
+                       const std::vector<util::File>& textureFiles);
     virtual ~ProceduralRenderer();
 
     virtual void init() override;
     virtual void reload() override;
+
 protected:
     virtual void draw(const util::viewport::Viewport& viewport) override;
+
 private:
     void reloadProgram();
     void reloadTextures();

@@ -4,22 +4,18 @@
 #include <cassert>
 #include <sys/stat.h>
 
-FileWatcher::FileWatcher()
-: m_files { }
+FileWatcher::FileWatcher() : m_files{}
 {
-
 }
 
 FileWatcher::~FileWatcher()
 {
-
 }
 
 void FileWatcher::addFile(const std::string& file)
 {
     m_files[file] = timeStamp(file);
 }
-
 
 void FileWatcher::removeFile(const std::string& file)
 {

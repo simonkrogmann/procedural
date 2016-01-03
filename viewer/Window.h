@@ -8,7 +8,8 @@
 
 struct GLFWwindow;
 
-class Window {
+class Window
+{
 public:
     Window();
     ~Window();
@@ -17,13 +18,15 @@ public:
     int init(const std::string& title);
     void initAfterGL();
     void setRenderer(std::unique_ptr<Renderer> renderer);
-    Renderer * renderer();
+    Renderer* renderer();
     void keyPress(int key, int action, int mods);
     void resize(const unsigned int& width, const unsigned int& height);
-    void setFileResolution(const unsigned int& width, const unsigned int& height);
+    void setFileResolution(const unsigned int& width,
+                           const unsigned int& height);
     void loop();
+
 private:
-    GLFWwindow * m_window;
+    GLFWwindow* m_window;
     std::unique_ptr<Renderer> m_renderer;
     util::viewport::Viewport m_viewport;
     util::viewport::Viewport m_fileResolution;

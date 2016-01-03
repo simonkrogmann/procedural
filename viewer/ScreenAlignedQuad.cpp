@@ -4,22 +4,18 @@
 
 using namespace gl;
 
-ScreenAlignedQuad::ScreenAlignedQuad() {
+ScreenAlignedQuad::ScreenAlignedQuad()
+{
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
     GLuint buffer;
 
-    const float data[] = {
-        -1.0, 1.0,
-        1.0, 1.0,
-        -1.0, -1.0,
-        1.0, -1.0
-    };
+    const float data[] = {-1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0};
 
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 4, &data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(data), &data, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
@@ -31,14 +27,14 @@ ScreenAlignedQuad::ScreenAlignedQuad() {
     glDeleteBuffers(1, &buffer);
 }
 
-ScreenAlignedQuad::~ScreenAlignedQuad() {
+ScreenAlignedQuad::~ScreenAlignedQuad()
+{
     glDeleteVertexArrays(1, &m_vao);
 }
 
-
-void ScreenAlignedQuad::draw() {
+void ScreenAlignedQuad::draw()
+{
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindVertexArray(0);
 }
-

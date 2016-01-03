@@ -9,8 +9,8 @@
 
 #include "util.h"
 
-Config::Config(const int argc, char * argv[])
-: m_settings {"simonkrogmann", "procedural"}
+Config::Config(const int argc, char* argv[])
+    : m_settings{"simonkrogmann", "procedural"}
 {
     const auto arguments = toVector(argc, argv);
     const auto options = parseArguments(arguments);
@@ -21,10 +21,9 @@ Config::Config(const int argc, char * argv[])
 
 Config::~Config()
 {
-
 }
 
-std::vector<std::string> Config::toVector(const int& argc, char * argv[])
+std::vector<std::string> Config::toVector(const int& argc, char* argv[])
 {
     std::vector<std::string> arguments;
     for (int i = 0; i < argc; ++i)
@@ -34,7 +33,8 @@ std::vector<std::string> Config::toVector(const int& argc, char * argv[])
     return arguments;
 }
 
-std::map<std::string, std::string> Config::parseArguments(const std::vector<std::string>& arguments)
+std::map<std::string, std::string> Config::parseArguments(
+    const std::vector<std::string>& arguments)
 {
     std::map<std::string, std::string> options;
     for (const auto& argument : arguments)
@@ -57,7 +57,6 @@ std::vector<std::string> Config::additionalArguments()
     return m_additionalArguments;
 }
 
-
 void Config::setValues(const std::map<std::string, std::string>& pairs)
 {
     for (const auto& pair : pairs)
@@ -65,7 +64,7 @@ void Config::setValues(const std::map<std::string, std::string>& pairs)
         if (defaults.find(pair.first) != defaults.end())
         {
             m_settings.setValue(QString::fromStdString(pair.first),
-                QString::fromStdString(pair.second));
+                                QString::fromStdString(pair.second));
         }
     }
 }
@@ -73,8 +72,8 @@ void Config::setValues(const std::map<std::string, std::string>& pairs)
 std::string Config::value(const std::string& key)
 {
     assert(defaults.find(key) != defaults.end());
-    const auto setting = m_settings.value(QString::fromStdString(key),
-        QString::fromStdString(defaults.at(key)));
+    const auto setting = m_settings.value(
+        QString::fromStdString(key), QString::fromStdString(defaults.at(key)));
     return setting.toString().toUtf8().constData();
 }
 
@@ -89,7 +88,6 @@ void Config::setValue(const std::string& key, const unsigned int& value)
     m_settings.setValue(QString::fromStdString(key), value);
 }
 
-const std::map<std::string, std::string> Config::defaults {
-    {"gl-version", "best"},
-    {"file-resolution", "3840x2160"},
+const std::map<std::string, std::string> Config::defaults{
+    {"gl-version", "best"}, {"file-resolution", "3840x2160"},
 };

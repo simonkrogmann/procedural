@@ -2,7 +2,8 @@
 
 #include "Drawable.h"
 
-class ScreenAlignedQuad : public Drawable {
+class ScreenAlignedQuad : public Drawable
+{
 public:
     ScreenAlignedQuad();
     virtual ~ScreenAlignedQuad();

@@ -13,6 +13,7 @@ public:
 
     std::vector<util::File> includes();
     std::vector<util::File> textures();
+
 private:
     std::vector<std::string> m_internal;
     std::vector<util::File> m_external;

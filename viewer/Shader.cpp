@@ -30,32 +30,37 @@ std::string Shader::idString()
 }
 
 Shader Shader::vertex(const std::string& filename,
-        const std::vector<util::File>& includes)
+                      const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER,
+                  includes);
 }
 
 Shader Shader::geometry(const std::string& filename,
-        const std::vector<util::File>& includes)
+                        const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER,
+                  includes);
 }
 
 Shader Shader::fragment(const std::string& filename,
-        const std::vector<util::File>& includes)
+                        const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER,
+                  includes);
 }
 
 Shader Shader::compute(const std::string& filename,
-        const std::vector<util::File>& includes)
+                       const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER, includes);
+    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER,
+                  includes);
 }
 
 bool Shader::ARBIncludeSupported()
 {
-    static auto supported = util::glExtensionSupported("GL_ARB_shading_language_include");
+    static auto supported =
+        util::glExtensionSupported("GL_ARB_shading_language_include");
     static auto checked = false;
     if (!checked)
     {
@@ -63,17 +68,15 @@ bool Shader::ARBIncludeSupported()
         if (!supported)
         {
             std::cout << "Warning: GL_ARB_shader_include is not supported. "
-                << "The behaviour will be emulated instead." <<  std::endl;
+                      << "The behaviour will be emulated instead." << std::endl;
         }
     }
     return supported;
-
 }
 
 Shader::Shader(const std::string& name, const std::string& source,
-    const GLenum& type, const std::vector<util::File>& includes)
-: m_name {name}
-, m_shader {0}
+               const GLenum& type, const std::vector<util::File>& includes)
+    : m_name{name}, m_shader{0}
 {
     auto shaderSource = source;
     const static auto glslVersion = util::glslVersion();
@@ -106,16 +109,16 @@ void Shader::includeShader(const std::string& name, const std::string& source)
     m_includes[name] = source;
     if (ARBIncludeSupported())
     {
-        glNamedStringARB(GL_SHADER_INCLUDE_ARB, util::glLength(name), name.c_str(),
-            util::glLength(source), source.c_str());
+        glNamedStringARB(GL_SHADER_INCLUDE_ARB, util::glLength(name),
+                         name.c_str(), util::glLength(source), source.c_str());
     }
-
 }
 
 void Shader::compileShader(const std::string& source)
 {
     auto uploadSource = source;
-    if (!ARBIncludeSupported()) {
+    if (!ARBIncludeSupported())
+    {
         for (const auto& include : m_includes)
         {
             const auto directive = "#include \"" + include.first + "\"";
@@ -128,11 +131,12 @@ void Shader::compileShader(const std::string& source)
     if (ARBIncludeSupported())
     {
         std::vector<const char*> includeCStrings;
-        for (const auto& include : m_includes) {
+        for (const auto& include : m_includes)
+        {
             includeCStrings.push_back(include.first.c_str());
         }
         glCompileShaderIncludeARB(m_shader, util::glLength(includeCStrings),
-            includeCStrings.data(), nullptr);
+                                  includeCStrings.data(), nullptr);
     }
     else
     {
@@ -146,14 +150,13 @@ void Shader::deleteIncludes()
     {
         for (const auto& include : m_includes)
         {
-            glDeleteNamedStringARB(util::glLength(include.first), include.first.c_str());
+            glDeleteNamedStringARB(util::glLength(include.first),
+                                   include.first.c_str());
         }
     }
 }
 
-Shader::Shader(Shader&& old)
-: m_name{old.m_name}
-, m_shader{old.m_shader}
+Shader::Shader(Shader&& old) : m_name{old.m_name}, m_shader{old.m_shader}
 {
     old.m_shader = 0;
 }
@@ -175,7 +178,7 @@ void Shader::printCompilationError() const
     std::cout << "Compilation failed for " << m_name << ":" << std::endl;
     GLint length;
     glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &length);
-    char * infoLog = new char[length + 1];
+    char* infoLog = new char[length + 1];
     glGetShaderInfoLog(m_shader, length, NULL, infoLog);
     std::cout << infoLog << std::endl;
     delete[] infoLog;

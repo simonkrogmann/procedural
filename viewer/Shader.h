@@ -21,18 +21,18 @@ public:
     static std::string idString();
 
     static Shader vertex(const std::string& filename,
-        const std::vector<util::File>& includes = {});
+                         const std::vector<util::File>& includes = {});
     static Shader geometry(const std::string& filename,
-        const std::vector<util::File>& includes = {});
+                           const std::vector<util::File>& includes = {});
     static Shader fragment(const std::string& filename,
-        const std::vector<util::File>& includes = {});
+                           const std::vector<util::File>& includes = {});
     static Shader compute(const std::string& filename,
-        const std::vector<util::File>& includes = {});
+                          const std::vector<util::File>& includes = {});
 
     Shader(Shader&& old);
     Shader(const Shader&) = delete;
     Shader(const std::string& name, const std::string& source,
-        const GLenum& type, const std::vector<util::File>& includes = {});
+           const GLenum& type, const std::vector<util::File>& includes = {});
     ~Shader();
 
     bool isCompiled() const;

@@ -9,7 +9,8 @@ using namespace gl;
 class Shader;
 namespace util
 {
-    template<typename T> class Group;
+template <typename T>
+class Group;
 }
 
 class Program
@@ -26,6 +27,7 @@ public:
     GLint operator[](const std::string& uniformName) const;
     GLuint get() const { return m_program; };
     void use() const;
+
 private:
     GLuint linkShaders(const util::Group<Shader>& shaders);
 

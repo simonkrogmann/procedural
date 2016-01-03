@@ -9,14 +9,15 @@ using namespace gl;
 
 const std::string ProceduralRenderer::shaderLocation = "../viewer/shader/";
 
-ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
+ProceduralRenderer::ProceduralRenderer(
+    const std::vector<util::File>& includes,
     const std::vector<util::File>& textureFiles)
-: Renderer { }
-, m_screen { }
-, m_program { }
-, m_includes { includes }
-, m_textures { }
-, m_start { std::chrono::steady_clock::now() }
+    : Renderer{}
+    , m_screen{}
+    , m_program{}
+    , m_includes{includes}
+    , m_textures{}
+    , m_start{std::chrono::steady_clock::now()}
 {
     for (const auto& textureFile : textureFiles)
     {
@@ -33,7 +34,6 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
 
 ProceduralRenderer::~ProceduralRenderer()
 {
-
 }
 
 void ProceduralRenderer::init()
@@ -57,10 +57,10 @@ void ProceduralRenderer::reloadProgram()
     auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
     util::replace(fragmentCode, "//textures", textureString);
     util::replace(fragmentCode, "//includes", includeString);
-    const util::Group<Shader> shaders (
+    const util::Group<Shader> shaders(
         Shader::vertex(shaderLocation + "screenalignedquad.vert"),
-        Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER, m_includes)
-    );
+        Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER,
+               m_includes));
     m_program = std::make_unique<Program>(shaders);
 }
 
@@ -97,7 +97,8 @@ void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
         return;
     }
 
-    std::chrono::duration<double> diff = std::chrono::steady_clock::now() - m_start;
+    std::chrono::duration<double> diff =
+        std::chrono::steady_clock::now() - m_start;
 
     m_program->use();
     glUniform2i((*m_program)["windowSize"], viewport.width, viewport.height);

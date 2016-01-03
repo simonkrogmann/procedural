@@ -12,24 +12,20 @@
 
 using namespace gl;
 
-Program::Program(const util::Group<Shader>& shaders)
-: m_program {0}
+Program::Program(const util::Group<Shader>& shaders) : m_program{0}
 {
     m_program = linkShaders(shaders);
 
     if (!isLinked())
     {
         printLinkingError();
-    } else {
     }
 }
 
-Program::Program(Program&& old)
-: m_program{old.m_program}
+Program::Program(Program&& old) : m_program{old.m_program}
 {
     old.m_program = 0;
 }
-
 
 Program::~Program()
 {
@@ -46,7 +42,6 @@ GLuint Program::linkShaders(const util::Group<Shader>& shaders)
     }
 
     glLinkProgram(linkProgram);
-
 
     for (const auto& shader : shaders)
     {
@@ -68,7 +63,7 @@ void Program::printLinkingError() const
     std::cout << "Linking failed:" << std::endl;
     GLint length;
     glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &length);
-    char * infoLog = new char[length + 1];
+    char* infoLog = new char[length + 1];
     glGetProgramInfoLog(m_program, length, NULL, infoLog);
     std::cout << infoLog << std::endl;
     delete[] infoLog;
