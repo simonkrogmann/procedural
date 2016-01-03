@@ -10,7 +10,7 @@
 #include "util.h"
 
 Config::Config(const int argc, char* argv[])
-    : m_settings{"simonkrogmann", "procedural"}
+    : m_settings{"simonkrogmann", "procedural-viewer"}
 {
     const auto arguments = toVector(argc, argv);
     const auto options = parseArguments(arguments);
@@ -89,5 +89,7 @@ void Config::setValue(const std::string& key, const unsigned int& value)
 }
 
 const std::map<std::string, std::string> Config::defaults{
-    {"gl-version", "best"}, {"file-resolution", "3840x2160"},
+    {"gl-version", "best"},
+    {"file-resolution", "3840x2160"},
+    {"fullscreen", "true"},
 };

@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
         const auto numbers = util::splitNumbers(version, ".");
         w.requestGLVersion(numbers.first, numbers.second);
     }
-    w.init("procedural");
+    w.init("procedural-viewer", config.value("fullscreen") == "true");
     initializeGL();
     util::glContextInfo();
     w.initAfterGL();

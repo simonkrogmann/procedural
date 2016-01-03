@@ -44,12 +44,19 @@ void Window::requestGLVersion(const int& major, const int& minor)
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, major);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minor);
+    glfwWindowHint(GLFW_AUTO_ICONIFY, 0);
 }
 
-int Window::init(const std::string& title)
+int Window::init(const std::string& title, const bool& fullscreen)
 {
+    auto monitor = fullscreen ? glfwGetPrimaryMonitor() : nullptr;
+    if (fullscreen)
+    {
+        const auto mode = glfwGetVideoMode(monitor);
+        m_viewport = {0, 0, mode->width, mode->height};
+    }
     m_window = glfwCreateWindow(m_viewport.width, m_viewport.height,
-                                title.c_str(), NULL, NULL);
+                                title.c_str(), monitor, nullptr);
 
     if (!m_window)
     {
