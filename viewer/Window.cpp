@@ -53,7 +53,8 @@ int Window::init(const std::string& title, const bool& fullscreen)
     if (fullscreen)
     {
         const auto mode = glfwGetVideoMode(monitor);
-        m_viewport = {0, 0, mode->width, mode->height};
+        m_viewport = {0, 0, static_cast<unsigned int>(mode->width),
+                      static_cast<unsigned int>(mode->height)};
     }
     m_window = glfwCreateWindow(m_viewport.width, m_viewport.height,
                                 title.c_str(), monitor, nullptr);
