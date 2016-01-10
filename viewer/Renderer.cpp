@@ -2,7 +2,7 @@
 
 #include <glbinding/gl/gl.h>
 
-#include "util.h"
+#include <utilpp/gl/viewport.h>
 
 using namespace gl;
 

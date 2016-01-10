@@ -6,11 +6,12 @@
 #include <map>
 #include <chrono>
 
+#include <utilpp/file.h>
+
 #include "Renderer.h"
 #include "ScreenAlignedQuad.h"
 #include "Program.h"
 #include "Texture.h"
-#include "util.h"
 
 class ProceduralRenderer : public Renderer
 {

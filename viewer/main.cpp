@@ -7,13 +7,14 @@
 #include <glbinding/gl/gl.h>
 #include <glbinding/callbacks.h>
 #include <QSettings>
+#include <utilpp/gl/base.h>
+#include <utilpp/str.h>
+#include <utilpp/Config.h>
 
 #include "Window.h"
 #include "ProceduralRenderer.h"
-#include "Config.h"
 #include "Shader.h"
 #include "Project.h"
-#include "util.h"
 
 using namespace gl;
 
@@ -41,7 +42,13 @@ void initializeGL()
 
 int main(int argc, char* argv[])
 {
-    Config config{argc, argv};
+    util::Config config{"simonkrogmann", "procedural-viewer"};
+    config.setDefaults({
+        {"gl-version", "best"},
+        {"file-resolution", "3840x2160"},
+        {"fullscreen", "true"},
+    });
+    config.load(argc, argv);
     Shader::id = config.valueUInt("shader-id");
     const auto arguments = config.additionalArguments();
     const auto openFile =

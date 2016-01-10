@@ -3,8 +3,9 @@
 #include <string>
 #include <memory>
 
+#include <utilpp/gl/viewport.h>
+
 #include "Renderer.h"
-#include "util.h"
 
 struct GLFWwindow;
 

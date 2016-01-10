@@ -1,9 +1,9 @@
 #pragma once
 
 #include <glbinding/gl/gl.h>
+#include <utilpp/FileWatcher.h>
 
 #include "Framebuffer.h"
-#include "FileWatcher.h"
 
 using namespace gl;
 
@@ -35,5 +35,5 @@ protected:
 
 private:
     Framebuffer m_fileFBO;
-    FileWatcher m_fileWatcher;
+    util::FileWatcher m_fileWatcher;
 };

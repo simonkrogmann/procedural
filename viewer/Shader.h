@@ -5,8 +5,7 @@
 #include <map>
 
 #include <glbinding/gl/gl.h>
-
-#include "util.h"
+#include <utilpp/file.h>
 
 using namespace gl;
 
@@ -20,13 +19,13 @@ public:
     static std::string textureString(const std::string& name);
     static std::string idString();
 
-    static Shader vertex(const std::string& filename,
+    static Shader vertex(const util::File& file,
                          const std::vector<util::File>& includes = {});
-    static Shader geometry(const std::string& filename,
+    static Shader geometry(const util::File& file,
                            const std::vector<util::File>& includes = {});
-    static Shader fragment(const std::string& filename,
+    static Shader fragment(const util::File& file,
                            const std::vector<util::File>& includes = {});
-    static Shader compute(const std::string& filename,
+    static Shader compute(const util::File& file,
                           const std::vector<util::File>& includes = {});
 
     Shader(Shader&& old);
