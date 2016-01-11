@@ -1,9 +1,12 @@
 #include "ProceduralRenderer.h"
 
 #include <glbinding/gl/gl.h>
+#include <utilpp/file.h>
+#include <utilpp/Group.h>
+#include <utilpp/str.h>
+#include <utilpp/gl/viewport.h>
 
 #include "Shader.h"
-#include "util.h"
 
 using namespace gl;
 
@@ -58,7 +61,8 @@ void ProceduralRenderer::reloadProgram()
     util::replace(fragmentCode, "//textures", textureString);
     util::replace(fragmentCode, "//includes", includeString);
     const util::Group<Shader> shaders(
-        Shader::vertex(shaderLocation + "screenalignedquad.vert"),
+        Shader::vertex(util::File{"screenalignedquad.vert",
+                                  shaderLocation + "screenalignedquad.vert"}),
         Shader("procedural.frag", fragmentCode, GL_FRAGMENT_SHADER,
                m_includes));
     m_program = std::make_unique<Program>(shaders);

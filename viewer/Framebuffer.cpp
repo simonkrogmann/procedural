@@ -3,8 +3,9 @@
 #include <iostream>
 
 #include <glbinding/gl/gl.h>
-
-#include "util.h"
+#include <utilpp/StateKeeper.h>
+#include <utilpp/gl/base.h>
+#include <utilpp/file.h>
 
 using namespace gl;
 

@@ -3,8 +3,9 @@
 #include <iostream>
 
 #include <glbinding/gl/gl.h>
-
-#include "util.h"
+#include <utilpp/gl/base.h>
+#include <utilpp/file.h>
+#include <utilpp/str.h>
 
 using namespace gl;
 
@@ -29,32 +30,28 @@ std::string Shader::idString()
     return "const int shader_id = " + uniqueId() + ";\n";
 }
 
-Shader Shader::vertex(const std::string& filename,
+Shader Shader::vertex(const util::File& file,
                       const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_VERTEX_SHADER,
-                  includes);
+    return Shader(file.name, file.content(), GL_VERTEX_SHADER, includes);
 }
 
-Shader Shader::geometry(const std::string& filename,
+Shader Shader::geometry(const util::File& file,
                         const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_GEOMETRY_SHADER,
-                  includes);
+    return Shader(file.name, file.content(), GL_GEOMETRY_SHADER, includes);
 }
 
-Shader Shader::fragment(const std::string& filename,
+Shader Shader::fragment(const util::File& file,
                         const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_FRAGMENT_SHADER,
-                  includes);
+    return Shader(file.name, file.content(), GL_FRAGMENT_SHADER, includes);
 }
 
-Shader Shader::compute(const std::string& filename,
+Shader Shader::compute(const util::File& file,
                        const std::vector<util::File>& includes)
 {
-    return Shader(filename, util::loadFile(filename), GL_COMPUTE_SHADER,
-                  includes);
+    return Shader(file.name, file.content(), GL_COMPUTE_SHADER, includes);
 }
 
 bool Shader::ARBIncludeSupported()

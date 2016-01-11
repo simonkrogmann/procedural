@@ -3,8 +3,7 @@
 #include <string>
 
 #include <glbinding/gl/gl.h>
-
-#include "util.h"
+#include <utilpp/file.h>
 
 using namespace gl;
 

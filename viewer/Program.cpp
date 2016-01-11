@@ -6,9 +6,9 @@
 #include <cstring>
 
 #include <glbinding/gl/gl.h>
+#include <utilpp/Group.h>
 
 #include "Shader.h"
-#include "util.h"
 
 using namespace gl;
 

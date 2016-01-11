@@ -4,7 +4,7 @@
 
 #include <glbinding/gl/gl.h>
 
-#include "util.h"
+#include <utilpp/StateKeeper.h>
 
 using namespace gl;
 
