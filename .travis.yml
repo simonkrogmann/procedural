@@ -1,6 +1,6 @@
 language: cpp
 compiler:
-# - clang
+  - clang
   - gcc
 sudo: required
 dist: trusty
@@ -14,24 +14,33 @@ addons:
       - gcc-5
       - cppcheck
       - qtbase5-dev
+      # for glfw
       - libqt5opengl5-dev
       - xorg-dev
       - libglu1-mesa-dev
 install:
   - mkdir build && cd build
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - sudo add-apt-repository -y "deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.7 main"
+  - sudo apt-get update -y
+  - sudo apt-get install -y --force-yes clang-3.7
+  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
+  # glfw
   - git clone https://github.com/glfw/glfw.git
   - cd glfw && mkdir build && cd build && cmake .. -DBUILD_SHARED_LIBS=ON
   - make && sudo make install
   - cd ../..
+  # glbinding
   - git clone https://github.com/cginternals/glbinding.git
   - cd glbinding && mkdir build && cd build && cmake .. -DOPTION_BUILD_TOOLS=OFF
   - make && sudo make install
   - cd ../..
+  # utilpp
   - git clone https://github.com/simonkrogmann/utilpp.git
   - cd utilpp && mkdir build && cd build && cmake .. -DCLANG_FORMAT=OFF
   - make && sudo make install
   - cd ../..
+  # glslangValidator
   - svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang/Install/Linux
   - cd Linux && ./install
   - cd ..
