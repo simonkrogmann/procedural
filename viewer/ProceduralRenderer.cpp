@@ -1,10 +1,10 @@
 #include "ProceduralRenderer.h"
 
 #include <glbinding/gl/gl.h>
-#include <utilpp/file.h>
-#include <utilpp/Group.h>
-#include <utilpp/str.h>
-#include <utilpp/gl/viewport.h>
+#include <utilgpu/cpp/file.h>
+#include <utilgpu/cpp/Group.h>
+#include <utilgpu/cpp/str.h>
+#include <utilgpu/gl/viewport.h>
 
 #include "Shader.h"
 

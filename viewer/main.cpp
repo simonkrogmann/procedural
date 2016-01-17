@@ -7,9 +7,9 @@
 #include <glbinding/gl/gl.h>
 #include <glbinding/callbacks.h>
 #include <QSettings>
-#include <utilpp/gl/base.h>
-#include <utilpp/str.h>
-#include <utilpp/Config.h>
+#include <utilgpu/gl/base.h>
+#include <utilgpu/cpp/str.h>
+#include <utilgpu/qt/Config.h>
 
 #include "Window.h"
 #include "ProceduralRenderer.h"

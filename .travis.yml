@@ -28,8 +28,8 @@ install:
   - cd glbinding && mkdir build && cd build && cmake .. -DOPTION_BUILD_TOOLS=OFF
   - make && sudo make install
   - cd ../..
-  - git clone https://github.com/simonkrogmann/utilpp.git
-  - cd utilpp && mkdir build && cd build && cmake .. -DCLANG_FORMAT=OFF
+  - git clone https://github.com/simonkrogmann/utilgpu.git
+  - cd utilgpu && mkdir build && cd build && cmake .. -DCLANG_FORMAT=OFF -DBUILD_ALL=ON
   - make && sudo make install
   - cd ../..
   - svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang/Install/Linux

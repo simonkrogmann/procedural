@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glbinding/gl/gl.h>
-#include <utilpp/FileWatcher.h>
+#include <utilgpu/cpp/FileWatcher.h>
 
 #include "Framebuffer.h"
 

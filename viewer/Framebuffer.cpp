@@ -1,11 +1,12 @@
 #include "Framebuffer.h"
 
 #include <iostream>
+#include <vector>
 
 #include <glbinding/gl/gl.h>
-#include <utilpp/StateKeeper.h>
-#include <utilpp/gl/base.h>
-#include <utilpp/file.h>
+#include <utilgpu/cpp/StateKeeper.h>
+#include <utilgpu/gl/base.h>
+#include <utilgpu/qt/texture.h>
 
 using namespace gl;
 

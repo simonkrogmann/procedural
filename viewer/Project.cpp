@@ -1,8 +1,8 @@
 #include "Project.h"
 
-#include <utilpp/file.h>
-#include <utilpp/str.h>
-#include <utilpp/yaml.h>
+#include <utilgpu/cpp/file.h>
+#include <utilgpu/cpp/str.h>
+#include <utilgpu/cpp/yaml.h>
 
 Project::Project(const std::string& filename)
 {
