@@ -6,7 +6,7 @@
 #include <cstring>
 
 #include <glbinding/gl/gl.h>
-#include <utilpp/Group.h>
+#include <utilgpu/cpp/Group.h>
 
 #include "Shader.h"
 
