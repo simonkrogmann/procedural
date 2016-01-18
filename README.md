@@ -13,6 +13,14 @@ A lbrary of procedural textures written in glsl and a viewer to display them.
 The viewer can be started with either a project file (.glsl-project) or a fragment shader (.frag):
 
 `./procedural-viewer <file> [options]`
+
+Key | Action
+--- | ---
+ S  | screenshot (using offscreen rendering)
+ R  | reload shaders
+
+Shaders and textures will also automatically be reloaded on file changes.
+
 ###Project Files
 A project file consists of internal includes (from the library), your own includes, textures and a main shader, which should contain a main function.
 Sample project file:
@@ -30,6 +38,7 @@ main: main.frag
 ```
 ###Accessible Variables
 The textures are accessible by the names given to them in the project file. Additionally the following variables can be used:
+
 * in vec2 position
 * out vec4 color
 * uniform ivec2 windowSize

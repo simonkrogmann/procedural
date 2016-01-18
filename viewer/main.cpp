@@ -46,10 +46,14 @@ int main(int argc, char* argv[])
     config.setDefaults({
         {"gl-version", "best"},
         {"file-resolution", "3840x2160"},
-        {"fullscreen", "true"},
+        {"fullscreen", "false"},
     });
     config.load(argc, argv);
-    Shader::id = config.valueUInt("shader-id");
+
+    // increase id to work around program crashes,
+    // where the shader id couldn't be synced properly
+    Shader::id = config.valueUInt("shader-id") + 100;
+    config.setValue("shader-id", Shader::id);
     const auto arguments = config.additionalArguments();
     const auto openFile =
         (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
