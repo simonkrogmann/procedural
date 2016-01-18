@@ -28,7 +28,9 @@ textures:
     depth: depth.png
 main: main.frag
 ```
-###Accessible Uniforms
+###Accessible Variables
 The textures are accessible by the names given to them in the project file. Additionally the following variables can be used:
-* ivec2 windowSize
-* float time (in seconds)
+* in vec2 position
+* out vec4 color
+* uniform ivec2 windowSize
+* uniform float time (in seconds)

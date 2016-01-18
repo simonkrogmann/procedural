@@ -20,3 +20,25 @@ float aastep(float threshold, float value)
 
     return smoothstep(threshold - delta, threshold + delta, value);
 }
+
+vec2 rotate(vec2 uv, float angle)
+{
+    mat2 rotation = mat2(
+        cos(angle), -sin(angle),
+        sin(angle), cos(angle)
+    );
+    return rotation * uv;
+}
+
+vec2[25] multisampleLocations(vec2 uv, int samples)
+{
+    vec2 locations[25];
+    for (int x = 0;  x < samples; ++x)
+    {
+        for (int y = 0;  y < samples; ++y)
+        {
+            locations[x + samples * y] = uv + dFdx(uv) * vec2(x, y) / samples;
+        }
+    }
+    return locations;
+}

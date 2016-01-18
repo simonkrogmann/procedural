@@ -1,0 +1,4 @@
+internal-includes:
+    - util
+    - mandelbrot
+main: main.frag
