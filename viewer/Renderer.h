@@ -28,6 +28,7 @@ public:
     void renderOffscreen(const Framebuffer& fbo,
                          const util::viewport::Viewport& resolution);
     void renderToFile(const util::viewport::Viewport& resolution);
+    virtual void saveFramebuffers() = 0;
 
 protected:
     void addDependentPath(const std::string& path);

@@ -1,4 +1,5 @@
 internal-includes:
     - util
     - mandelbrot
-main: main.frag
+stages:
+    final: main.frag

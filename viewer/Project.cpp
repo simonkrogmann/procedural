@@ -8,7 +8,7 @@ Project::Project(const std::string& filename)
 {
     if (util::endsWith(filename, ".frag"))
     {
-        m_mainShader = filename;
+        m_stages.push_back({"final", filename});
     }
     else
     {
@@ -26,7 +26,10 @@ Project::Project(const std::string& filename)
             m_textures.push_back(
                 {texture.first, folder + texture.second->value()});
         }
-        m_mainShader = folder + (root["main"]->value());
+        for (const auto& stage : root["stages"]->children())
+        {
+            m_stages.push_back({stage.first, folder + stage.second->value()});
+        }
     }
 }
 
@@ -34,7 +37,7 @@ Project::~Project()
 {
 }
 
-std::vector<util::File> Project::includes()
+std::vector<util::File> Project::includes() const
 {
     std::vector<util::File> includeFiles;
 
@@ -47,11 +50,15 @@ std::vector<util::File> Project::includes()
     {
         includeFiles.push_back(include);
     }
-    includeFiles.push_back({"main", m_mainShader});
     return includeFiles;
 }
 
-std::vector<util::File> Project::textures()
+std::vector<util::File> Project::stages() const
+{
+    return m_stages;
+}
+
+std::vector<util::File> Project::textures() const
 {
     return m_textures;
 }

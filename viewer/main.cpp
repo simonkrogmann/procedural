@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
     util::glContextInfo();
     w.initAfterGL();
 
-    auto renderer = std::make_unique<ProceduralRenderer>(project.includes(),
-                                                         project.textures());
+    auto renderer = std::make_unique<ProceduralRenderer>(
+        project.includes(), project.textures(), project.stages());
 
     w.setRenderer(std::move(renderer));
     w.loop();

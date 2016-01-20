@@ -27,7 +27,8 @@ void Renderer::renderToFile(const util::viewport::Viewport& resolution)
 {
     m_fileFBO.resize(resolution.width, resolution.height);
     renderOffscreen(m_fileFBO, resolution);
-    m_fileFBO.save("test.png");
+    m_fileFBO.save("final.png");
+    saveFramebuffers();
 }
 
 void Renderer::renderOffscreen(const Framebuffer& fbo,

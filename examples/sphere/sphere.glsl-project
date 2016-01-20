@@ -6,4 +6,5 @@ external-includes:
     settings: settings.frag
 textures:
 
-main: main.frag
+stages:
+    final: main.frag

@@ -1,0 +1,11 @@
+internal-includes:
+    - util
+    - math
+    - blur
+    - mandelbrot
+external-includes:
+    settings: settings.frag
+stages:
+    base_image: image.frag
+    blur_x: blur_x.frag
+    blur_y: blur_y.frag

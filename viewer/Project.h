@@ -11,12 +11,13 @@ public:
     Project(const std::string& filename);
     ~Project();
 
-    std::vector<util::File> includes();
-    std::vector<util::File> textures();
+    std::vector<util::File> includes() const;
+    std::vector<util::File> textures() const;
+    std::vector<util::File> stages() const;
 
 private:
     std::vector<std::string> m_internal;
     std::vector<util::File> m_external;
-    std::string m_mainShader;
+    std::vector<util::File> m_stages;
     std::vector<util::File> m_textures;
 };
