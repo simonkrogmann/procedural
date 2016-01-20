@@ -1,5 +1,7 @@
 #include "ProceduralRenderer.h"
 
+#include <iostream>
+
 #include <glbinding/gl/gl.h>
 #include <utilgpu/cpp/file.h>
 #include <utilgpu/cpp/Group.h>
@@ -97,6 +99,10 @@ void ProceduralRenderer::reloadTextures()
 {
     for (const auto& stage : m_stages)
     {
+        if (!stage.program->isLinked())
+        {
+            return;
+        }
         stage.program->use();
         unsigned int textureIndex = 0;
         for (auto& texture : m_textures)
@@ -119,6 +125,7 @@ void ProceduralRenderer::reloadTextures()
             ++textureIndex;
         }
     }
+    std::cout << "Shaders successfully compiled" << std::endl;
 }
 
 void ProceduralRenderer::reload()
