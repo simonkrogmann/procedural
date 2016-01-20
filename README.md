@@ -16,14 +16,14 @@ The viewer can be started with either a project file (.glsl-project) or a fragme
 
 Key | Action
 --- | ---
- S  | screenshot (using offscreen rendering)
+ S  | screenshot (using offscreen rendering, the framebuffers of the other stages are also saved to files)
  R  | reload shaders
 
 Shaders and textures will also automatically be reloaded on file changes.
 
 ###Project Files
-A project file consists of internal includes (from the library), your own includes, textures and a main shader, which should contain a main function.
-Sample project file:
+A project file consists of internal includes (from the library), your own includes, textures and stages, each of which should include a main function. All stages are rendered to textures, except the last stage, which is rendered to the default framebuffer.
+Here is a sample project file:
 ```
 internal-includes:
     - util
@@ -34,12 +34,14 @@ external-includes:
 textures:
     normals: normals.png
     depth: depth.png
-main: main.frag
+stages: 
+    base: image.frag
+    final: blur.frag
 ```
 ###Accessible Variables
-The textures are accessible by the names given to them in the project file. Additionally the following variables can be used:
+The textures and the results of all previous stages are accessible (as `uniform sampler2D` using the format GL_RGBA8)  by the names given to them in the project file. Additionally the following variables can be used:
 
-* in vec2 position
-* out vec4 color
-* uniform ivec2 windowSize
-* uniform float time (in seconds)
+* `in vec2 position`
+* `out vec4 color`
+* `uniform ivec2 windowSize`
+* `uniform float time` (in seconds)
