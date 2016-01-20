@@ -1,7 +1,7 @@
 vec3 colorFunc(float factor)
 {
     factor = abs((factor - 0.5) * 2);
-    return (1.0 - factor) * vec3(1, 0.3, 0.1);
+    return pow((1.0 - factor), 0.6) * vec3(1, 0.3, 0.1);
 }
 
 void main()

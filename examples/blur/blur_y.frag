@@ -1,4 +1,4 @@
 void main()
 {
-    color = blurY(blur_x, position, samples);
+    color = blurY(blur_x, position, samples, windowSize);
 }
