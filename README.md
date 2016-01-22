@@ -26,15 +26,15 @@ A project file consists of internal includes (from the library), your own includ
 Here is a sample project file:
 ```
 internal-includes:
-    - util
-    - sphere
-    - lighting
+    util
+    sphere
+    lighting
 external-includes:
     settings: settings.frag
 textures:
     normals: normals.png
     depth: depth.png
-stages: 
+stages:
     base: image.frag
     final: blur.frag
 ```

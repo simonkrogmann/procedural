@@ -1,6 +1,6 @@
 internal-includes:
-    - util
-    - mandelbrot
-    - color_functions
+    util
+    mandelbrot
+    color_functions
 stages:
     final: main.frag

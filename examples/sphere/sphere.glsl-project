@@ -1,10 +1,9 @@
 internal-includes:
-    - util
-    - sphere
-    - lighting
+    util
+    sphere
+    lighting
 external-includes:
     settings: settings.frag
 textures:
-
 stages:
     final: main.frag

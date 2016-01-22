@@ -1,6 +1,6 @@
 internal-includes:
-    - util
-    - color_functions
+    util
+    color_functions
 external-includes:
     settings: settings.frag
 stages:
