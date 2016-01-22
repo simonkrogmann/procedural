@@ -1,3 +1,6 @@
+// uses includes:
+//  - util
+
 vec4 sphereHelper(vec2 uv, vec2 position, float radius)
 {
     float height = sqrt(pow(radius, 2.0) - pow(length(uv - position), 2));

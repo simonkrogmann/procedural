@@ -1,3 +1,6 @@
+// uses includes:
+//  - math
+
 float weight(float sigma, float factor, int i)
 {
     return factor * pow(e, -0.5 * pow(i / sigma, 2.0));

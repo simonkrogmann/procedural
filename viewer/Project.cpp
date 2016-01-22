@@ -48,6 +48,11 @@ Project::Project(const std::string& filename)
     checkExists(m_external);
     checkExists(m_textures);
     checkExists(m_stages);
+    if (m_stages.size() < 1)
+    {
+        std::cout << "There must be at least one stage." << std::endl;
+        m_valid = false;
+    }
 }
 
 Project::~Project()
