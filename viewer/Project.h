@@ -14,10 +14,14 @@ public:
     std::vector<util::File> includes() const;
     std::vector<util::File> textures() const;
     std::vector<util::File> stages() const;
+    bool valid() const;
 
 private:
-    std::vector<std::string> m_internal;
+    void checkExists(const std::vector<util::File>& files);
+
+    std::vector<util::File> m_internal;
     std::vector<util::File> m_external;
     std::vector<util::File> m_stages;
     std::vector<util::File> m_textures;
+    bool m_valid = true;
 };

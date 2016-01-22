@@ -58,6 +58,11 @@ int main(int argc, char* argv[])
     const auto openFile =
         (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
     Project project{openFile};
+    if (!project.valid())
+    {
+        std::cout << "Invalid project file" << std::endl;
+        exit(1);
+    }
 
     Window w;
     const auto resolution = config.value("file-resolution");
