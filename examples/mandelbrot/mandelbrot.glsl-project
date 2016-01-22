@@ -2,5 +2,6 @@ internal-includes:
     util
     mandelbrot
     color_functions
+    multisample
 stages:
     final: main.frag
