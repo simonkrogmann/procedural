@@ -104,6 +104,10 @@ void Window::keyPress(int key, int action, int mods)
     {
         m_renderer->renderToFile(m_fileResolution);
     }
+    else if (key == 'F' && action == GLFW_PRESS && mods == 0)
+    {
+        m_renderer->measureFrameTime();
+    }
     else if (key == 'Q' && action == GLFW_PRESS && mods == GLFW_MOD_CONTROL)
     {
         glfwSetWindowShouldClose(m_window, 1);

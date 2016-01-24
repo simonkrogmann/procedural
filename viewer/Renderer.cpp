@@ -1,7 +1,8 @@
 #include "Renderer.h"
 
-#include <glbinding/gl/gl.h>
+#include <iostream>
 
+#include <glbinding/gl/gl.h>
 #include <utilgpu/gl/viewport.h>
 
 using namespace gl;
@@ -21,6 +22,29 @@ void Renderer::render(const util::viewport::Viewport& viewport)
         reload();
     }
     draw(viewport);
+    if (m_measureFrameTime)
+    {
+        updateFrameTime();
+    }
+}
+
+void Renderer::updateFrameTime()
+{
+    std::chrono::duration<double> diff =
+        std::chrono::steady_clock::now() - m_start;
+    if (diff.count() > 1.0)
+    {
+        std::cout << 1000.0 / m_frames << " ms/frame" << std::endl;
+        m_measureFrameTime = false;
+    }
+    ++m_frames;
+}
+
+void Renderer::measureFrameTime()
+{
+    m_frames = 0;
+    m_measureFrameTime = true;
+    m_start = std::chrono::steady_clock::now();
 }
 
 void Renderer::renderToFile(const util::viewport::Viewport& resolution)

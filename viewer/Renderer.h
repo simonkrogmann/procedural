@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+
 #include <glbinding/gl/gl.h>
 #include <utilgpu/cpp/FileWatcher.h>
 
@@ -28,6 +30,8 @@ public:
     void renderOffscreen(const Framebuffer& fbo,
                          const util::viewport::Viewport& resolution);
     void renderToFile(const util::viewport::Viewport& resolution);
+    void measureFrameTime();
+    void updateFrameTime();
     virtual void saveFramebuffers() = 0;
 
 protected:
@@ -37,4 +41,8 @@ protected:
 private:
     Framebuffer m_fileFBO;
     util::FileWatcher m_fileWatcher;
+
+    unsigned int m_frames = 0;
+    bool m_measureFrameTime = false;
+    std::chrono::time_point<std::chrono::steady_clock> m_start;
 };
