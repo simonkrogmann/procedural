@@ -10,10 +10,10 @@
 #include <utilgpu/gl/base.h>
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/qt/Config.h>
+#include <utilgpu/gl/Shader.h>
 
 #include "Window.h"
 #include "ProceduralRenderer.h"
-#include "Shader.h"
 #include "Project.h"
 
 using namespace gl;

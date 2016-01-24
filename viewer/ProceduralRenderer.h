@@ -7,11 +7,11 @@
 #include <chrono>
 
 #include <utilgpu/cpp/file.h>
+#include <utilgpu/gl/ScreenAlignedQuad.h>
+#include <utilgpu/gl/Program.h>
+#include <utilgpu/gl/Texture.h>
 
 #include "Renderer.h"
-#include "ScreenAlignedQuad.h"
-#include "Program.h"
-#include "Texture.h"
 
 struct Stage
 {

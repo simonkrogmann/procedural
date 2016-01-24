@@ -7,8 +7,7 @@
 #include <utilgpu/cpp/Group.h>
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/gl/viewport.h>
-
-#include "Shader.h"
+#include <utilgpu/gl/Shader.h>
 
 using namespace gl;
 

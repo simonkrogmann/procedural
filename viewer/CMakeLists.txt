@@ -8,19 +8,6 @@ set(sources
     Renderer.h
     ProceduralRenderer.cpp
     ProceduralRenderer.h
-
-    Drawable.cpp
-    Drawable.h
-    ScreenAlignedQuad.cpp
-    ScreenAlignedQuad.h
-    Program.cpp
-    Program.h
-    Shader.cpp
-    Shader.h
-    Texture.cpp
-    Texture.h
-    Framebuffer.cpp
-    Framebuffer.h
 )
 
 set(target procedural-viewer)

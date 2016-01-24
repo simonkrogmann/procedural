@@ -4,8 +4,7 @@
 
 #include <glbinding/gl/gl.h>
 #include <utilgpu/cpp/FileWatcher.h>
-
-#include "Framebuffer.h"
+#include <utilgpu/gl/Framebuffer.h>
 
 using namespace gl;
 
