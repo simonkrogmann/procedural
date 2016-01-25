@@ -18,7 +18,7 @@ Key | Action
 --- | ---
  S  | screenshot (using offscreen rendering, the framebuffers of the other stages are also saved to files)
  R  | reload shaders
- F  | print FPS
+ F  | toggle frame time display
 
 Shaders and textures will also automatically be reloaded on file changes.
 

@@ -5,6 +5,7 @@
 #include <glbinding/gl/gl.h>
 #include <utilgpu/cpp/FileWatcher.h>
 #include <utilgpu/gl/Framebuffer.h>
+#include <utilgpu/gl/FrameTimeDisplay.h>
 
 using namespace gl;
 
@@ -29,8 +30,7 @@ public:
     void renderOffscreen(const Framebuffer& fbo,
                          const util::viewport::Viewport& resolution);
     void renderToFile(const util::viewport::Viewport& resolution);
-    void measureFrameTime();
-    void updateFrameTime();
+    void toggleFrameTimeDisplay();
     virtual void saveFramebuffers() = 0;
 
 protected:
@@ -41,7 +41,6 @@ private:
     Framebuffer m_fileFBO;
     util::FileWatcher m_fileWatcher;
 
-    unsigned int m_frames = 0;
     bool m_measureFrameTime = false;
-    std::chrono::time_point<std::chrono::steady_clock> m_start;
+    util::FrameTimeDisplay m_frameTimeDisplay;
 };

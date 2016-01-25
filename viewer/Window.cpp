@@ -106,7 +106,7 @@ void Window::keyPress(int key, int action, int mods)
     }
     else if (key == 'F' && action == GLFW_PRESS && mods == 0)
     {
-        m_renderer->measureFrameTime();
+        m_renderer->toggleFrameTimeDisplay();
     }
     else if (key == 'Q' && action == GLFW_PRESS && mods == GLFW_MOD_CONTROL)
     {
