@@ -29,3 +29,33 @@ vec2 rotate(vec2 uv, float angle)
     );
     return rotation * uv;
 }
+
+vec3 rotateX(vec3 uv, float angle)
+{
+    mat3 rotation = mat3(
+        1, 0, 0,
+        0, cos(angle), -sin(angle),
+        0, sin(angle), cos(angle)
+    );
+    return rotation * uv;
+}
+
+vec3 rotateY(vec3 uv, float angle)
+{
+    mat3 rotation = mat3(
+        cos(angle), 0, sin(angle),
+        0, 1, 0,
+        -sin(angle), 0, cos(angle)
+    );
+    return rotation * uv;
+}
+
+vec3 rotateZ(vec3 uv, float angle)
+{
+    mat3 rotation = mat3(
+        cos(angle), -sin(angle), 0,
+        sin(angle), cos(angle), 0,
+        0, 0, 1
+    );
+    return rotation * uv;
+}

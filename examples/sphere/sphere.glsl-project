@@ -1,9 +1,0 @@
-internal-includes:
-    util
-    sphere
-    lighting
-external-includes:
-    settings: settings.frag
-textures:
-stages:
-    final: main.frag

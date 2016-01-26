@@ -1,0 +1,17 @@
+internal-includes:
+    math
+    util
+    color_functions
+    sphere
+    lighting
+external-includes:
+    settings: settings.frag
+textures:
+    # not included
+    # polar mapped day and night textures of earth
+    day: day.jpg
+    night: night.jpg
+    # background image of space
+    stars: stars.jpg
+stages:
+    final: main.frag
