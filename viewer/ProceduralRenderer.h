@@ -10,8 +10,7 @@
 #include <utilgpu/gl/ScreenAlignedQuad.h>
 #include <utilgpu/gl/Program.h>
 #include <utilgpu/gl/Texture.h>
-
-#include "Renderer.h"
+#include <utilgpu/gl/Renderer.h>
 
 struct Stage
 {
@@ -21,7 +20,7 @@ struct Stage
     std::unique_ptr<Framebuffer> framebuffer;
 };
 
-class ProceduralRenderer : public Renderer
+class ProceduralRenderer : public util::Renderer
 {
 public:
     ProceduralRenderer(const std::vector<util::File>& includes,

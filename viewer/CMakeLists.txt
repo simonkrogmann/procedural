@@ -4,8 +4,6 @@ set(sources
     Window.h
     Project.cpp
     Project.h
-    Renderer.cpp
-    Renderer.h
     ProceduralRenderer.cpp
     ProceduralRenderer.h
 )

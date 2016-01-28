@@ -77,7 +77,7 @@ void Window::initAfterGL()
     glfwSetKeyCallback(m_window, onKeyPress);
 }
 
-void Window::setRenderer(std::unique_ptr<Renderer> renderer)
+void Window::setRenderer(std::unique_ptr<util::Renderer> renderer)
 {
     m_renderer = std::move(renderer);
     m_renderer->init();
@@ -89,7 +89,7 @@ void Window::setFileResolution(const unsigned int& width,
     m_fileResolution = {0, 0, width, height};
 }
 
-Renderer* Window::renderer()
+util::Renderer* Window::renderer()
 {
     return m_renderer.get();
 }
