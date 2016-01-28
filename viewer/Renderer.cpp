@@ -52,7 +52,7 @@ void Renderer::renderOffscreen(const Framebuffer& fbo,
     render(resolution);
 }
 
-void Renderer::addDependentPath(const std::string& path)
+void Renderer::addDependentPath(const util::File& path)
 {
     m_fileWatcher.addFile(path);
 }

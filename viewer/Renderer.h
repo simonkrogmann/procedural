@@ -34,7 +34,7 @@ public:
     virtual void saveFramebuffers() = 0;
 
 protected:
-    void addDependentPath(const std::string& path);
+    void addDependentPath(const util::File& path);
     virtual void draw(const util::viewport::Viewport& viewport) = 0;
 
 private:

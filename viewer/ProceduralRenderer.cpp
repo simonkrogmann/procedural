@@ -28,15 +28,15 @@ ProceduralRenderer::ProceduralRenderer(
     for (const auto& textureFile : textureFiles)
     {
         m_textures.push_back(Texture(textureFile));
-        addDependentPath(textureFile.path);
+        addDependentPath(textureFile);
     }
     for (const auto& include : m_includes)
     {
-        addDependentPath(include.path);
+        addDependentPath(include);
     }
     for (const auto& stage : m_stageShaders)
     {
-        addDependentPath(stage.path);
+        addDependentPath(stage);
     }
     addDependentPath(shaderLocation + "procedural.frag");
     addDependentPath(shaderLocation + "screenalignedquad.vert");

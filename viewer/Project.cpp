@@ -14,7 +14,7 @@ Project::Project(const std::string& filename)
     }
     else
     {
-        const auto folder = util::rsplit("./" + filename, "/").first + "/";
+        const auto directory = util::directoryOf(filename);
         const auto document = util::parseCFL(filename);
         if (!document->valid())
         {
@@ -31,15 +31,17 @@ Project::Project(const std::string& filename)
         }
         for (const auto& include : root["external-includes"]->children())
         {
-            m_external.push_back({include->name(), folder + include->value()});
+            m_external.push_back(
+                {include->name(), directory + include->value()});
         }
         for (const auto& texture : root["textures"]->children())
         {
-            m_textures.push_back({texture->name(), folder + texture->value()});
+            m_textures.push_back(
+                {texture->name(), directory + texture->value()});
         }
         for (const auto& stage : root["stages"]->children())
         {
-            m_stages.push_back({stage->name(), folder + stage->value()});
+            m_stages.push_back({stage->name(), directory + stage->value()});
         }
     }
 
