@@ -1,32 +1,30 @@
+set(target procedural-viewer)
+
 set(sources
     main.cpp
     Window.cpp
-    Window.h
     Project.cpp
-    Project.h
     ProceduralRenderer.cpp
+)
+
+set(includes
+    Window.h
+    Project.h
     ProceduralRenderer.h
 )
 
-set(target procedural-viewer)
+set(resources
+    shader/screenalignedquad.vert
+    shader/procedural.frag
+    shader/default.frag
+)
 
-add_executable(${target} ${sources})
-
-target_compile_options(${target} PRIVATE ${DEFAULT_COMPILE_FLAGS})
-
-target_link_libraries(${target}
+set(libraries
     ${GLFW_LIBRARIES}
     glbinding::glbinding
     utilgpu::cpp utilgpu::gl utilgpu::qt
     Qt5::OpenGL
 )
 
-option(CLANG_FORMAT "Add clang formatting to the build step" ON)
-if (CLANG_FORMAT)
-    add_custom_target(format-${target}
-        COMMAND clang-format -i ${sources}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-        COMMENT "Formatting code"
-        VERBATIM)
-    add_dependencies(${target} format-${target})
-endif()
+create_executable(${target} "${sources}" "${includes}" "${libraries}")
+generate_resource_header(procedural ${target} "${resources}")

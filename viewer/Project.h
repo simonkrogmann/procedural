@@ -8,7 +8,7 @@
 class Project
 {
 public:
-    Project(const std::string& filename);
+    Project(const util::File& file);
     ~Project();
 
     std::vector<util::File> includes() const;

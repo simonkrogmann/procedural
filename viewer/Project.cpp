@@ -6,16 +6,16 @@
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/cpp/cfl.h>
 
-Project::Project(const std::string& filename)
+Project::Project(const util::File& file)
 {
-    if (util::endsWith(filename, ".frag"))
+    if (util::endsWith(file.path, ".frag"))
     {
-        m_stages.push_back({"final", filename});
+        m_stages.push_back(file);
     }
     else
     {
-        const auto directory = util::directoryOf(filename);
-        const auto document = util::parseCFL(filename);
+        const auto directory = file.directory();
+        const auto document = util::parseCFL(file.path);
         if (!document->valid())
         {
             std::cout << document->message() << std::endl;

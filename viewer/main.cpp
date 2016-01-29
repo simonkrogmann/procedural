@@ -7,9 +7,10 @@
 #include <glbinding/gl/gl.h>
 #include <glbinding/callbacks.h>
 #include <QSettings>
-#include <utilgpu/gl/base.h>
 #include <utilgpu/cpp/str.h>
+#include <utilgpu/cpp/file.h>
 #include <utilgpu/qt/Config.h>
+#include <utilgpu/gl/base.h>
 #include <utilgpu/gl/Shader.h>
 
 #include "Window.h"
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
     const auto arguments = config.additionalArguments();
     const auto openFile =
         (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
-    Project project{openFile};
+    Project project{util::File{"final", openFile}};
     if (!project.valid())
     {
         std::cout << "Invalid project file" << std::endl;

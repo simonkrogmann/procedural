@@ -4,14 +4,13 @@
 
 #include <glbinding/gl/gl.h>
 #include <utilgpu/cpp/file.h>
+#include <utilgpu/cpp/resource.h>
 #include <utilgpu/cpp/Group.h>
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/gl/viewport.h>
 #include <utilgpu/gl/Shader.h>
 
 using namespace gl;
-
-const std::string ProceduralRenderer::shaderLocation = "../viewer/shader/";
 
 ProceduralRenderer::ProceduralRenderer(
     const std::vector<util::File>& includes,
@@ -38,8 +37,6 @@ ProceduralRenderer::ProceduralRenderer(
     {
         addDependentPath(stage);
     }
-    addDependentPath(shaderLocation + "procedural.frag");
-    addDependentPath(shaderLocation + "screenalignedquad.vert");
 }
 
 ProceduralRenderer::~ProceduralRenderer()
@@ -68,7 +65,9 @@ void ProceduralRenderer::reloadStages()
         textureString += Shader::textureString(m_stageShaders[i].name);
     }
 
-    auto fragmentCode = util::loadFile(shaderLocation + "procedural.frag");
+    util::Resource fragmentFile =
+        loadResource<procedural>("shader/procedural.frag");
+    auto fragmentCode = fragmentFile.content();
     util::replace(fragmentCode, "//textures", textureString);
     util::replace(fragmentCode, "//includes", includeString);
 
@@ -82,8 +81,7 @@ void ProceduralRenderer::reloadStages()
         includes.push_back(shader);
         const util::Group<Shader> shaders(
             Shader::vertex(
-                util::File{"screenalignedquad.vert",
-                           shaderLocation + "screenalignedquad.vert"}),
+                loadResource<procedural>("shader/screenalignedquad.vert")),
             Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER, includes));
         auto program = std::make_unique<Program>(shaders);
         auto fbo = (i != m_stageShaders.size() - 1) ? new Framebuffer(10, 10)
