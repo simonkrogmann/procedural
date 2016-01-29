@@ -5,7 +5,7 @@ A lbrary of procedural textures written in glsl and a viewer to display them.
 
 ##Viewer
 ###Dependencies:
-* [utilgpu](https://github.com/simonkrogmann/utilgpu) (Sublibraries: cpp, gl, qt)
+* [utilgpu](https://github.com/simonkrogmann/utilgpu) (Sublibraries: cpp, gl, qt, window)
 * [glbinding](https://github.com/cginternals/glbinding)
 * Qt5
 
@@ -40,7 +40,7 @@ stages:
     final: blur.frag
 ```
 ###Accessible Variables
-The textures and the results of all previous stages are accessible (as `uniform sampler2D` using the format GL_RGBA8)  by the names given to them in the project file. Additionally the following variables can be used:
+The textures and the results of all previous stages are accessible (as `uniform sampler2D` using the format GL_RGBA8) by the names given to them in the project file. Additionally the following variables can be used:
 
 * `in vec2 position`
 * `out vec4 color`

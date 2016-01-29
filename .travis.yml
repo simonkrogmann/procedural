@@ -29,7 +29,7 @@ install:
   - make && sudo make install
   - cd ../..
   - git clone https://github.com/simonkrogmann/utilgpu.git
-  - cd utilgpu && mkdir build && cd build && cmake .. -DCLANG_FORMAT=OFF -DBUILD_GL=ON -DBUILD_QT=ON
+  - cd utilgpu && mkdir build && cd build && cmake .. -DCLANG_FORMAT=OFF -DBUILD_GL=ON -DBUILD_QT=ON -DBUILD_WINDOW=ON
   - make && sudo make install
   - cd ../..
   - svn checkout https://cvs.khronos.org/svn/repos/ogl/trunk/ecosystem/public/sdk/tools/glslang/Install/Linux
