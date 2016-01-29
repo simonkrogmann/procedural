@@ -13,7 +13,5 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 find_package(Qt5OpenGL  REQUIRED)
 
-include_directories(${GLFW_INCLUDE_DIRS})
-
 add_subdirectory(viewer)
 add_subdirectory(test)

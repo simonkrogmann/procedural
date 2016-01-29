@@ -9,8 +9,8 @@
 #include <utilgpu/qt/Config.h>
 #include <utilgpu/gl/base.h>
 #include <utilgpu/gl/Shader.h>
+#include <utilgpu/window/Window.h>
 
-#include "Window.h"
 #include "ProceduralRenderer.h"
 #include "Project.h"
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-    Window w;
+    util::Window w;
     const auto resolution = config.value("file-resolution");
     const auto numbers = util::splitNumbers(resolution, "x");
     w.setFileResolution(numbers.first, numbers.second);

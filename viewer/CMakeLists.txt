@@ -2,13 +2,11 @@ set(target procedural-viewer)
 
 set(sources
     main.cpp
-    Window.cpp
     Project.cpp
     ProceduralRenderer.cpp
 )
 
 set(includes
-    Window.h
     Project.h
     ProceduralRenderer.h
 )
@@ -20,10 +18,8 @@ set(resources
 )
 
 set(libraries
-    ${GLFW_LIBRARIES}
     glbinding::glbinding
-    utilgpu::cpp utilgpu::gl utilgpu::qt
-    Qt5::OpenGL
+    utilgpu::cpp utilgpu::gl utilgpu::qt utilgpu::window
 )
 
 create_executable(${project} ${target} "${sources}" "${includes}" "${libraries}")
