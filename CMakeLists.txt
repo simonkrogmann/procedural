@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.0)
-project(procedural)
+set(project procedural)
+project(${project})
 
 find_package(glbinding REQUIRED)
 find_package(utilgpu REQUIRED)

@@ -26,5 +26,5 @@ set(libraries
     Qt5::OpenGL
 )
 
-create_executable(${target} "${sources}" "${includes}" "${libraries}")
-generate_resource_header(procedural ${target} "${resources}")
+create_executable(${project} ${target} "${sources}" "${includes}" "${libraries}")
+generate_resource_header(${project} ${target} "${resources}")
