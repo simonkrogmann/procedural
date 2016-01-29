@@ -3,12 +3,9 @@
 #include <map>
 #include <iostream>
 
-#include <glbinding/Binding.h>
-#include <glbinding/gl/gl.h>
-#include <glbinding/callbacks.h>
-#include <QSettings>
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/cpp/file.h>
+#include <utilgpu/cpp/resource.h>
 #include <utilgpu/qt/Config.h>
 #include <utilgpu/gl/base.h>
 #include <utilgpu/gl/Shader.h>
@@ -16,30 +13,6 @@
 #include "Window.h"
 #include "ProceduralRenderer.h"
 #include "Project.h"
-
-using namespace gl;
-
-void initializeGL()
-{
-    glbinding::Binding::initialize(false);
-    glbinding::setCallbackMaskExcept(
-        glbinding::CallbackMask::After | glbinding::CallbackMask::Parameters,
-        {"glGetError"});
-    glbinding::setAfterCallback(
-        [](const glbinding::FunctionCall& call)
-        {
-            const auto error = glGetError();
-            if (error != GL_NO_ERROR)
-            {
-                std::cout << error << " in " << call.function->name()
-                          << " with parameters:" << std::endl;
-                for (const auto& parameter : call.parameters)
-                {
-                    std::cout << "    " << parameter->asString() << std::endl;
-                }
-            }
-        });
-}
 
 int main(int argc, char* argv[])
 {
@@ -56,9 +29,10 @@ int main(int argc, char* argv[])
     Shader::id = config.valueUInt("shader-id") + 100;
     config.setValue("shader-id", Shader::id);
     const auto arguments = config.additionalArguments();
-    const auto openFile =
-        (arguments.size() > 1) ? arguments[1] : "../viewer/shader/default.frag";
-    Project project{util::File{"final", openFile}};
+    const auto openFile = (arguments.size() > 1)
+                              ? util::File{arguments[1]}
+                              : loadResource<procedural>("shader/default.frag");
+    Project project{openFile};
     if (!project.valid())
     {
         std::cout << "Invalid project file" << std::endl;
@@ -77,7 +51,7 @@ int main(int argc, char* argv[])
         w.requestGLVersion(numbers.first, numbers.second);
     }
     w.init("procedural-viewer", config.value("fullscreen") == "true");
-    initializeGL();
+    util::glInitialize();
     util::glContextInfo();
     w.initAfterGL();
 

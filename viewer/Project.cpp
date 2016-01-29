@@ -11,6 +11,7 @@ Project::Project(const util::File& file)
     if (util::endsWith(file.path, ".frag"))
     {
         m_stages.push_back(file);
+        m_stages.back().name = "final";
     }
     else
     {
@@ -23,26 +24,25 @@ Project::Project(const util::File& file)
             return;
         }
         auto& root = *document;
+
+        auto loadDocumentNode = [&](const auto& node, auto& target)
+        {
+            for (const auto& element : node->children())
+            {
+                target.push_back(
+                    {element->name(), directory + element->value()});
+            }
+        };
+
         const std::string includeLocation = "../library/";
         for (const auto& include : root["internal-includes"]->values())
         {
             m_internal.push_back(
                 {include, includeLocation + include + ".frag"});
         }
-        for (const auto& include : root["external-includes"]->children())
-        {
-            m_external.push_back(
-                {include->name(), directory + include->value()});
-        }
-        for (const auto& texture : root["textures"]->children())
-        {
-            m_textures.push_back(
-                {texture->name(), directory + texture->value()});
-        }
-        for (const auto& stage : root["stages"]->children())
-        {
-            m_stages.push_back({stage->name(), directory + stage->value()});
-        }
+        loadDocumentNode(root["external-includes"], m_external);
+        loadDocumentNode(root["textures"], m_textures);
+        loadDocumentNode(root["stages"], m_stages);
     }
 
     // check for file existence

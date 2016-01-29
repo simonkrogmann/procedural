@@ -65,8 +65,7 @@ void ProceduralRenderer::reloadStages()
         textureString += Shader::textureString(m_stageShaders[i].name);
     }
 
-    util::Resource fragmentFile =
-        loadResource<procedural>("shader/procedural.frag");
+    auto fragmentFile = loadResource<procedural>("shader/procedural.frag");
     auto fragmentCode = fragmentFile.content();
     util::replace(fragmentCode, "//textures", textureString);
     util::replace(fragmentCode, "//includes", includeString);
