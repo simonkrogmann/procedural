@@ -26,8 +26,8 @@ int main(int argc, char* argv[])
 
     // increase id to work around program crashes,
     // where the shader id couldn't be synced properly
-    Shader::id = config.valueUInt("shader-id") + 100;
-    config.setValue("shader-id", Shader::id);
+    util::Shader::id = config.valueUInt("shader-id") + 100;
+    config.setValue("shader-id", util::Shader::id);
     const auto arguments = config.additionalArguments();
     const auto openFile = (arguments.size() > 1)
                               ? util::File{arguments[1]}
@@ -61,6 +61,6 @@ int main(int argc, char* argv[])
     w.setRenderer(std::move(renderer));
     w.loop();
 
-    config.setValue("shader-id", Shader::id);
+    config.setValue("shader-id", util::Shader::id);
     return 0;
 }

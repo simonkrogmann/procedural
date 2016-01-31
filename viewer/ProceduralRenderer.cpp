@@ -26,7 +26,7 @@ ProceduralRenderer::ProceduralRenderer(
 {
     for (const auto& textureFile : textureFiles)
     {
-        m_textures.push_back(Texture(textureFile));
+        m_textures.push_back(util::Texture(textureFile));
         addDependentPath(textureFile);
     }
     for (const auto& include : m_includes)
@@ -54,15 +54,15 @@ void ProceduralRenderer::reloadStages()
     std::string textureString = "", includeString = "";
     for (const auto& texture : m_textures)
     {
-        textureString += Shader::textureString(texture.name());
+        textureString += util::Shader::textureString(texture.name());
     }
     for (const auto& include : m_includes)
     {
-        includeString += Shader::includeString(include.name);
+        includeString += util::Shader::includeString(include.name);
     }
     for (size_t i = 0; i < m_stageShaders.size(); ++i)
     {
-        textureString += Shader::textureString(m_stageShaders[i].name);
+        textureString += util::Shader::textureString(m_stageShaders[i].name);
     }
 
     auto fragmentFile = loadResource<procedural>("shader/procedural.frag");
@@ -75,19 +75,19 @@ void ProceduralRenderer::reloadStages()
     {
         const auto& shader = m_stageShaders[i];
         auto stageCode = fragmentCode;
-        util::replace(stageCode, "//main", Shader::includeString(shader.name));
+        util::replace(stageCode, "//main", util::Shader::includeString(shader.name));
         auto includes = m_includes;
         includes.push_back(shader);
-        const util::Group<Shader> shaders(
-            Shader::vertex(
+        const util::Group<util::Shader> shaders(
+            util::Shader::vertex(
                 loadResource<procedural>("shader/screenalignedquad.vert")),
-            Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER, includes));
-        auto program = std::make_unique<Program>(shaders);
-        auto fbo = (i != m_stageShaders.size() - 1) ? new Framebuffer(10, 10)
-                                                    : Framebuffer::None();
+            util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER, includes));
+        auto program = std::make_unique<util::Program>(shaders);
+        auto fbo = (i != m_stageShaders.size() - 1) ? new util::Framebuffer(10, 10)
+                                                    : util::Framebuffer::None();
         m_stages.push_back({m_stageShaders[i].name});
         m_stages.back().program = std::move(program);
-        m_stages.back().framebuffer = std::unique_ptr<Framebuffer>(fbo);
+        m_stages.back().framebuffer = std::unique_ptr<util::Framebuffer>(fbo);
     }
 }
 

@@ -16,8 +16,8 @@ struct Stage
 {
     Stage(const std::string& name) : name{name}, program{}, framebuffer{} {}
     std::string name;
-    std::unique_ptr<Program> program;
-    std::unique_ptr<Framebuffer> framebuffer;
+    std::unique_ptr<util::Program> program;
+    std::unique_ptr<util::Framebuffer> framebuffer;
 };
 
 class ProceduralRenderer : public util::Renderer
@@ -41,9 +41,9 @@ private:
 
     const static std::string shaderLocation;
 
-    ScreenAlignedQuad m_screen;
+    util::ScreenAlignedQuad m_screen;
     std::vector<util::File> m_includes;
-    std::vector<Texture> m_textures;
+    std::vector<util::Texture> m_textures;
     std::vector<util::File> m_stageShaders;
     std::vector<Stage> m_stages;
     std::chrono::time_point<std::chrono::steady_clock> m_start;
