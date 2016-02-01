@@ -75,16 +75,19 @@ void ProceduralRenderer::reloadStages()
     {
         const auto& shader = m_stageShaders[i];
         auto stageCode = fragmentCode;
-        util::replace(stageCode, "//main", util::Shader::includeString(shader.name));
+        util::replace(stageCode, "//main",
+                      util::Shader::includeString(shader.name));
         auto includes = m_includes;
         includes.push_back(shader);
         const util::Group<util::Shader> shaders(
             util::Shader::vertex(
                 loadResource<procedural>("shader/screenalignedquad.vert")),
-            util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER, includes));
+            util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER,
+                         includes));
         auto program = std::make_unique<util::Program>(shaders);
-        auto fbo = (i != m_stageShaders.size() - 1) ? new util::Framebuffer(10, 10)
-                                                    : util::Framebuffer::None();
+        auto fbo = (i != m_stageShaders.size() - 1)
+                       ? new util::Framebuffer(10, 10)
+                       : util::Framebuffer::None();
         m_stages.push_back({m_stageShaders[i].name});
         m_stages.back().program = std::move(program);
         m_stages.back().framebuffer = std::unique_ptr<util::Framebuffer>(fbo);

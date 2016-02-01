@@ -1,4 +1,4 @@
-#version 140
+#version 330
 #extension GL_ARB_shading_language_include : enable
 #extension GL_ARB_explicit_attrib_location : enable
 
