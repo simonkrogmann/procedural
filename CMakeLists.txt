@@ -4,7 +4,7 @@ project(${project})
 
 find_package(glbinding REQUIRED)
 
-set(use_utilggpu_compilation_options ON)
+set(use_utilgpu_compilation_options ON)
 find_package(utilgpu REQUIRED)
 
 # GLFW
