@@ -43,8 +43,9 @@ private:
 
     util::ScreenAlignedQuad m_screen;
     std::vector<util::File> m_includes;
-    std::vector<util::Texture> m_textures;
     std::vector<util::File> m_stageShaders;
+    std::vector<util::File> m_textureFiles;
+    std::vector<util::Texture> m_textures;
     std::vector<Stage> m_stages;
     std::chrono::time_point<std::chrono::steady_clock> m_start;
 };

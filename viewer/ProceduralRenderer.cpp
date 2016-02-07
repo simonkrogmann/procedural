@@ -12,21 +12,20 @@
 
 using namespace gl;
 
-ProceduralRenderer::ProceduralRenderer(
-    const std::vector<util::File>& includes,
-    const std::vector<util::File>& textureFiles,
-    const std::vector<util::File>& stages)
+ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
+                                       const std::vector<util::File>& textures,
+                                       const std::vector<util::File>& stages)
     : Renderer{}
     , m_screen{}
     , m_includes{includes}
-    , m_textures{}
     , m_stageShaders{stages}
+    , m_textureFiles{textures}
+    , m_textures{}
     , m_stages{}
     , m_start{std::chrono::steady_clock::now()}
 {
-    for (const auto& textureFile : textureFiles)
+    for (const auto& textureFile : m_textureFiles)
     {
-        m_textures.push_back(util::Texture(textureFile));
         addDependentPath(textureFile);
     }
     for (const auto& include : m_includes)
@@ -52,9 +51,9 @@ void ProceduralRenderer::init()
 void ProceduralRenderer::reloadStages()
 {
     std::string textureString = "", includeString = "";
-    for (const auto& texture : m_textures)
+    for (const auto& texture : m_textureFiles)
     {
-        textureString += util::Shader::textureString(texture.name());
+        textureString += util::Shader::textureString(texture.name);
     }
     for (const auto& include : m_includes)
     {
@@ -85,12 +84,11 @@ void ProceduralRenderer::reloadStages()
             util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER,
                          includes));
         auto program = std::make_unique<util::Program>(shaders);
-        auto fbo = (i != m_stageShaders.size() - 1)
-                       ? new util::Framebuffer(10, 10)
-                       : util::Framebuffer::None();
         m_stages.push_back({m_stageShaders[i].name});
         m_stages.back().program = std::move(program);
-        m_stages.back().framebuffer = std::unique_ptr<util::Framebuffer>(fbo);
+        m_stages.back().framebuffer = (i != m_stageShaders.size() - 1)
+                                          ? util::Framebuffer::Simple(10, 10)
+                                          : util::Framebuffer::None();
     }
 }
 
@@ -104,25 +102,31 @@ void ProceduralRenderer::reloadTextures()
         }
         stage.program->use();
         unsigned int textureIndex = 0;
-        for (auto& texture : m_textures)
+        m_textures.clear();
+        for (auto& textureFile : m_textureFiles)
         {
             glActiveTexture(GL_TEXTURE0 + textureIndex);
-            texture.load();
+            m_textures.push_back({});
+            m_textures.back().load(textureFile);
             const auto location =
-                stage.program->getUniformLocation(texture.name());
+                stage.program->getUniformLocation(textureFile.name);
             glUniform1i(location, textureIndex);
             ++textureIndex;
         }
         // add previous stages as textures
         for (const auto& textureStage : m_stages)
         {
+            if (textureStage.framebuffer->get() == 0)
+                continue;
             glActiveTexture(GL_TEXTURE0 + textureIndex);
-            glBindTexture(GL_TEXTURE_2D, textureStage.framebuffer->getColor());
+            textureStage.framebuffer->getColor()->bind();
+            textureStage.framebuffer->check();
             const auto location =
                 stage.program->getUniformLocation(textureStage.name);
             glUniform1i(location, textureIndex);
             ++textureIndex;
         }
+        glActiveTexture(GL_TEXTURE0 + textureIndex);
     }
     std::cout << "Shaders successfully compiled" << std::endl;
 }
