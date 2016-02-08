@@ -12,6 +12,11 @@
 #include <utilgpu/gl/Texture.h>
 #include <utilgpu/gl/Renderer.h>
 
+namespace util
+{
+class Framebuffer;
+}
+
 struct Stage
 {
     Stage(const std::string& name) : name{name}, program{}, framebuffer{} {}

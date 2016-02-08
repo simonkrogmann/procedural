@@ -9,6 +9,7 @@
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/gl/viewport.h>
 #include <utilgpu/gl/Shader.h>
+#include <utilgpu/gl/Framebuffer.h>
 
 using namespace gl;
 
@@ -120,7 +121,6 @@ void ProceduralRenderer::reloadTextures()
                 continue;
             glActiveTexture(GL_TEXTURE0 + textureIndex);
             textureStage.framebuffer->getColor()->bind();
-            textureStage.framebuffer->check();
             const auto location =
                 stage.program->getUniformLocation(textureStage.name);
             glUniform1i(location, textureIndex);

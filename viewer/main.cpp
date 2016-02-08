@@ -9,6 +9,7 @@
 #include <utilgpu/qt/Config.h>
 #include <utilgpu/gl/base.h>
 #include <utilgpu/gl/Shader.h>
+#include <utilgpu/gl/Framebuffer.h>
 #include <utilgpu/window/Window.h>
 
 #include "ProceduralRenderer.h"
