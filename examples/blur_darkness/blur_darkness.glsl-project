@@ -1,0 +1,16 @@
+# Blurs large dark section of input image
+
+internal-includes:
+    math
+    blur
+textures:
+    # not included
+    image: image.jpg
+stages:
+    blur_x: blur_x.frag
+    blur_y: blur_y.frag
+    color_range: color_range.frag
+    dilate: dilate.frag
+    blur_xd: blur_xd.frag
+    blur_yd: blur_yd.frag
+    final: main.frag
