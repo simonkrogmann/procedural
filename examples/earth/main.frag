@@ -10,7 +10,7 @@ void main()
 
     vec3 dayColor = texture(day, texCoords).rgb;
     vec3 nightColor = 0.7 * texture(night, texCoords).rgb;
-    vec3 starsColor = 2 * texture(stars, uv).rgb;
+    vec3 starsColor = 2 * texture(stars, mod(uv, 1.0)).rgb;
 
     float intensity = phong(sphereData.xyz, sun, eye, factors);
     vec3 earthColor = mix(nightColor, dayColor, intensity);

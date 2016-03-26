@@ -14,6 +14,7 @@ vec4 sphere(vec2 uv, vec2 position, float radius)
 vec2 polar(vec3 normal)
 {
     float x = atan(normal.x, normal.z) / (2.0 * pi);
-    float y = 1.0 * acos(-normal.y) / pi;
+    float y = acos(-normal.y) / pi;
+    x = mod(x, 1.0);
     return vec2(x, y);
 }
