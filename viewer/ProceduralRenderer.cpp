@@ -109,6 +109,7 @@ void ProceduralRenderer::reloadTextures()
             glActiveTexture(GL_TEXTURE0 + textureIndex);
             m_textures.push_back({});
             m_textures.back().load(textureFile);
+            m_textures.back().generateMipMap();
             const auto location =
                 stage.program->getUniformLocation(textureFile.name);
             glUniform1i(location, textureIndex);

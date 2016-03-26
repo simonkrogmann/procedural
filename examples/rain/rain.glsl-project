@@ -1,0 +1,12 @@
+internal-includes:
+    util
+    noise
+    raindrops
+    math
+    blur
+textures:
+    image: ../resources/capitol_reef.jpg
+stages:
+    blur_x: blur_x.frag
+    blur_y: blur_y.frag
+    final: main.frag
