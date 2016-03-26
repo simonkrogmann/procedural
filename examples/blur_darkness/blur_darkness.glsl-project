@@ -4,8 +4,7 @@ internal-includes:
     math
     blur
 textures:
-    # not included
-    image: image.jpg
+    image: ../resources/bryce_canyon.jpg
 stages:
     blur_x: blur_x.frag
     blur_y: blur_y.frag

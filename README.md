@@ -1,5 +1,5 @@
 # procedural [![Build Status](https://travis-ci.org/simonkrogmann/procedural.svg?branch=master)](https://travis-ci.org/simonkrogmann/procedural)
-A lbrary of procedural textures written in glsl and a viewer to display them.
+A library of procedural textures and image effects written in glsl and a viewer to display them.
 
 ##Library
 
@@ -39,6 +39,7 @@ stages:
     base: image.frag
     final: blur.frag
 ```
+
 ###Accessible Variables
 The textures and the results of all previous stages are accessible (as `uniform sampler2D` using the format GL_RGBA8) by the names given to them in the project file. Additionally the following variables can be used:
 
@@ -46,3 +47,7 @@ The textures and the results of all previous stages are accessible (as `uniform 
 * `out vec4 color`
 * `uniform ivec2 windowSize`
 * `uniform float time` (in seconds)
+
+###Examples
+
+The images used in some examples are not included. They can be downloaded with the script `examples/resources/download_textures.py` however.
