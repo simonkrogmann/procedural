@@ -33,11 +33,16 @@ int main(int argc, char* argv[])
     const auto openFile = (arguments.size() > 1)
                               ? util::File{arguments[1]}
                               : loadResource<procedural>("shader/default.frag");
+    if (!openFile.exists())
+    {
+        std::cout << openFile.path << " does not exist." << std::endl;
+        exit(1);
+    }
     Project project{openFile};
     if (!project.valid())
     {
-        std::cout << "Invalid project file" << std::endl;
-        exit(1);
+        std::cout << "Invalid project file." << std::endl;
+        exit(2);
     }
 
     util::Window w;

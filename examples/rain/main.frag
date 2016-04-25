@@ -1,4 +1,3 @@
-
 void main() {
     vec2 uv = scaleToCenterSquare(position, windowSize);
 
