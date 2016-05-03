@@ -129,7 +129,7 @@ void ProceduralRenderer::reloadTextures()
         }
         glActiveTexture(GL_TEXTURE0 + textureIndex);
     }
-    std::cout << "Shaders successfully compiled" << std::endl;
+    std::cout << "Shaders successfully compiled." << std::endl;
 }
 
 void ProceduralRenderer::reload()
