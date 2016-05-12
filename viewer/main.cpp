@@ -30,9 +30,10 @@ int main(int argc, char* argv[])
     util::Shader::id = config.valueUInt("shader-id") + 100;
     config.setValue("shader-id", util::Shader::id);
     const auto arguments = config.additionalArguments();
-    const auto openFile = (arguments.size() > 1)
-                              ? util::File{arguments[1]}
-                              : loadResource<procedural>("shader/default.frag");
+    const auto openFile =
+        (arguments.size() > 1)
+            ? util::File{arguments[1]}
+            : util::loadResource<procedural>("shader/default.frag");
     if (!openFile.exists())
     {
         std::cout << openFile.path << " does not exist." << std::endl;

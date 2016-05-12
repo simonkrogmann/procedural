@@ -65,7 +65,8 @@ void ProceduralRenderer::reloadStages()
         textureString += util::Shader::textureString(m_stageShaders[i].name);
     }
 
-    auto fragmentFile = loadResource<procedural>("shader/procedural.frag");
+    auto fragmentFile =
+        util::loadResource<procedural>("shader/procedural.frag");
     auto fragmentCode = fragmentFile.content();
     util::replace(fragmentCode, "//textures", textureString);
     util::replace(fragmentCode, "//includes", includeString);
@@ -80,8 +81,8 @@ void ProceduralRenderer::reloadStages()
         auto includes = m_includes;
         includes.push_back(shader);
         const util::Group<util::Shader> shaders(
-            util::Shader::vertex(
-                loadResource<procedural>("shader/screenalignedquad.vert")),
+            util::Shader::vertex(util::loadResource<procedural>(
+                "shader/screenalignedquad.vert")),
             util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER,
                          includes));
         auto program = std::make_unique<util::Program>(shaders);
