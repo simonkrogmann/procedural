@@ -7,7 +7,6 @@
 #include <utilgpu/cpp/resource.h>
 #include <utilgpu/cpp/str.h>
 #include <utilgpu/gl/Framebuffer.h>
-#include <utilgpu/gl/Shader.h>
 #include <utilgpu/gl/base.h>
 #include <utilgpu/qt/Config.h>
 #include <utilgpu/window/Window.h>
@@ -22,14 +21,9 @@ int main(int argc, char* argv[])
         {"gl-version", "best"},
         {"file-resolution", "3840x2160"},
         {"fullscreen", "false"},
-        {"shader-id", "0"},
     });
     config.load(argc, argv);
 
-    // increase id to work around program crashes,
-    // where the shader id couldn't be synced properly
-    util::Shader::id = config.value<unsigned int>("shader-id") + 100;
-    config.setValue("shader-id", util::Shader::id);
     const auto arguments = config.additionalArguments();
     const auto openFile =
         (arguments.size() > 1)
@@ -69,6 +63,5 @@ int main(int argc, char* argv[])
     w.setRenderer(std::move(renderer));
     w.loop();
 
-    config.setValue("shader-id", util::Shader::id);
     return 0;
 }

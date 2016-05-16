@@ -9,7 +9,6 @@ uniform ivec2 windowSize;
 uniform float time;
 
 // The symbols below will be auto-replaced
-//id
 //textures
 //includes
 //main
