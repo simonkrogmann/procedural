@@ -1,15 +1,15 @@
+#include <iostream>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include <iostream>
 
-#include <utilgpu/cpp/str.h>
 #include <utilgpu/cpp/file.h>
 #include <utilgpu/cpp/resource.h>
-#include <utilgpu/qt/Config.h>
-#include <utilgpu/gl/base.h>
-#include <utilgpu/gl/Shader.h>
+#include <utilgpu/cpp/str.h>
 #include <utilgpu/gl/Framebuffer.h>
+#include <utilgpu/gl/Shader.h>
+#include <utilgpu/gl/base.h>
+#include <utilgpu/qt/Config.h>
 #include <utilgpu/window/Window.h>
 
 #include "ProceduralRenderer.h"
@@ -22,12 +22,13 @@ int main(int argc, char* argv[])
         {"gl-version", "best"},
         {"file-resolution", "3840x2160"},
         {"fullscreen", "false"},
+        {"shader-id", "0"},
     });
     config.load(argc, argv);
 
     // increase id to work around program crashes,
     // where the shader id couldn't be synced properly
-    util::Shader::id = config.valueUInt("shader-id") + 100;
+    util::Shader::id = config.value<unsigned int>("shader-id") + 100;
     config.setValue("shader-id", util::Shader::id);
     const auto arguments = config.additionalArguments();
     const auto openFile =
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
         const auto numbers = util::splitNumbers(version, ".");
         w.requestGLVersion(numbers.first, numbers.second);
     }
-    w.init("procedural-viewer", config.value("fullscreen") == "true");
+    w.init("procedural-viewer", config.value<bool>("fullscreen"));
     util::glInitialize();
     util::glContextInfo();
     w.initAfterGL();

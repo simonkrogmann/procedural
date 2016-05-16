@@ -3,13 +3,13 @@
 #include <iostream>
 
 #include <glbinding/gl/gl.h>
+#include <utilgpu/cpp/Group.h>
 #include <utilgpu/cpp/file.h>
 #include <utilgpu/cpp/resource.h>
-#include <utilgpu/cpp/Group.h>
 #include <utilgpu/cpp/str.h>
-#include <utilgpu/gl/viewport.h>
-#include <utilgpu/gl/Shader.h>
 #include <utilgpu/gl/Framebuffer.h>
+#include <utilgpu/gl/Shader.h>
+#include <utilgpu/gl/viewport.h>
 
 using namespace gl;
 

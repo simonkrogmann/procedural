@@ -2,9 +2,9 @@
 
 #include <iostream>
 
+#include <utilgpu/cpp/cfl.h>
 #include <utilgpu/cpp/file.h>
 #include <utilgpu/cpp/str.h>
-#include <utilgpu/cpp/cfl.h>
 
 Project::Project(const util::File& file)
 {
@@ -25,8 +25,7 @@ Project::Project(const util::File& file)
         }
         auto& root = *document;
 
-        auto loadDocumentNode = [&](const auto& node, auto& target)
-        {
+        auto loadDocumentNode = [&](const auto& node, auto& target) {
             for (const auto& element : node->children())
             {
                 target.push_back(
