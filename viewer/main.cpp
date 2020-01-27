@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -52,8 +53,10 @@ int main(int argc, char* argv[])
         const auto numbers = util::splitNumbers(version, ".");
         w.requestGLVersion(numbers.first, numbers.second);
     }
-    w.init("procedural-viewer", config.value<bool>("fullscreen"));
-    util::glInitialize();
+    const auto ret =
+        w.init("procedural-viewer", config.value<bool>("fullscreen"));
+    assert(ret == 0);
+    util::glInitialize(util::getGLProcAddressPointer());
     util::glContextInfo();
     w.initAfterGL();
 

@@ -2,11 +2,10 @@ internal-includes:
     util
     math
     blur
-    mandelbrot
 external-includes:
     settings: settings.frag
+textures:
+    image: ../resources/capitol_reef.jpg
 stages:
-    base_image: image.frag
-    # 2-pass blur for better performance
     blur_x: blur_x.frag
     blur_y: blur_y.frag

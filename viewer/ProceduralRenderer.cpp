@@ -39,9 +39,7 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     }
 }
 
-ProceduralRenderer::~ProceduralRenderer()
-{
-}
+ProceduralRenderer::~ProceduralRenderer() {}
 
 void ProceduralRenderer::init()
 {
@@ -119,8 +117,7 @@ void ProceduralRenderer::reloadTextures()
         // add previous stages as textures
         for (const auto& textureStage : m_stages)
         {
-            if (textureStage.framebuffer->get() == 0)
-                continue;
+            if (textureStage.framebuffer->get() == 0) continue;
             glActiveTexture(GL_TEXTURE0 + textureIndex);
             textureStage.framebuffer->getColor()->bind();
             const auto location =

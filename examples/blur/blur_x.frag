@@ -1,4 +1,4 @@
 void main()
 {
-    color = blurX(base_image, position, samples, windowSize);
+    color = blurX(image, position, samples, windowSize);
 }

@@ -3,8 +3,10 @@ BasedOnStyle:  Google
 AccessModifierOffset: -4
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
+# for clang 10
+# AllowShortBlocksOnASingleLine: Empty
 AllowShortFunctionsOnASingleLine: Inline
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: true
@@ -18,7 +20,8 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-IndentCaseLabels: true
+IncludeBlocks: Preserve
+IndentCaseLabels: false
 IndentWidth:     4
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
@@ -29,6 +32,7 @@ PenaltyBreakString: 10000
 PenaltyExcessCharacter: 1000
 PenaltyReturnTypeOnItsOwnLine: 20000
 PointerAlignment: Left
+SortIncludes: true
 SpaceAfterControlStatementKeyword: true
 SpaceBeforeAssignmentOperators: true
 SpaceInEmptyParentheses: false
@@ -36,7 +40,6 @@ SpacesBeforeTrailingComments: 2
 SpacesInAngles:  false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
-SpacesInSquareBrackets: false
 Standard:        Auto
 TabWidth:        4
 UseTab:          Never

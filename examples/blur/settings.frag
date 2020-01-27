@@ -1,1 +1,1 @@
-const int samples = 50;
+const int samples = 128;

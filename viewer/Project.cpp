@@ -56,9 +56,7 @@ Project::Project(const util::File& file)
     }
 }
 
-Project::~Project()
-{
-}
+Project::~Project() {}
 
 void Project::checkExists(const std::vector<util::File>& files)
 {
