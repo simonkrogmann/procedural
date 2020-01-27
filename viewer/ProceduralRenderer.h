@@ -36,6 +36,7 @@ public:
     virtual void init() override;
     virtual void reload() override;
     virtual void saveFramebuffers() override;
+    virtual void keyPressed(int key, bool control) override;
 
 protected:
     virtual void draw(const util::viewport::Viewport& viewport) override;
@@ -53,4 +54,6 @@ private:
     std::vector<util::Texture> m_textures;
     std::vector<Stage> m_stages;
     std::chrono::time_point<std::chrono::steady_clock> m_start;
+    std::chrono::time_point<std::chrono::steady_clock> m_currentFrameTime;
+    bool m_paused;
 };

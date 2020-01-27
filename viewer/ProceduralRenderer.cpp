@@ -24,6 +24,7 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     , m_textures{}
     , m_stages{}
     , m_start{std::chrono::steady_clock::now()}
+    , m_paused{false}
 {
     for (const auto& textureFile : m_textureFiles)
     {
@@ -145,6 +146,18 @@ void ProceduralRenderer::saveFramebuffers()
     }
 }
 
+void ProceduralRenderer::keyPressed(int key, bool control)
+{
+    if (key == ' ' && !control)
+    {
+        m_paused = !m_paused;
+        if (!m_paused)
+        {
+            m_start += std::chrono::steady_clock::now() - m_currentFrameTime;
+        }
+    }
+}
+
 void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
 {
     for (const auto& stage : m_stages)
@@ -158,8 +171,11 @@ void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
             return;
         }
 
-        std::chrono::duration<double> diff =
-            std::chrono::steady_clock::now() - m_start;
+        if (!m_paused)
+        {
+            m_currentFrameTime = std::chrono::steady_clock::now();
+        }
+        std::chrono::duration<double> diff = m_currentFrameTime - m_start;
 
         stage.program->use();
         glUniform2i((*stage.program)["windowSize"], viewport.width,
