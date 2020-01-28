@@ -43,10 +43,10 @@ stages:
 ### Accessible Variables
 The textures and the results of all previous stages are accessible (as `uniform sampler2D` using the format GL_RGBA8) by the names given to them in the project file. Additionally the following variables can be used:
 
-* `in vec2 position`
-* `out vec4 color`
-* `uniform ivec2 windowSize`
-* `uniform float time` (in seconds)
+* `in vec2 normalizedCoord`
+* `out vec4 fragColor`
+* `uniform ivec2 iResolution`
+* `uniform float iTime` (in seconds)
 
 ### Examples
 

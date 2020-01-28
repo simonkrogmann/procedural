@@ -6,9 +6,9 @@ vec3 colorFunc(float factor)
 
 void main()
 {
-    vec2 uv = scaleToCenterSquare(position, windowSize);
+    vec2 uv = scaleToCenterSquare(normalizedCoord, iResolution);
     uv = 2.5 * (uv - 0.5);
     vec3 c = colorFunc(mandelbrot(uv));
 
-    color = vec4(c, 1.0);
+    fragColor = vec4(c, 1.0);
 }

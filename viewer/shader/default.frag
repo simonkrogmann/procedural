@@ -1,4 +1,4 @@
 void main()
 {
-    color = vec4(position, 0.0, 1.0);
+    fragColor = vec4(normalizedCoord, 0.0, 1.0);
 }

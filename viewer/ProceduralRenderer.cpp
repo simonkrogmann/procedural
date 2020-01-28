@@ -25,6 +25,7 @@ ProceduralRenderer::ProceduralRenderer(const std::vector<util::File>& includes,
     , m_stages{}
     , m_start{std::chrono::steady_clock::now()}
     , m_paused{false}
+    , m_frame{0}
 {
     for (const auto& textureFile : m_textureFiles)
     {
@@ -73,17 +74,18 @@ void ProceduralRenderer::reloadStages()
     m_stages.clear();
     for (size_t i = 0; i < m_stageShaders.size(); ++i)
     {
-        const auto& shader = m_stageShaders[i];
+        auto shader = m_stageShaders[i].content();
+        if (shader.find("mainImage(") != shader.npos)
+        {
+            shader += "\nvoid main() { mainImage(fragColor, fragCoord); }\n";
+        }
         auto stageCode = fragmentCode;
-        util::replace(stageCode, "//main",
-                      util::Shader::includeString(shader.name));
-        auto includes = m_includes;
-        includes.push_back(shader);
+        util::replace(stageCode, "//main", shader);
         const util::Group<util::Shader> shaders(
             util::Shader::vertex(util::loadResource<procedural>(
                 "shader/screenalignedquad.vert")),
             util::Shader("procedural.frag", stageCode, GL_FRAGMENT_SHADER,
-                         includes));
+                         m_includes));
         auto program = std::make_unique<util::Program>(shaders);
         m_stages.push_back({m_stageShaders[i].name});
         m_stages.back().program = std::move(program);
@@ -178,10 +180,12 @@ void ProceduralRenderer::draw(const util::viewport::Viewport& viewport)
         std::chrono::duration<double> diff = m_currentFrameTime - m_start;
 
         stage.program->use();
-        glUniform2i((*stage.program)["windowSize"], viewport.width,
+        glUniform2f((*stage.program)["iResolution"], viewport.width,
                     viewport.height);
-        glUniform1f((*stage.program)["time"], diff.count());
+        glUniform1f((*stage.program)["iTime"], diff.count());
+        glUniform1i((*stage.program)["iFrame"], m_frame);
 
         m_screen.draw();
+        ++m_frame;
     }
 }

@@ -5,8 +5,8 @@ vec3 chess(vec2 uv, int size)
     return vec3(color);
 }
 
-vec3 chessSquare(vec2 uv, int size, vec2 windowSize)
+vec3 chessSquare(vec2 uv, int size, vec2 resolution)
 {
-    vec2 centerUV = scaleToCenterSquare(uv, windowSize);
+    vec2 centerUV = scaleToCenterSquare(uv, resolution);
     return insideSquare(centerUV) ? chess(centerUV, size) : vec3(0);
 }

@@ -1,4 +1,4 @@
 void main()
 {
-    color = blurX(image, position, 30, windowSize);
+    fragColor = blurX(image, normalizedCoord, 30, iResolution);
 }

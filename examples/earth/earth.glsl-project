@@ -9,9 +9,9 @@ external-includes:
 textures:
     # not included
     # polar mapped day and night textures of earth
-    day: day.jpg
-    night: night.jpg
+    day: ../resources/day.jpg
+    night: ../resources/night.jpg
     # background image of space
-    stars: stars.jpg
+    stars: ../resources/stars.jpg
 stages:
     final: main.frag

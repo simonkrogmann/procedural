@@ -56,4 +56,5 @@ private:
     std::chrono::time_point<std::chrono::steady_clock> m_start;
     std::chrono::time_point<std::chrono::steady_clock> m_currentFrameTime;
     bool m_paused;
+    int m_frame;
 };

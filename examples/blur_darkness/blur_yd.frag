@@ -1,4 +1,4 @@
 void main()
 {
-    color = blurY(blur_xd, position, 10, windowSize);
+    fragColor = blurY(blur_xd, normalizedCoord, 10, iResolution);
 }
